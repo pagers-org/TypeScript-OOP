@@ -5,11 +5,419 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>typescript-oop</title>
+  <title>Ocean Cafe</title>
+  <link rel="stylesheet" href="./assets/index.css">
+  <script src="https://kit.fontawesome.com/7fd51b7743.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-
+  <div id="app">
+    <header>
+      <h1>🤣객체지향 카페🤣</h1>
+      <nav>
+        <input type="radio" name="tab" id="order-management" checked />
+        <input type="radio" name="tab" id="material-management" />
+        <label class="order-management" for="order-management"><i class="fa-solid fa-mug-hot"></i>&nbsp;주문 관리</label>
+        <label class="material-management" for="material-management"><i class="fas fa-blender"></i>&nbsp;재료 관리</label>
+        <span class="tab"></span>
+      </nav>
+    </header>
+    <main>
+      <section id="left-section">
+        <div class="order-list">
+          <h3>주문 목록</h3>
+          <div class="order-button-area">
+            <button class="order-button">주문 받기</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th rowspan="2">No</th>
+                <th rowspan="2">메뉴</th>
+                <th colspan="8">옵션</th>
+                <th rowspan="2">수량</th>
+              </tr>
+              <tr>
+                <th>사이즈</th>
+                <th>샷</th>
+                <th>시럽</th>
+                <th>ICE<br />HOT</th>
+                <th>얼음<br />종류</th>
+                <th>휘핑<br />크림</th>
+                <th>엑스트라</th>
+                <th>컵</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>123</td>
+                <td>아메리카노</td>
+                <td>1sada</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>아메리카노</td>
+                <td>1sada</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>아메리카노</td>
+                <td>1sada</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>아메리카노</td>
+                <td>1sada</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>아메리카노</td>
+                <td>1sada</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="maked-list">
+          <h3>현재 만들어진 커피</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>메뉴(수량)</th>
+                <th>주문 시간</th>
+                <th>서빙 완료 시간</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>아메리카노(3),에스프레소(1)</td>
+                <td>1</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>아메리카노(3),에스프레소(1)</td>
+                <td>1</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section id="right-section">
+        <h1>주방</h1>
+        <div class="coffee-container">
+          <h1 class="coffee_name">Choose your coffee</h1>
+          <div class="cup">
+            <div class="filling reset">
+              <div class="coffee">커피</div>
+              <div class="water">물</div>
+              <div class="liquor">리퀴르</div>
+              <div class="milk">우유</div>
+              <div class="whipped_cream">휘핑 크림</div>
+              <div class="milk_foam">밀크 폼</div>
+              <div class="steamed_milk">데운 우유</div>
+              <div class="chocolate">초콜릿</div>
+            </div>
+            <div class="plate"></div>
+          </div>
+        </div>
+        <div class="select-coffee-container">
+          <div class="row">
+            <div>
+              <button class="coffee-category-button" id="americano">아메리카노</button>
+              <button class="coffee-category-button" id="au_lait">카페 오레</button>
+              <button class="coffee-category-button" id="capuccino">카푸치노</button>
+              <button class="coffee-category-button" id="corretto">코레또</button>
+              <button class="coffee-category-button" id="espresso">에스프레소</button>
+            </div>
+            <div>
+              <button class="coffee-category-button" id="latte">카페 라떼</button>
+              <button class="coffee-category-button" id="lungo">룽고</button>
+              <button class="coffee-category-button" id="macchiato">마끼야또</button>
+              <button class="coffee-category-button" id="mocha">카페 모카</button>
+              <button class="coffee-category-button" id="ristretto">리스트레또</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="coffee-add-area">
+              <form>
+                <input type="text"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+                  maxlength="2" />
+                <span class="ms">잔</span>
+                <button type="submit" class="coffee-add-options-button">추가</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="modal-layout">
+    <div class="modal-header">
+      <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>
+      <h1>아메리카노(3) 옵션</h1>
+    </div>
+    <div class="modal-table">
+      <table>
+        <caption>현재 2잔 준비 됐습니다.</caption>
+        <thead>
+          <th>No</th>
+          <th>사이즈</th>
+          <th>샷</th>
+          <th>시럽</th>
+          <th>ICE/HOT</th>
+          <th>얼음 종류</th>
+          <th>휘핑 크림</th>
+          <th>엑스트라</th>
+          <th>컵</th>
+          <th>수정하기</th>
+          <th>삭제하기</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No</td>
+            <td>사이즈</td>
+            <td>샷</td>
+            <td>시럽</td>
+            <td>ICE/HOT</td>
+            <td>얼음 종류</td>
+            <td>휘핑 크림</td>
+            <td>엑스트라</td>
+            <td>컵</td>
+            <td><span><i class="fa-solid fa-pen"></i></span></td>
+            <td><span><i class="fa-solid fa-trash-can"></i></span></td>
+          </tr>
+          <tr>
+            <td>No</td>
+            <td>사이즈</td>
+            <td>샷</td>
+            <td>시럽</td>
+            <td>ICE/HOT</td>
+            <td>얼음 종류</td>
+            <td>휘핑 크림</td>
+            <td>엑스트라</td>
+            <td>컵</td>
+            <td><span><i class="fa-solid fa-pen"></i></span></td>
+            <td><span><i class="fa-solid fa-trash-can"></i></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-content">
+      <form>
+        <div class="modal-content-side">
+          <div>
+            <p>사이즈</p>
+            <ul>
+              <li>
+                <input id="coffee-size-tall" type="radio" name="coffee-size" value="Tall" />
+                <label for="coffee-size-tall">Tall</label>
+              </li>
+              <li>
+                <input id="coffee-size-grande" type="radio" name="coffee-size" value="Grande" />
+                <label for="coffee-size-grande">Grande</label>
+              </li>
+              <li>
+                <input id="coffee-size-venti" type="radio" name="coffee-size" value="Venti" />
+                <label for="coffee-size-venti">Venti</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>샷</p>
+            <ul>
+              <li>
+                <input id="coffee-one-shot" type="radio" name="coffee-size" value="One shot" />
+                <label for="coffee-one-shot">1샷</label>
+              </li>
+              <li>
+                <input id="coffee-two-shot" type="radio" name="coffee-size" value="Two shot" checked />
+                <label for="coffee-two-shot">2샷</label>
+              </li>
+              <li>
+                <input id="coffee-three-shot" type="radio" name="coffee-size" value="Three shot" />
+                <label for="coffee-three-shot">3샷</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>시럽</p>
+            <ul>
+              <li>
+                <input id="coffee-vanilla-syrup" type="radio" name="coffee-syrup" value="Vanilla" />
+                <label for="coffee-vanilla-syrup">바닐라</label>
+              </li>
+              <li>
+                <input id="coffee-hazelnut-syrup" type="radio" name="coffee-syrup" value="Hazelnut" />
+                <label for="coffee-hazelnut-syrup">헤이즐넛</label>
+              </li>
+              <li>
+                <input id="coffee-caramel-syrup" type="radio" name="coffee-syrup" value="Caramel" />
+                <label for="coffee-caramel-syrup">카라멜</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>ICE/HOT</p>
+            <ul>
+              <li>
+                <input id="ice-coffee" type="radio" name="coffee-ice-or-hot" value="Ice" />
+                <label for="ice-coffee">ICE</label>
+              </li>
+              <li>
+                <input id="hot-coffee" type="radio" name="coffee-ice-or-hot" value="Hot" />
+                <label for="hot-coffee">HOT</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-content-side">
+          <div>
+            <p>얼음 종류</p>
+            <ul>
+              <li>
+                <input id="coffee-ice-basic" type="radio" name="coffee-ice" value="Basic" />
+                <label for="coffee-ice-basic">기본 얼음</label>
+              </li>
+              <li>
+                <input id="coffee-ice-cube" type="radio" name="coffee-ice" value="Cube" />
+                <label for="coffee-ice-cube">각 얼음</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>휘핑 크림</p>
+            <ul>
+              <li>
+                <input id="coffee-none-whipped-cream" type="radio" name="coffee-whipped-cream" value="None" checked />
+                <label for="coffee-none-whipped-cream">없음</label>
+              </li>
+              <li>
+                <input id="coffee-fit-whipped-cream" type="radio" name="coffee-whipped-cream" value="Fit" />
+                <label for="coffee-fit-whipped-cream">적당히</label>
+              </li>
+              <li>
+                <input id="coffee-Many-whipped-cream" type="radio" name="coffee-whipped-cream" value="Many" />
+                <label for="coffee-Many-whipped-cream">많이</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>엑스트라</p>
+            <ul>
+              <li>
+                <input id="coffee-extra-java-chip" type="checkbox" />
+                <label for="coffee-extra-java-chip">자바칩</label>
+              </li>
+              <li>
+                <input id="coffee-extra-caramel-drizzle" type="checkbox" />
+                <label for="coffee-extra-caramel-drizzle">카라멜 드리즐</label>
+              </li>
+              <li>
+                <input id="coffee-extra-chocolate-drizzle" type="checkbox" />
+                <label for="coffee-extra-chocolate-drizzle">초코 드리즐</label>
+              </li>
+              <li>
+                <input id="coffee-extra-almond" type="checkbox" />
+                <label for="coffee-extra-almond">아몬드</label>
+              </li>
+              <li>
+                <input id="coffee-extra-cinnamomum" type="checkbox" />
+                <label for="coffee-extra-cinnamomum">시나몬</label>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p>컵</p>
+            <ul>
+              <li>
+                <input id="coffee-disposable-cup" type="radio" name="coffee-cup" value="Disposable" />
+                <label for="coffee-disposable-cup">1회용 컵</label>
+              </li>
+              <li>
+                <input id="coffee-tumbler-cup" type="radio" name="coffee-cup" value="Tumbler" />
+                <label for="coffee-tumbler-cup">텀블러</label>
+              </li>
+              <li>
+                <input id="coffee-mug-cup" type="radio" name="coffee-cup" value="Mug" />
+                <label for="coffee-mug-cup">머그컵</label>
+              </li>
+              <li>
+                <input id="coffee-recycling-cup" type="radio" name="coffee-cup" value="Recycling" />
+                <label for="coffee-recycling-cup">재활용 컵</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+      <div class="modal-confirm">
+        <button>옵션 추가하기</button>
+      </div>
+    </div>
+    <div class="coffee-serve-area none">
+      <a href="#"><span>커피 서빙</span></a>
+    </div>
+  </div>
+  <div>log</div>
+  <script src="./dist/index.js"></script>
 </body>
 
 </html>
+<!-- 
+      <form>
+        <select name="pets" id="pet-select">
+          <option value="">재료를 선택해주세요!</option>
+          <option value="coffee">커피</option>
+          <option value="water">물</option>
+          <option value="liquor">리퀴르</option>
+          <option value="milk">우유</option>
+          <option value="whipped_cream">휘핑 크림</option>
+          <option value="milk_foam">밀크 폼</option>
+          <option value="steamed_milk">데운 우유</option>
+          <option value="chocolate">초콜릿</option>
+        </select>
+        <input type="text" />
+      </form> -->

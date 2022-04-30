@@ -1,0 +1,120 @@
+
+.select-coffee-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.coffee-category-button {
+  user-select: none;
+  background: rgba(214, 217, 227, 0.6);
+  outline: none;
+  font-size: 1rem;
+  border: 2px solid #a67a60;
+  box-shadow: none;
+  color: #363636;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.coffee-category-button:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.select-coffee-container .selected {
+  background: rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+}
+
+.coffee-add-area {
+  margin: 2em 0;
+}
+
+.coffee-add-area form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.coffee-add-area input {
+  border: 2px solid #000000;
+  padding: 10px 10px 10px 3px;
+  width: 80px;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 5px;
+}
+
+.ms {
+  position: absolute;
+  right: 80px;
+}
+
+.coffee-add-area button {
+  border: none;
+  padding: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.coffee-add-area button:hover {
+  background-color: #ddb477;
+}
+
+.coffee-serve-area  a{
+  position: relative;
+  width: 300px;
+  height: 75px;
+  margin: 10px 0;
+  font-size: 24px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color:#000000;
+  transition: 0.5s;
+}
+
+.coffee-serve-area a:hover {
+  color:#ffffff;
+}
+
+.coffee-serve-area a::before{
+  content: '';
+  position: absolute;
+  top:0;
+  left:0;
+  width: 0;
+  height:100%;
+  background: url('../images/btn-bg1.png');
+  background-size: cover;
+  transform-origin: left;
+  transition: 0.5s;
+}
+
+.coffee-serve-area a:hover::before{
+  width: 100%;
+}
+
+.coffee-serve-area a span {
+  position: relative;
+  z-index: 1;
+}

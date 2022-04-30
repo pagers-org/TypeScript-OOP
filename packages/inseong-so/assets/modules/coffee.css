@@ -1,0 +1,183 @@
+.coffee-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coffee_name {
+  color: #000000;
+  text-align: center;
+  font-size: 20px;
+  margin: 1em 0;
+}
+
+.cup {
+  width: var(--cup-width);
+  height: var(--cup-height);
+  border-radius: 0 0 100px 100px;
+  position: relative;
+  background-color: var(--cup-color);
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.cup::after {
+  z-index: -10;
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: calc(100% - 10px);
+  width: var(--cup-handle-width);
+  height: var(--cup-handle-height);
+  border: var(--main-border);
+  border-radius: 50% 30%;
+}
+
+.plate {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: calc((var(--cup-width) - var(--plate-width)) / 2);
+  width: var(--plate-width);
+  background: var(--cup-color);
+  height: var(--plate-height);
+  border-radius: 10px;
+}
+
+.filling {
+  position: absolute;
+  left: calc(var(--cup-border-width) / 2);
+  bottom: calc(var(--cup-border-width) / 2);
+  width: var(--cup-inside-width);
+  height: var(--cup-inside-height);
+  overflow: hidden;
+  border-radius: 0 0 100px 100px;
+  background-color: var(--main-bg-color);
+  bottom: 10px;
+}
+
+.filling div {
+  position: absolute;
+  width: 100%;
+  transition: all 1s linear;
+  color: #817f75;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 0;
+  overflow: hidden;
+  font-size: 14px;
+  height: 100%;
+  bottom: -100%;
+  box-sizing: border-box;
+}
+
+.filling.reset.americano {
+  --water-bottom: 0;
+  --coffee-bottom: -60%;
+}
+
+.filling.reset.au_lait {
+  --coffee-bottom: -50%;
+  --milk-bottom: 0%;
+}
+
+.filling.reset.capuccino {
+  --coffee-bottom: -65%;
+  --steamed_milk-bottom: -35%;
+  --milk_foam-bottom: 0;
+}
+
+.filling.reset.espresso {
+  --coffee-bottom: -60%;
+}
+
+.filling.reset.latte {
+  --coffee-bottom: -60%;
+  --steamed_milk-bottom: -20%;
+  --milk_foam-bottom: 0%;
+}
+
+.filling.reset.corretto {
+  --coffee-bottom: -45%;
+  --liquor-bottom: -25%;
+}
+
+.filling.reset.lungo {
+  --water-bottom: 0;
+  --coffee-bottom: -50%;
+}
+
+.filling.reset.macchiato {
+  --coffee-bottom: -70%;
+  --milk_foam-bottom: 0;
+}
+
+.filling.reset.mocha {
+  --coffee-bottom: -60%;
+  --chocolate-bottom: -40%;
+  --steamed_milk-bottom: -20%;
+  --whipped_cream-bottom: 0%;
+}
+
+.filling.reset.ristretto {
+  --coffee-bottom: -80%;
+}
+
+div.chocolate {
+  background: var(--chocolate-color);
+  bottom: var(--chocolate-bottom);
+  z-index: 6;
+}
+
+div.coffee {
+  background: var(--coffee-color);
+  bottom: var(--coffee-bottom);
+  z-index: 7;
+}
+
+div.liquor {
+  background: var(--liquor-color);
+  bottom: var(--liquor-bottom);
+  z-index: 4;
+}
+
+div.milk {
+  background: var(--milk-color);
+  bottom: var(--milk-bottom);
+  z-index: 2;
+}
+
+div.milk_foam {
+  background: var(--milk_foam-color);
+  bottom: var(--milk_foam-bottom);
+  z-index: 5;
+}
+
+div.steamed_milk {
+  background: var(--steamed_milk-color);
+  bottom: var(--steamed_milk-bottom);
+  z-index: 6;
+}
+
+div.water {
+  background: var(--water-color);
+  bottom: var(--water-bottom);
+}
+
+div.whipped_cream {
+  background: var(--whipped_cream-color);
+  bottom: var(--whipped_cream-bottom);
+  z-index: 4;
+}
+
+.filling.reset {
+  --coffee-bottom: -100%;
+  --water-bottom: -100%;
+  --milk-bottom: -100%;
+  --liquor-bottom: -100%;
+  --whipped_cream-bottom: -100%;
+  --steamed_milk-bottom: -100%;
+  --milk_foam-bottom: -100%;
+  --chocolate-bottom: -100%;
+}
