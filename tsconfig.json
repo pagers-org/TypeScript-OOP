@@ -12,18 +12,23 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "isolatedModules": false,
+    "outDir": "dist",
+    "paths": {
+      "~/*": [
+        "*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+    },
+    "typeRoots": [
+      "@types/"
+    ]
   },
-  "references": [
-    {
-      "path": "packages/bomee"
-    },
-    {
-      "path": "packages/dahye"
-    },
-    {
-      "path": "packages/inseong-so"
-    },
+  "include": [
+    "**/*.ts"
   ],
-  "exclude": ["packages/**/dist/**"],
-  "include": []
+  "exclude": [
+    "node_modules"
+  ]
 }
