@@ -1,0 +1,41 @@
+.order-list h3 {
+  margin: 0;
+}
+
+.order-list button {
+  border: none;
+  transition: 0.3s ease-in-out;
+}
+
+.order-list button:hover {
+  background-color: #ddb477;
+}
+
+.order-button-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+.order-button {
+  padding: 10px;
+  border: 2px double #eeeeee;
+}
+
+
+.order-list table tr th:nth-child(2), .order-list table tr td:nth-child(2) {
+  width: 160px;
+}
+
+.order-list table tr th:last-of-type, .order-list table tr td:last-of-type {
+  width: 60px;
+}
+
+.maked-list table tr th:nth-child(2), .maked-list table tr td:nth-child(2) {
+  width: 400px;
+}
+
+.maked-list table tr th:nth-child(3), .maked-list table tr td:nth-child(3),
+.maked-list table tr th:last-of-type, .maked-list table tr td:last-of-type {
+  width: 150px;
+}
