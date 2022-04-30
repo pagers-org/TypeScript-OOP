@@ -46,13 +46,13 @@ jobs:
             git config --global user.email '${{github.actor}}@users.noreply.github.com'
 
       - name: Git add
-        run: git add --force dist/
+        run: git add --force ./dist
     
       - name: Git commit
         run: git commit -m "publish"
 
       - name: Push dist to branch
         run: |
-            git subtree split --branch dist --prefix dist/
+            git subtree split --branch dist --prefix .dist/
             git push -f origin dist:dist
             git branch -D dist

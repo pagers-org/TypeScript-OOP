@@ -6,7 +6,12 @@
     "esModuleInterop": true,
     "strict": true,
     "target": "es6",
-    "lib": ["ES5", "ES6", "ESNext", "DOM"],
+    "lib": [
+      "ES5",
+      "ES6",
+      "ESNext",
+      "DOM"
+    ],
     "skipLibCheck": true,
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
