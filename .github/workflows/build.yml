@@ -53,6 +53,6 @@ jobs:
 
       - name: Push dist to branch
         run: |
-            git subtree split --branch dist --prefix ./dist
+            git subtree split --branch dist --prefix dist
             git push -f origin dist:dist
             git branch -D dist
