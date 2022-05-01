@@ -2,7 +2,7 @@
 
 ## 프로세스
 1. 커피 주문 불러오기를 누르면 랜덤으로 커피 주문 목록이 생성된다.
-   ```json
+   ```js
    [
     {
       coffeeName: "아메리카노",
@@ -77,70 +77,70 @@
 
 #### 커피 종류(개체에 대한 모델링)
 - 아메리카노
-  ```json
+  ```js
   americano: {
     name: "아메리카노",
   }
   ```
 
 - 카페 오레
-  ```json
+  ```js
   au_lait: {
     name: "카페 오레",
   }
   ```
 
 - 카푸치노
-  ```json
+  ```js
   capuccino: {
     name: "카푸치노",
   }
   ```
 
 - 코레또
-  ```json
+  ```js
   corretto: {
     name: "코레또",
   }
   ```
 
 - 에스프레소
-  ```json
+  ```js
   espresso: {
     name: "에스프레소",
   }
   ```
 
 - 카페 라떼
-  ```json
+  ```js
   latte: {
     name: "라떼",
   }
   ```
 
 - 룽고
-  ```json
+  ```js
   lungo: {
     name: "룽고",
   }
   ```
 
 - 마끼야또
-  ```json
+  ```js
   macchiato: {
     name: "마끼야또",
   }
   ```
 
 - 카페 모카
-  ```json
+  ```js
   mocha: {
     name: "카페 모카",
   }
   ```
 
 - 리스트레또
-  ```json
+  ```js
   ristretto: {
     name: "리스트레또",
   }
