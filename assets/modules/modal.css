@@ -230,7 +230,7 @@
 .modal-content-side {
   width: 530px;
   border-radius: 15px;
-  background-color: #916627;
+  background-color: #f3d8b0;
   padding: 20px;
 }
 
@@ -239,7 +239,8 @@
   border-radius: 15px;
   padding: 5px;
   text-align: center;
-  background-color: #ddb477;
+  background-color: #a36239;
+  color: #ffffff;
 }
 
 .modal-content-side ul {

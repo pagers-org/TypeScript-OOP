@@ -73,10 +73,13 @@ input[type=number] {
   border: none;
   padding: 20px;
   transition: 0.3s ease-in-out;
+  background-color: #ddb477;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .coffee-add-area button:hover {
-  background-color: #ddb477;
+  background-color: #a36239;
+  color: #ffffff;
 }
 
 .coffee-serve-area  a{

@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=./",
-    "watch": "vite build --watch"
+    "build": "vite build --base=./"
   },
   "keywords": [],
   "author": "InSeong-So",
