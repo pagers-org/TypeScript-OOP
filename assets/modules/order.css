@@ -1,5 +1,5 @@
 .order-list, .maked-list {
-  width: 90%;
+  width: 100%;
   text-align: center;
 }
 
@@ -34,6 +34,10 @@
 
 .order-list table tr th:last-of-type, .order-list table tr td:last-of-type {
   width: 60px;
+}
+
+.edit-order:hover, .remove-order:hover {
+  cursor: pointer;
 }
 
 .maked-list table tr th:nth-child(2), .maked-list table tr td:nth-child(2) {

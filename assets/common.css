@@ -70,68 +70,6 @@ h1 {
   margin: 0;
 }
 
-table {
-  border-collapse: collapse;
-  font-size: 0.9em;
-  min-width: 732px;
-  max-height: 255px;
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  text-align: center;
-}
-
-table tr th:first-of-type, table tr td:first-of-type {
-  width: 60px;
-}
-
-thead tr {
-  background-color: #a36239;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-th {
-  border: 2px solid #ffffff;
-}
-
-th, td {
-  padding: 12px 15px;
-}
-
-tbody tr {
-  border-bottom: 1px solid #dddddd;
-}
-
-tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
-}
-
-tbody tr:last-of-type {
-  border-bottom: 2px solid #a36239;
-}
-
-tbody tr.active-row {
-  font-weight: bold;
-  color: #a36239;
-}
-
-tbody {
-  display: block;
-  max-height: 169px;
-  overflow-y: scroll;
-}
-
-thead, tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-thead {
-  width: calc(100% - 1em);
-}
-
 button {
   border-radius: 15px;
 }
@@ -140,15 +78,12 @@ button:hover {
   cursor: pointer;
 }
 
-
 .wrapper {
   margin: 0 auto;
-  min-width: 732px;
   text-align: center;
 }
 
 .table {
-  margin: 0 0 40px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
