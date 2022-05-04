@@ -1,4 +1,3 @@
-
 .select-coffee-container {
   margin-top: 20px;
   display: flex;
@@ -82,7 +81,7 @@ input[type=number] {
   color: #ffffff;
 }
 
-.coffee-serve-area  a{
+.coffee-serve-area a {
   position: relative;
   width: 300px;
   height: 75px;
@@ -92,32 +91,39 @@ input[type=number] {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  color:#000000;
+  color: #000000;
   transition: 0.5s;
 }
 
 .coffee-serve-area a:hover {
-  color:#ffffff;
+  color: #ffffff;
 }
 
-.coffee-serve-area a::before{
+.coffee-serve-area a::before {
   content: '';
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 0;
-  height:100%;
+  height: 100%;
   background: url('../images/btn-bg1.png');
   background-size: cover;
   transform-origin: left;
   transition: 0.5s;
 }
 
-.coffee-serve-area a:hover::before{
+.coffee-serve-area a:hover::before {
   width: 100%;
 }
 
 .coffee-serve-area a span {
   position: relative;
   z-index: 1;
+}
+
+
+@media screen and (max-width: 1408px) {
+  .coffee-container {
+    margin: 1em 0 3em 0;
+  }
 }

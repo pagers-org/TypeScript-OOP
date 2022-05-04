@@ -33,11 +33,25 @@
   width: 65%;
 }
 
-#left-section table {
-  border: 1px solid #000000;
-}
-
 #right-section {
   border-radius: 20px;
   background-color: #eee6d9;
+}
+
+@media screen and (max-width: 1408px) {
+  #app {
+    gap: 2em;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+
+  #left-section, #right-section {
+    width: 95%;
+    height: 100%;
+  }
 }
