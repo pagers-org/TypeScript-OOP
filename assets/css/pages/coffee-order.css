@@ -1,0 +1,412 @@
+main#order {
+  flex-direction: row;
+}
+
+main#order section {
+  width: 45%;
+  margin: 0 2.5%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.order-list, .maked-list {
+  width: 100%;
+  text-align: center;
+}
+
+.order-list h3 {
+  margin: 0;
+}
+
+.order-list button {
+  border: none;
+  transition: 0.3s ease-in-out;
+  font-size: 1em;
+}
+
+.order-list button:hover {
+  background-color: #ddb477;
+}
+
+.order-button-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+.order-button {
+  padding: 10px;
+  border: 2px double #eeeeee;
+}
+
+.order-list table tr th:nth-child(2), .order-list table tr td:nth-child(2) {
+  width: 160px;
+}
+
+.order-list table tr th:last-of-type, .order-list table tr td:last-of-type {
+  width: 60px;
+}
+
+.edit-order:hover, .remove-order:hover {
+  cursor: pointer;
+}
+
+.maked-list table tr th:nth-child(2), .maked-list table tr td:nth-child(2) {
+  width: 400px;
+}
+
+.maked-list table tr th:nth-child(3), .maked-list table tr td:nth-child(3),
+.maked-list table tr th:last-of-type, .maked-list table tr td:last-of-type {
+  width: 150px;
+}
+
+.maked-list-view {
+  opacity: 0;
+  visibility: 0;
+  height: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.maked-list-view button {
+  width: 100%;
+  border: none;
+  transition: 0.3s ease-in-out;
+  font-size: 1em;
+}
+
+.maked-list-view button:hover {
+  background-color: #ddb477;
+}
+
+.maked-list h1 {
+  margin-bottom: 2em;
+}
+
+.coffee-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coffee_name {
+  color: #000000;
+  text-align: center;
+  font-size: 20px;
+  margin: 1em 0;
+}
+
+.cup {
+  width: var(--cup-width);
+  height: var(--cup-height);
+  border-radius: 0 0 100px 100px;
+  position: relative;
+  background-color: var(--cup-color);
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.cup::after {
+  z-index: -10;
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: calc(100% - 10px);
+  width: var(--cup-handle-width);
+  height: var(--cup-handle-height);
+  border: var(--main-border);
+  border-radius: 50% 30%;
+}
+
+.plate {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: calc((var(--cup-width) - var(--plate-width)) / 2);
+  width: var(--plate-width);
+  background: var(--cup-color);
+  height: var(--plate-height);
+  border-radius: 10px;
+}
+
+.filling {
+  position: absolute;
+  left: calc(var(--cup-border-width) / 2);
+  bottom: calc(var(--cup-border-width) / 2);
+  width: var(--cup-inside-width);
+  height: var(--cup-inside-height);
+  overflow: hidden;
+  border-radius: 0 0 100px 100px;
+  background-color: var(--main-bg-color);
+  bottom: 10px;
+}
+
+.filling div {
+  position: absolute;
+  width: 100%;
+  transition: all 1s linear;
+  color: #817f75;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 0;
+  overflow: hidden;
+  font-size: 14px;
+  height: 100%;
+  bottom: -100%;
+  box-sizing: border-box;
+}
+
+.filling.reset.americano {
+  --water-bottom: 0;
+  --coffee-bottom: -60%;
+}
+
+.filling.reset.au_lait {
+  --coffee-bottom: -50%;
+  --milk-bottom: 0%;
+}
+
+.filling.reset.capuccino {
+  --coffee-bottom: -65%;
+  --steamed_milk-bottom: -35%;
+  --milk_foam-bottom: 0;
+}
+
+.filling.reset.espresso {
+  --coffee-bottom: -60%;
+}
+
+.filling.reset.latte {
+  --coffee-bottom: -60%;
+  --steamed_milk-bottom: -20%;
+  --milk_foam-bottom: 0%;
+}
+
+.filling.reset.corretto {
+  --coffee-bottom: -45%;
+  --liquor-bottom: -25%;
+}
+
+.filling.reset.lungo {
+  --water-bottom: 0;
+  --coffee-bottom: -50%;
+}
+
+.filling.reset.macchiato {
+  --coffee-bottom: -70%;
+  --milk_foam-bottom: 0;
+}
+
+.filling.reset.mocha {
+  --coffee-bottom: -60%;
+  --chocolate-bottom: -40%;
+  --steamed_milk-bottom: -20%;
+  --whipped_cream-bottom: 0%;
+}
+
+.filling.reset.ristretto {
+  --coffee-bottom: -80%;
+}
+
+div.chocolate {
+  background: var(--chocolate-color);
+  bottom: var(--chocolate-bottom);
+  z-index: 6;
+}
+
+div.coffee {
+  background: var(--coffee-color);
+  bottom: var(--coffee-bottom);
+  z-index: 7;
+}
+
+div.liquor {
+  background: var(--liquor-color);
+  bottom: var(--liquor-bottom);
+  z-index: 4;
+}
+
+div.milk {
+  background: var(--milk-color);
+  bottom: var(--milk-bottom);
+  z-index: 2;
+}
+
+div.milk_foam {
+  background: var(--milk_foam-color);
+  bottom: var(--milk_foam-bottom);
+  z-index: 5;
+}
+
+div.steamed_milk {
+  background: var(--steamed_milk-color);
+  bottom: var(--steamed_milk-bottom);
+  z-index: 6;
+}
+
+div.water {
+  background: var(--water-color);
+  bottom: var(--water-bottom);
+}
+
+div.whipped_cream {
+  background: var(--whipped_cream-color);
+  bottom: var(--whipped_cream-bottom);
+  z-index: 4;
+}
+
+.filling.reset {
+  --coffee-bottom: -100%;
+  --water-bottom: -100%;
+  --milk-bottom: -100%;
+  --liquor-bottom: -100%;
+  --whipped_cream-bottom: -100%;
+  --steamed_milk-bottom: -100%;
+  --milk_foam-bottom: -100%;
+  --chocolate-bottom: -100%;
+}
+
+.select-coffee-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.coffee-category-button {
+  user-select: none;
+  background: rgba(214, 217, 227, 0.6);
+  outline: none;
+  font-size: 1rem;
+  border: 2px solid #a67a60;
+  box-shadow: none;
+  color: #363636;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.coffee-category-button:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.select-coffee-container .selected {
+  background: rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+}
+
+.coffee-add-area {
+  margin: 2em 0;
+}
+
+.coffee-add-area form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.coffee-add-area input {
+  border: 2px solid #000000;
+  padding: 10px 10px 10px 3px;
+  width: 80px;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 5px;
+}
+
+.ms {
+  position: absolute;
+  right: 80px;
+}
+
+.coffee-add-area button {
+  border: none;
+  padding: 20px;
+  transition: 0.3s ease-in-out;
+  background-color: #ddb477;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+
+.coffee-add-area button:hover {
+  background-color: #a36239;
+  color: #ffffff;
+}
+
+.coffee-serve-area a {
+  position: relative;
+  width: 300px;
+  height: 75px;
+  margin: 10px 0;
+  font-size: 24px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #000000;
+  transition: 0.5s;
+}
+
+.coffee-serve-area a:hover {
+  color: #ffffff;
+}
+
+.coffee-serve-area a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: url('../images/btn-bg1.png');
+  background-size: cover;
+  transform-origin: left;
+  transition: 0.5s;
+}
+
+.coffee-serve-area a:hover::before {
+  width: 100%;
+}
+
+.coffee-serve-area a span {
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (max-width: 1408px) {
+  .maked-list {
+    display: none;
+  }
+
+  .maked-list-view {
+    opacity: 1;
+    visibility: visible;
+    height: 50px;
+    margin-bottom: 1em;
+    width: 90%;
+  }
+
+  .coffee-container {
+    margin: 1em 0 3em 0;
+  }
+}

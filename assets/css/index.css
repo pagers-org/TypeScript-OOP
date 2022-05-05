@@ -1,9 +1,7 @@
 @import url('./common.css');
+@import url('./pages/coffee-order.css');
+@import url('./pages/coffee-material.css');
 @import url('./modules/modal.css');
-@import url('./modules/header.css');
-@import url('./modules/order.css');
-@import url('./modules/select-coffee.css');
-@import url('./modules/coffee.css');
 
 #app {
   width: 100vw;

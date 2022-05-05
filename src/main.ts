@@ -10,7 +10,7 @@ pageNav.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLInputElement;
   if (!$target.matches('[type="radio"]')) return;
   event.preventDefault();
-  alert('아직 해당 단계가 아니네요...!!');
+  alert('아직 준비되지 않았네요🥺');
 });
 
 buttons.forEach(button =>

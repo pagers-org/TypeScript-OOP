@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OOP Cafe</title>
-  <link rel="stylesheet" href="./assets/index.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
   <script src="https://kit.fontawesome.com/7fd51b7743.js" crossorigin="anonymous"></script>
 </head>
 
@@ -22,7 +22,7 @@
         <span class="tab"></span>
       </nav>
     </header>
-    <main>
+    <main id="order">
       <section id="left-section">
         <div class="order-list">
           <h1>주문 목록</h1>
@@ -133,11 +133,11 @@
           <div class="row">
             <div class="coffee-add-area">
               <form>
-                <input type="text"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
-                  maxlength="2" />
-                <span class="ms">잔</span>
-                <button type="submit" class="coffee-add-options-button">추가</button>
+                <!-- <input type="text"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
+              maxlength="2" />
+            <span class="ms">잔</span> -->
+                <button type="submit" class="coffee-add-options-button">만들기</button>
               </form>
             </div>
           </div>
