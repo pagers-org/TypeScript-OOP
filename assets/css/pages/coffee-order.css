@@ -393,6 +393,15 @@ input[type=number] {
   z-index: 1;
 }
 
+#none-order {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-image: url('../../images/closed.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
 @media screen and (max-width: 1408px) {
   .maked-list {
     display: none;
@@ -404,6 +413,7 @@ input[type=number] {
     height: 50px;
     margin-bottom: 1em;
     width: 90%;
+    margin-top: 2em
   }
 
   .coffee-container {

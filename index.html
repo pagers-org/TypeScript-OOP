@@ -30,7 +30,7 @@
             <button class="order-button">주문 받기</button>
           </div>
           <div class="wrapper">
-            <div class="table">
+            <div class="table" id="order-table">
               <div class="table-row header">
                 <div class="cell">No</div>
                 <div class="cell">메뉴명</div>
@@ -72,24 +72,24 @@
         <div class="maked-list">
           <h1>현재까지 서빙된 커피</h1>
           <div class="wrapper">
-            <div class="table">
+            <div class="table" id="maked-table">
               <div class="table-row header">
                 <div class="cell">No</div>
                 <div class="cell">메뉴(수량)</div>
-                <div class="cell">주문 시간</div>
-                <div class="cell">서빙 완료 시간</div>
+                <div class="cell">최근 주문 시간</div>
+                <div class="cell">최근 서빙 완료 시간</div>
               </div>
               <div class="table-row">
                 <div class="cell" data-title="No">1</div>
                 <div class="cell" data-title="메뉴(수량)">아메리카노(3)</div>
-                <div class="cell" data-title="주문 시간">2022.05.02 20:44:32</div>
-                <div class="cell" data-title="서빙 완료 시간">2022.05.02 20:46:17</div>
+                <div class="cell" data-title="최근 주문 시간">2022.05.02 20:44:32</div>
+                <div class="cell" data-title="최근 서빙 완료 시간">2022.05.02 20:46:17</div>
               </div>
               <div class="table-row">
                 <div class="cell" data-title="No">1</div>
                 <div class="cell" data-title="메뉴(수량)">에스프레소(1)</div>
-                <div class="cell" data-title="주문 시간">2022.05.02 20:51:37</div>
-                <div class="cell" data-title="서빙 완료 시간">2022.05.02 20:53:11</div>
+                <div class="cell" data-title="최근 주문 시간">2022.05.02 20:51:37</div>
+                <div class="cell" data-title="최근 서빙 완료 시간">2022.05.02 20:53:11</div>
               </div>
             </div>
           </div>
@@ -133,10 +133,6 @@
           <div class="row">
             <div class="coffee-add-area">
               <form>
-                <!-- <input type="text"
-              oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
-              maxlength="2" />
-            <span class="ms">잔</span> -->
                 <button type="submit" class="coffee-add-options-button">만들기</button>
               </form>
             </div>
@@ -330,22 +326,8 @@
       <a href="#"><span>커피 서빙하기</span></a>
     </div>
   </div>
+  <!-- <script src="https://unpkg.com/adorable-css"></script> -->
   <script type="module" src="./src/main.ts"></script>
 </body>
 
 </html>
-<!--  재료 추가 시
-      <form>
-        <select name="material" id="material-select">
-          <option value="">재료를 선택해주세요!</option>
-          <option value="coffee">커피</option>
-          <option value="water">물</option>
-          <option value="liquor">리퀴르</option>
-          <option value="milk">우유</option>
-          <option value="whipped_cream">휘핑 크림</option>
-          <option value="milk_foam">밀크 폼</option>
-          <option value="steamed_milk">데운 우유</option>
-          <option value="chocolate">초콜릿</option>
-        </select>
-        <input type="text" />
-      </form> -->
