@@ -1,9 +1,9 @@
-import { MenuInterface } from 'Menu';
+import { CoffeeOptions } from 'Coffee';
 import { COFFEE, CUP, EXTRA, ICE, ICEORHOT, SIZE, SYRUP, WHIPPEDCREAM } from './utils/constants';
 import { getRandomInt } from './utils/getRandom';
 
 class Order {
-  private orderList: MenuInterface[];
+  private orderList: CoffeeOptions[];
 
   constructor() {
     this.orderList = [];
@@ -27,11 +27,11 @@ class Order {
     return this.orderList;
   }
 
-  set setOrderItem(list: MenuInterface[]) {
+  set setOrderItem(list: CoffeeOptions[]) {
     this.orderList = list;
   }
 
-  set addOrderItem(value: MenuInterface) {
+  set addOrderItem(value: CoffeeOptions) {
     this.orderList.push(value);
   }
 }

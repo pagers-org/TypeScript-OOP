@@ -1,4 +1,5 @@
-class Coffee {
+import { CoffeeOptions } from 'Coffee';
+abstract class CoffeeMaker {
   private water: number;
   private coffee: number;
   private steamedMilk: number;
@@ -27,7 +28,7 @@ class Coffee {
   get getAulait() {
     this.milk = 6;
     this.coffee = 5;
-    return { water: this.milk, coffee: this.coffee };
+    return { milk: this.milk, coffee: this.coffee };
   }
   get getCapuccino() {
     this.coffee = 3.5;
@@ -85,4 +86,4 @@ class Coffee {
     return { coffee: this.coffee };
   }
 }
-export default Coffee;
+export default CoffeeMaker;

@@ -1,4 +1,4 @@
-import { MenuInterface } from 'Menu';
+import { CoffeeOptions } from 'Coffee';
 import Coffee from './coffee';
 import Order from './order';
 
@@ -18,7 +18,7 @@ pageNav.addEventListener('click', (event: MouseEvent) => {
   alert('아직 준비되지 않았네요🥺');
 });
 
-const coffee = new Coffee();
+// const coffee = new Coffee();
 const order = new Order();
 let index = 0;
 
@@ -26,11 +26,10 @@ orderButton.addEventListener('click', e => {
   index++;
   const randomMenu = order.getRandomOrder;
   order.addOrderItem = Object.assign(randomMenu, { id: index.toString() });
-
   renderOrderTable(order.getOrderItem);
 });
 
-const renderOrderTable = (list: MenuInterface[]) => {
+const renderOrderTable = (list: CoffeeOptions[]) => {
   const $contents = `
   <div class="table-row header">
   <div class="cell">No</div>
@@ -48,7 +47,7 @@ const renderOrderTable = (list: MenuInterface[]) => {
 </div>
 ${list
   .map(
-    (item: MenuInterface) =>
+    (item: CoffeeOptions) =>
       `
 <div class="table-row">
 <div class="cell" data-title="No">${item.id}</div>
@@ -63,8 +62,8 @@ ${list
 <div class="cell" data-title="컵">${item.cup}</div>
 <div class="cell" data-title="수정하기">
   <span class="edit-order"
-    ><i class="fa-solid fa-pen" id="${item.id}"></i
-  ></span>
+    ><i id="${item.id}" class="fa-solid fa-pen"></i
+    ></span>
 </div>
 <div class="cell" data-title="삭제하기">
   <span class="remove-order"
@@ -84,9 +83,13 @@ document.querySelector('.wrapper')?.addEventListener('click', event => {
   const $target = event.target as HTMLElement;
 
   if ($target.matches('.fa-pen')) {
-    const siblings = $target.parentElement?.parentElement?.parentElement?.children;
-    for (let i = 0; i < siblings!.length - 2; i++) {
-      siblings![i].setAttribute('contenteditable', 'true');
+    const menuListRow = $target.parentElement?.parentElement?.parentElement?.children || [];
+    for (let i = 0; i < menuListRow.length - 2; i++) {
+      if (menuListRow[i].hasAttribute('contenteditable')) {
+        menuListRow[i].removeAttribute('contenteditable');
+      } else {
+        menuListRow[i].setAttribute('contenteditable', 'true');
+      }
     }
   }
   if ($target.matches('.fa-trash-can')) {
@@ -99,6 +102,10 @@ document.querySelector('.wrapper')?.addEventListener('click', event => {
 
 buttons.forEach(button =>
   button.addEventListener('click', () => {
+    if (!order.getOrderItem.map(item => item.menu).includes(button.innerText)) {
+      alert('주문 내역이 없습니다.');
+      return;
+    }
     if (currentElement) {
       currentElement.classList.remove('selected');
       coffeeFilling.classList.remove(currentElement.id);
