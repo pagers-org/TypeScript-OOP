@@ -271,12 +271,14 @@ div.whipped_cream {
 }
 
 .select-coffee-container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 1em;
   align-items: center;
   box-sizing: border-box;
+  max-width:350px;
+  margin: 20px auto 0;
+  text-align: center;
 }
 
 .coffee-category-button {
@@ -290,6 +292,7 @@ div.whipped_cream {
   box-sizing: border-box;
   border-radius: 10px;
   padding: 4px;
+  margin:5px 0;
 }
 
 .coffee-category-button:hover {
@@ -393,13 +396,26 @@ input[type=number] {
   z-index: 1;
 }
 
-#none-order {
+.MenuSelect{
+  position: relative;
+  width:100%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.MenuSelect.none-order:before {
   width: 100%;
   height: 100%;
   border-radius: 20px;
   background-image: url('../../images/closed.jpg');
   background-position: center;
   background-size: cover;
+  content: "";
+  position: absolute;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 1408px) {

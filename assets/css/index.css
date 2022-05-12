@@ -34,6 +34,7 @@
 #right-section {
   border-radius: 20px;
   background-color: #eee6d9;
+  position: relative;
 }
 
 @media screen and (max-width: 1408px) {
