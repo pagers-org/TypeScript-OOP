@@ -69,7 +69,7 @@ export class MenuSelect extends HTMLElement {
 
   createMenus() {
     menu.menuItems.forEach(menuItem => {
-      const beverage = beverageService.getById(menuItem.beverageId);
+      const beverage = beverageService.getBeverageById(menuItem.beverageId);
       const button = createElement(`<button class="coffee-category-button" id="ristretto">${beverage.name}</button>`);
       button.dataset['beverageId'] = String(beverage.id);
       this.$buttonContainer.appendChild(button);
