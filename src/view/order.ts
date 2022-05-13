@@ -44,13 +44,13 @@ export default class OrderView {
               <div class="table-row" data-key=${order._id}>
                 <div class="cell" data-title="No">${_idx + 1}</div>
                 <div class="cell" data-title="메뉴명">${order.menu}</div>
-                <div class="cell" data-title="사이즈">Tall</div>
+                <div class="cell" data-title="사이즈">${order.size}</div>
                 <div class="cell" data-title="샷">${order.shot}</div>
-                <div class="cell" data-title="시럽">-</div>
-                <div class="cell" data-title="ICE/HOT">ICE</div>
+                <div class="cell" data-title="시럽">${order.syrup}</div>
+                <div class="cell" data-title="ICE/HOT">${order.iceOrHot}</div>
                 <div class="cell" data-title="얼음 종류">-</div>
-                <div class="cell" data-title="휘핑 크림">-</div>
-                <div class="cell" data-title="엑스트라">-</div>
+                <div class="cell" data-title="휘핑 크림">${order.cream}</div>
+                <div class="cell" data-title="엑스트라">${order.extra}</div>
                 <div class="cell" data-title="컵">${order.cup}</div>
                 <div class="cell" data-title="수정하기">
                   <span class="edit-order"><i class="fa-solid fa-pen"></i></span>

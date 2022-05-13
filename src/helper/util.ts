@@ -1,5 +1,5 @@
 import { OrderItemType } from '../@types';
-import { COFFEE, SHOT, COLD_HOT, CUP, ICE } from '../constant/index';
+import { COFFEE, SHOT, COLD_HOT, CUP, ICE, SIZE, CREAM, EXTRA, SYRUP } from '../constant/index';
 
 const getRandomNumber = (num: number): number => {
   return Math.trunc(Math.random() * num);
@@ -12,10 +12,14 @@ export const getRandomCoffee = () => {
   return {
     _id: getRandomId(),
     menu: getRandomMenu(COFFEE),
-    shot: getRandomMenu(SHOT),
-    ice_hot: getRandomMenu(COLD_HOT),
+    size: getRandomMenu(SIZE),
     cup: getRandomMenu(CUP),
-    ice_type: getRandomMenu(ICE),
+    iceOrHot: getRandomMenu(COLD_HOT),
+    shot: getRandomMenu(SHOT),
+    ice: getRandomMenu(ICE),
+    cream: getRandomMenu(CREAM),
+    extra: getRandomMenu(EXTRA),
+    syrup: getRandomMenu(SYRUP),
   };
 };
 
