@@ -18,10 +18,16 @@ export class BeverageService {
   }
 
   public createRandomBeverage(): Beverage {
-    return this.getById(rangeRandom(1, this.beverages.length));
+    return this.getBeverageById(rangeRandom(1, this.beverages.length));
   }
 
-  public getById(id: number): Beverage {
-    return this.beverages.filter(beverage => beverage?.id === id)[0];
+  public getBeverageById(id: number): Beverage {
+    const beverage = this.beverages.filter(beverage => beverage?.id === id);
+
+    if (!beverage) {
+      throw new Error();
+    }
+
+    return beverage[0];
   }
 }
