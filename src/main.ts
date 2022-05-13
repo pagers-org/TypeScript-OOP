@@ -1,3 +1,5 @@
+import App from './App';
+
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
 const coffeeName = document.querySelector('.coffee_name') as HTMLHeadingElement;
@@ -37,3 +39,5 @@ modalLayout.addEventListener('click', (event: MouseEvent) => {
   if (!$target.matches('#close-icon')) return;
   modalLayout.classList.toggle('hidden');
 });
+
+new App();

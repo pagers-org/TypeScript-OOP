@@ -25,6 +25,7 @@
 <br/>
 
 ## ⚙️ BEFORE STARTED
+
 ```sh
 # clone repository
 git clone https://github.com/FECrash/TypeScript-OOP.git
@@ -45,7 +46,9 @@ npm run build
 <br/>
 
 ## 📖 TEMPLATE
+
 ### 🏷 주문 관리
+
 ```html
 <main id="order">
   <section id="left-section">
@@ -170,6 +173,7 @@ npm run build
 <br/>
 
 ### 🧾 재료 관리
+
 > CSS 구현 중이에요😖
 
 ```html
@@ -177,9 +181,9 @@ npm run build
   <section id="top">
     <h3>재료 추가하기</h3>
     <form autocomplete="" class="material-add-form">
-      <input type="text" name="material-name" placeholder="추가할 상품명" required="" autofocus="" maxlength="20">
-      <input type="number" name="material-price" placeholder="추가할 상품 금액" required="" min="100" step="10">
-      <input type="number" name="material-quantity" placeholder="추가할 상품 수량" required="" min="1" step="1">
+      <input type="text" name="material-name" placeholder="추가할 상품명" required="" autofocus="" maxlength="20" />
+      <input type="number" name="material-price" placeholder="추가할 상품 금액" required="" min="100" step="10" />
+      <input type="number" name="material-quantity" placeholder="추가할 상품 수량" required="" min="1" step="1" />
       <button type="submit" id="material-add-button">추가하기</button>
     </form>
   </section>
@@ -208,6 +212,7 @@ npm run build
   </section>
 </main>
 ```
+
 ```html
 <!-- 재료 추가 시 -->
 <form>
@@ -223,13 +228,15 @@ npm run build
     <option value="chocolate">초콜릿</option>
   </select>
   <input type="text" />
-</form> 
+</form>
 ```
 
 <br/>
 
 ## 💎 MISSION
+
 ### 📂 Info
+
 > 커피 제조법
 
 - ☕ 아메리카노: (물 `6`, 커피 `4`)
@@ -255,34 +262,33 @@ npm run build
 <br/>
 
 ### 💻 1st week : 온보딩 + Vanilla JavaScript 적응기
+
 #### 📝 설계
+
 - [UML 그리기](https://app.diagrams.net/)
 
 <br/>
 
 #### 💡 기능
-- [ ] 주문 받기를 클릭하면 랜덤으로 주문 목록 테이블에 추가됩니다.
 
+- [x] 주문 받기를 클릭하면 랜덤으로 주문 목록 테이블에 추가됩니다.
 - [ ] 주문 목록의 `수정하기`를 클릭하면 해당 주문을 수정할 수 있습니다.
   - TIP: `div 태그에 contenteditable 속성을 부여합니다.`
-
 - [ ] 주문 목록의 `삭제하기`를 클릭하면 해당 주문이 삭제됩니다.
-
 - [ ] 주문이 존재하지 않으면 주방의 `커피 선택 버튼`이 `비활성` 됩니다.
   - 가령 `아메리카노 하나만 주문 목록에 존재하면 아메리카노 버튼만 활성화` 되어야 합니다.
-  
   - 아무 주문도 없다면 주방은 `CLOSE` 됩니다.
     ```html
     <section id="right-section">
       <div id="none-order"></div>
     </section>
     ```
-
 - [ ] 주문이 존재하지 않음에도 `커피 선택 버튼`이나 `만들기` 버튼을 클릭하면 `경고창`을 출력합니다.
 
 <br/>
 
 ### 💻 2nd week : 구조/프로세스 설계
+
 - [ ] `주문 관리 탭`을 클릭하면 `커피를 주문하고 만드는 화면`으로 전환됩니다.
 - [ ] `재료 관리 탭`을 클릭하면 `커피 재료를 관리하는 화면`으로 전환됩니다.
 - [ ] 만들 커피가 선택되어 `만들기 버튼`을 클릭하면 옵션을 설정하는 `Modal 창이 출력`됩니다.
@@ -301,13 +307,16 @@ npm run build
 <br/>
 
 ### 💻 3rd week : Web Storage
+
 - [ ] 웹을 다시 접속해도 기존 상태가 `유지` 되어야 합니다.
 - [ ] 상태를 관리하는 무언가는 단독으로 사용하지 않고 `객체 또는 모듈화` 되어야 합니다.
 
 <br/>
 
 ### 💻 4th week : Promise/Loading
+
 - [ ] `주문받기` 버튼 클릭 시 `1초의 Delay`가 존재해야 합니다.
+
   - 1초 동안 `Loading 화면`을 출력합니다. Loading Icon은 `assets/images/coffee-cup.gif` 입니다.
 
 - [ ] `커피 서빙하기` 버튼 클릭 시 `2초의 Delay`가 존재해야 합니다.
@@ -316,14 +325,18 @@ npm run build
 <br/>
 
 ### 🧸 추가 기능
+
 - [ ] 만들 커피의 수량을 지정할 수 있습니다.
+
   ```html
   <div class="row">
     <div class="coffee-add-area">
       <form>
-        <input type="text"
+        <input
+          type="text"
           oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"
-          maxlength="2" />
+          maxlength="2"
+        />
         <span class="ms">잔</span>
         <button type="submit" class="coffee-add-options-button">추가</button>
       </form>
@@ -338,21 +351,21 @@ npm run build
 
 ## 📔 COMMIT CONVENTION
 
-|태그|설명|
-|---|----|
-|`✒️Feat: `|새로운 기능을 추가할 경우|
-|`🛠Fix: `|버그를 고친 경우|
-|`✍️Design: `|CSS 등 사용자 UI 디자인 변경|
-|`❗️♻️BREAKING CHANGE: `|커다란 API 변경의 경우|
-|`❗️✔️HOTFIX: `|급하게 치명적인 버그를 고쳐야하는 경우|
-|`🎆Style: `|코드 포맷 변경, 세미 콜론 누락, 코드 수정이 없는 경우|
-|`🗃Refactor: `|프로덕션 코드 리팩토링|
-|`💬Comment: `|필요한 주석 추가 및 변경|
-|`📝Docs: `|문서를 수정한 경우|
-|`🧪Test: `|테스트 추가, 테스트 리팩토링(프로덕션 코드 변경 X)|
-|`🔬Chore: `|빌드 태스트 업데이트, 패키지 매니저를 설정하는 경우(프로덕션 코드 변경 X)|
-|`✂️Rename: `|파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우|
-|`🧺Remove: `|파일을 삭제하는 작업만 수행한 경우|
+| 태그                     | 설명                                                                      |
+| ------------------------ | ------------------------------------------------------------------------- |
+| `✒️Feat: `               | 새로운 기능을 추가할 경우                                                 |
+| `🛠Fix: `                 | 버그를 고친 경우                                                          |
+| `✍️Design: `             | CSS 등 사용자 UI 디자인 변경                                              |
+| `❗️♻️BREAKING CHANGE: ` | 커다란 API 변경의 경우                                                    |
+| `❗️✔️HOTFIX: `          | 급하게 치명적인 버그를 고쳐야하는 경우                                    |
+| `🎆Style: `              | 코드 포맷 변경, 세미 콜론 누락, 코드 수정이 없는 경우                     |
+| `🗃Refactor: `            | 프로덕션 코드 리팩토링                                                    |
+| `💬Comment: `            | 필요한 주석 추가 및 변경                                                  |
+| `📝Docs: `               | 문서를 수정한 경우                                                        |
+| `🧪Test: `               | 테스트 추가, 테스트 리팩토링(프로덕션 코드 변경 X)                        |
+| `🔬Chore: `              | 빌드 태스트 업데이트, 패키지 매니저를 설정하는 경우(프로덕션 코드 변경 X) |
+| `✂️Rename: `             | 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우                        |
+| `🧺Remove: `             | 파일을 삭제하는 작업만 수행한 경우                                        |
 
 <br/>
 
