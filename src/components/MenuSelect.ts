@@ -1,5 +1,5 @@
 import { createElement } from '@/common';
-import { Orders } from '@/domain';
+import { MenuItem, Orders } from '@/domain';
 import { beverageService, menu, modalLayout, orders } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
@@ -68,10 +68,10 @@ export class MenuSelect extends HTMLElement {
   }
 
   createMenus() {
-    menu.menuItems.forEach(menuItem => {
+    menu.menuItems.forEach((menuItem: MenuItem) => {
       const beverage = beverageService.getBeverageById(menuItem.beverageId);
-      const button = createElement(`<button class="coffee-category-button" id="ristretto">${beverage.name}</button>`);
-      button.dataset['beverageId'] = String(beverage.id);
+      const button = createElement(`<button class='coffee-category-button' id='ristretto'>${beverage.name}</button>`);
+      button.dataset['beverageId'] = `${beverage.id}`;
       this.$buttonContainer.appendChild(button);
     });
   }
@@ -80,31 +80,31 @@ export class MenuSelect extends HTMLElement {
     return `
 <div class='MenuSelect ${CLASS_NAME_NONE_ORDER}'>
   <h1>주방</h1>
-  <div class="coffee-container">
-    <h1 class="coffee_name">Choose your coffee</h1>
-    <div class="cup">
-      <div class="filling reset">
-        <div class="coffee">커피</div>
-        <div class="water">물</div>
-        <div class="liquor">리퀴르</div>
-        <div class="milk">우유</div>
-        <div class="whipped_cream">휘핑 크림</div>
-        <div class="milk_foam">밀크 폼</div>
-        <div class="steamed_milk">데운 우유</div>
-        <div class="chocolate">초콜릿</div>
+  <div class='coffee-container'>
+    <h1 class='coffee_name'>Choose your coffee</h1>
+    <div class='cup'>
+      <div class='filling reset'>
+        <div class='coffee'>커피</div>
+        <div class='water'>물</div>
+        <div class='liquor'>리퀴르</div>
+        <div class='milk'>우유</div>
+        <div class='whipped_cream'>휘핑 크림</div>
+        <div class='milk_foam'>밀크 폼</div>
+        <div class='steamed_milk'>데운 우유</div>
+        <div class='chocolate'>초콜릿</div>
       </div>
-      <div class="plate"></div>
+      <div class='plate'></div>
     </div>
   </div>
-  <div class="select-coffee-container">
-    <div class="row">
-      <div class="buttons">
+  <div class='select-coffee-container'>
+    <div class='row'>
+      <div class='buttons'>
       </div>
     </div>
-    <div class="row">
-      <div class="coffee-add-area">
+    <div class='row'>
+      <div class='coffee-add-area'>
         <form>
-          <button type="submit" class="coffee-add-options-button">만들기</button>
+          <button type='submit' class='coffee-add-options-button'>만들기</button>
         </form>
       </div>
     </div>
