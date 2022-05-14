@@ -1,72 +1,27 @@
 import OrderRow from '@/View/OrderList/OrderRow/OrderRow';
-import Drink from '@/Model/Drink';
-import Option from '@/Model/Option';
+
+import OrderController from '@/Controller/OrderController';
 
 // 주문목록을 담당하는 view
+class OrderList {
+  orderTable = document.getElementById('order-table')!;
+  newOrderButton = document.getElementById('new-order');
+  orderController = new OrderController();
 
-// 전체 orderTable
-const orderTable = document.getElementById('order-table')!;
-// 주문받기 버튼
-const newOrderButton = document.getElementById('new-order');
+  constructor() {
+    this.events();
+  }
 
-// 과제 사항 1, 주문하기 버튼을 누르면 랜덤으로 생성된다.
-// @prettier-ignore
-newOrderButton?.addEventListener('click', () => {
-  console.log('click');
-  const drink = new Drink({ name: '아메리카노', options: [
-    new Option({
-      name: '사이즈',
-      selections: ['Tall', 'Grande', 'Venti'],
-      selectedIndex: 1,
-      type: 'radio',
-    }),
-    new Option({
-      name: '샷',
-      selections: ['1', '2', '3'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-    new Option({
-      name: '시럽',
-      selections: ['-', '1', '2'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-    new Option({
-      name: 'ICE/HOT',
-      selections: ['ICE', 'HOT'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-    new Option({
-      name: '얼음종류',
-      selections: ['각얼음', '간얼음'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-    new Option({
-      name: '휘핑크림',
-      selections: ['-', '넣음'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-    new Option({
-      name: '엑스트라',
-      selections: ['-'],
-      selectedIndex: 0,
-      type: 'checkbox',
-    }),
-    new Option({
-      name: '컵',
-      selections: ['1회용 컵', '다회용 컵', '개인 컵'],
-      selectedIndex: 0,
-      type: 'radio',
-    }),
-  ]
-  });
+  events = () => {
+    this.newOrderButton?.addEventListener('click', () => {
+      const drink = this.orderController.addDrink();
 
-  const newRowNumber = orderTable.children.length;
-  const newOrderRow = new OrderRow(newRowNumber, drink);
+      const newRowNumber = this.orderTable.children.length;
+      const newOrderRow = new OrderRow(newRowNumber, drink);
 
-  orderTable.appendChild(newOrderRow.render());
-});
+      this.orderTable.appendChild(newOrderRow.render());
+    });
+  };
+}
+
+export default new OrderList();
