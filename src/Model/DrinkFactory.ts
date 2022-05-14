@@ -1,7 +1,6 @@
 import Drink, { DrinkList, Drinks } from '@/Model/Drink';
 import Option from '@/Model/Option';
 
-// Drink를 종류별로 만들어주는 factory
 class DrinkFactory {
   private selectRandomDrink() {
     return Drinks[Math.floor(Math.random() * Drinks.length)];

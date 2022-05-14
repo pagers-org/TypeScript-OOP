@@ -2,7 +2,6 @@ import OrderRow from '@/View/OrderList/OrderRow/OrderRow';
 
 import OrderController from '@/Controller/OrderController';
 
-// 주문목록을 담당하는 view
 class OrderList {
   orderTable = document.getElementById('order-table')!;
   newOrderButton = document.getElementById('new-order');

@@ -1,8 +1,6 @@
 import type Drink from '@/Model/Drink';
 import OrderController from '@/Controller/OrderController';
 
-// 메뉴 하나를 담당하는 view
-// 한 줄을 만들어내는 컴포넌트에 가깝다.
 class OrderRow {
   id: number;
   orderRowElement: HTMLDivElement;

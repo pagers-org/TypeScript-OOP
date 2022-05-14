@@ -21,7 +21,6 @@ export const Drinks = Object.keys(DrinkMap).map(key => key as keyof typeof Drink
 
 export type DrinkList = typeof Drinks[number];
 
-// 마실 것만
 class Drink {
   name: DrinkList;
   options: Option[];

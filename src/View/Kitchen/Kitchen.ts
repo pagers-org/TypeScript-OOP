@@ -1,9 +1,6 @@
 import Drink, { DrinkMap } from '@/Model/Drink';
 import { OrderControllerObsever } from '@/Controller/OrderController';
 
-// 주방을 담당
-// 사용가능한 메뉴들은 메뉴 리스트에서 가져와서 그리도록
-// orderController를 listen한다.
 class Kitchen implements OrderControllerObsever {
   kitchenControllerElement = document.getElementById('coffee-list-kitchen')!;
   buttons: { [id: string]: HTMLButtonElement } = {};
