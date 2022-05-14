@@ -41,6 +41,6 @@ import CoffeeShop from './CoffeeShop';
 // });
 
 (() => {
-  const jerryCoffeeShop = new CoffeeShop();
-  jerryCoffeeShop.getReady();
+  const jerrysCoffeeShop = new CoffeeShop();
+  jerrysCoffeeShop.getReady();
 })();

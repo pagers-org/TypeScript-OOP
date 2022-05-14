@@ -1,15 +1,13 @@
-import Coffee, { ICoffe, CoffeeEnum } from './Coffee';
+import Coffee, { CoffeeEnum } from './Coffee';
 
-class Espresso extends Coffee implements ICoffe {
+class Espresso extends Coffee {
   name = CoffeeEnum.espresso;
 
   ingredients = {
     coffe: 4,
   } as const;
 
-  constructor() {
-    super();
-  }
+  //
 }
 
 export default Espresso;

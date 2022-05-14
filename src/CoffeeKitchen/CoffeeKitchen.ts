@@ -1,5 +1,11 @@
+import Coffee from '../Coffees/Coffee';
+
 class CoffeeKitchen {
   private static $ = document.querySelector('#right-section') as HTMLElement;
+  private static $modal = document.querySelector('.modal-layout') as HTMLDivElement;
+  private static $filling: HTMLDivElement | null;
+  private static $coffeeName: HTMLHeadingElement | null;
+  private static $activeButton: HTMLButtonElement | null = null;
 
   private static ACTIONS = {
     SELECT_COFFEE: 'coffee-category-button',
@@ -7,28 +13,57 @@ class CoffeeKitchen {
   };
 
   public static close() {
-    CoffeeKitchen.$.innerHTML = '';
+    CoffeeKitchen.$.innerHTML = `<div id="none-order"></div>`;
     CoffeeKitchen.$.removeEventListener('click', CoffeeKitchen.handleClickEvent);
   }
 
   public static open() {
     CoffeeKitchen.$.innerHTML = CoffeeKitchen.template;
+    CoffeeKitchen.$filling = this.$.querySelector('.filling');
+    CoffeeKitchen.$coffeeName = this.$.querySelector('.coffee_name');
     CoffeeKitchen.$.addEventListener('click', CoffeeKitchen.handleClickEvent);
   }
 
   public static handleClickEvent(event: MouseEvent) {
     const target = event.target as HTMLElement;
+    event.preventDefault();
+
     switch (true) {
       case (target as HTMLElement)?.className === CoffeeKitchen.ACTIONS.SELECT_COFFEE:
-        //
+        CoffeeKitchen.handleSelectEvent(target);
         break;
       case (target as HTMLElement)?.className === CoffeeKitchen.ACTIONS.MAKE_COFFEE:
-        event.preventDefault();
+        CoffeeKitchen.handleMakeCoffeeEvent();
         break;
       default:
-        console.log(event.target);
         return;
     }
+  }
+
+  private static handleSelectEvent(target: HTMLElement) {
+    if (!Coffee.hasCoffeeInList(target.id)) {
+      alert('주문 목록에 없는 메뉴예요 😙');
+      return false;
+    }
+    if (CoffeeKitchen.$activeButton) {
+      CoffeeKitchen.$activeButton.classList.remove('selected');
+      CoffeeKitchen.$filling?.classList.remove(CoffeeKitchen.$activeButton.id);
+    }
+
+    CoffeeKitchen.$activeButton = target as HTMLButtonElement;
+
+    CoffeeKitchen.$filling?.classList.add(CoffeeKitchen.$activeButton.id);
+    CoffeeKitchen.$activeButton.classList.add('selected');
+
+    if (CoffeeKitchen.$coffeeName) CoffeeKitchen.$coffeeName.innerText = target.innerText;
+  }
+
+  private static handleMakeCoffeeEvent() {
+    if (!Coffee.hasCoffeeInList(CoffeeKitchen.$activeButton?.id || '')) {
+      alert('주문 목록에 없는 메뉴예요 😙');
+      return false;
+    }
+    CoffeeKitchen.$modal.classList.toggle('hidden');
   }
 
   private static template = `
