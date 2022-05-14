@@ -7,6 +7,8 @@ import { OrderControllerObsever } from '@/Controller/OrderController';
 class Kitchen implements OrderControllerObsever {
   kitchenControllerElement = document.getElementById('coffee-list-kitchen')!;
   buttons: { [id: string]: HTMLButtonElement } = {};
+  kitchenCoverElement = document.getElementById('kitchen-cover')!;
+  isKichenOpen = false;
 
   constructor() {
     const children = Array.from(this.kitchenControllerElement.children);
@@ -29,14 +31,32 @@ class Kitchen implements OrderControllerObsever {
     return DrinkMap[drink.name];
   }
 
+  private toggleKitchenCover() {
+    if (this.isKichenOpen) {
+      this.kitchenCoverElement.classList.add('hide');
+    } else {
+      this.kitchenCoverElement.classList.remove('hide');
+    }
+  }
+
   addDrink = (drink: Drink) => {
     const drinkButtonId = this.getDrinkButtonId(drink);
     this.buttons[drinkButtonId].disabled = false;
+
+    if (!this.isKichenOpen) {
+      this.isKichenOpen = true;
+      this.toggleKitchenCover();
+    }
   };
 
   removeDrink = (drink: Drink) => {
     const drinkButtonId = this.getDrinkButtonId(drink);
     this.buttons[drinkButtonId].disabled = true;
+  };
+
+  noticeDrinkEmpty = () => {
+    this.isKichenOpen = false;
+    this.toggleKitchenCover();
   };
 }
 
