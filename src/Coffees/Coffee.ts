@@ -1,12 +1,12 @@
 class Coffee {
   static optionsList: Record<keyof ICoffeeOption, Array<ICoffeeOption[keyof ICoffeeOption]>> = {
     size: ['Tall', 'Grande', 'Venti'],
-    shot: [1, 2, 3],
-    syrup: ['바닐라', '헤이즐넛', '카라멜', null],
+    shot: ['1', '2', '3'],
+    syrup: ['바닐라', '헤이즐넛', '카라멜', '-'],
     hotOrIce: ['ICE', 'HOT'],
-    iceType: ['기본얼음', '각얼음', null],
+    iceType: ['기본얼음', '각얼음', '-'],
     whippedCream: ['없음', '적당히', '많이'],
-    extra: ['자바칩', '카라멜드리즐', '초코드리즐', '아몬드', '시나몬', null],
+    extra: ['자바칩', '카라멜드리즐', '초코드리즐', '아몬드', '시나몬', '-'],
     cup: ['1회용 컵', '텀블러', '머그컵', '재활용 컵'],
   };
 
@@ -25,6 +25,8 @@ class Coffee {
       return { ...acc, [key]: values[Math.floor(Math.random() * values.length)] || '-' };
     }, {} as ICoffeeOption);
   }
+
+  //
 }
 
 const COFFEE_OPTION_TITLE: Record<keyof ICoffeeOption, string> = {
@@ -44,28 +46,30 @@ export class ICoffe {
   options: ICoffeeOption;
 }
 
+type NullOption = '-';
+
 export type ICoffeeOption = {
   size: 'Tall' | 'Grande' | 'Venti';
-  shot: 1 | 2 | 3;
-  syrup: '바닐라' | '헤이즐넛' | '카라멜' | null;
+  shot: '1' | '2' | '3';
+  syrup: '바닐라' | '헤이즐넛' | '카라멜' | NullOption;
   hotOrIce: 'ICE' | 'HOT';
-  iceType: '기본얼음' | '각얼음' | null;
+  iceType: '기본얼음' | '각얼음' | NullOption;
   whippedCream: '없음' | '적당히' | '많이';
-  extra: '자바칩' | '카라멜드리즐' | '초코드리즐' | '아몬드' | '시나몬' | null;
+  extra: '자바칩' | '카라멜드리즐' | '초코드리즐' | '아몬드' | '시나몬' | NullOption;
   cup: '1회용 컵' | '텀블러' | '머그컵' | '재활용 컵';
 };
 
 export enum CoffeeEnum {
-  Americano = '아메리카노',
-  CafeAuLait = '카페 오레',
-  CafeLatte = '카페 라떼',
-  CafeMocha = '카페 모카',
-  Cappuccino = '카푸치노',
-  Corretto = '코레또',
-  Espresso = '에스프레소',
-  Lungo = '룽고',
-  Macchiato = '마끼야또',
-  Ristretto = '리스트레또',
+  americano = '아메리카노',
+  au_lait = '카페 오레',
+  latte = '카페 라떼',
+  corretto = '코레또',
+  espresso = '에스프레소',
+  mocha = '카페 모카',
+  cappuccino = '카푸치노',
+  lungo = '룽고',
+  macchiato = '마끼야또',
+  ristretto = '리스트레또',
 }
 
 export default Coffee;

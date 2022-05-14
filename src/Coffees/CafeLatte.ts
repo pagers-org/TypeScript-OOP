@@ -1,7 +1,7 @@
 import Coffee, { ICoffe, CoffeeEnum } from './Coffee';
 
 class CafeLatte extends Coffee implements ICoffe {
-  name = CoffeeEnum.CafeLatte;
+  name = CoffeeEnum.latte;
 
   ingredients = {
     coffee: 5,
