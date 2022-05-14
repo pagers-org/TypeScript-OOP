@@ -13,7 +13,14 @@ class Kitchen implements OrderControllerObsever {
   constructor() {
     const children = Array.from(this.kitchenControllerElement.children);
     this.findCoffeeCategoryButton(children);
+    this.event();
   }
+
+  private event = () => {
+    this.kitchenCoverElement.addEventListener('click', () => {
+      alert('주문해주세요!');
+    });
+  };
 
   private findCoffeeCategoryButton(elements: Element[]) {
     elements.forEach(element => {
