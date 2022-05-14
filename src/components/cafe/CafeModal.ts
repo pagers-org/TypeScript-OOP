@@ -1,15 +1,26 @@
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
+import { orders } from '@/main';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
 export class CafeModal extends Component {
+  private $closeButton!: HTMLElement;
+
+  init() {
+    this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
+  }
+
   events() {
     addEventListener(EVENT.ORDER_SUBMIT, () => {
+      if (orders.isEmpty()) {
+        return alert('주문을 추가하세요');
+      }
+
       this.toggle();
     });
 
-    this.$container.querySelector('#close-icon')?.addEventListener('click', () => {
+    this.$closeButton.addEventListener('click', () => {
       this.toggle();
     });
   }

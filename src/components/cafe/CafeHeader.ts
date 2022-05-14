@@ -2,7 +2,7 @@ import { Component } from '@/components';
 
 export class CafeHeader extends Component {
   events() {
-    this.$container?.addEventListener('click', (event: MouseEvent) => {
+    this.$container.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
       if (!$target.matches('[type="radio"]')) return;
       event.preventDefault();

@@ -135,12 +135,10 @@ main#order section {
 .filling {
   position: absolute;
   left: calc(var(--cup-border-width) / 2);
-  bottom: calc(var(--cup-border-width) / 2);
   width: var(--cup-inside-width);
   height: var(--cup-inside-height);
   overflow: hidden;
   border-radius: 0 0 100px 100px;
-  background-color: var(--main-bg-color);
   bottom: 10px;
 }
 
@@ -152,7 +150,6 @@ main#order section {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  height: 0;
   overflow: hidden;
   font-size: 14px;
   height: 100%;
@@ -381,7 +378,7 @@ input[type=number] {
   left: 0;
   width: 0;
   height: 100%;
-  background: url('../images/btn-bg1.png');
+  background: url('../../images/btn-bg1.png');
   background-size: cover;
   transform-origin: left;
   transition: 0.5s;
@@ -396,7 +393,7 @@ input[type=number] {
   z-index: 1;
 }
 
-.CafeMenuSelect {
+.MenuSelect {
   position: relative;
   width:100%;
   height:100%;
@@ -406,7 +403,7 @@ input[type=number] {
   justify-content: space-evenly;
 }
 
-.CafeMenuSelect.none-order:before {
+.MenuSelect.none-order:before {
   width: 100%;
   height: 100%;
   border-radius: 20px;

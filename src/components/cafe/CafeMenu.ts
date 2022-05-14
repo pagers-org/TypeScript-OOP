@@ -9,7 +9,7 @@ const CLASS_NAME_SELECTED = 'selected';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class CafeMenuSelect extends Component {
+export class CafeMenu extends Component {
   private $buttonContainer!: HTMLElement;
   private $form!: HTMLElement;
 

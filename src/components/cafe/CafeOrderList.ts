@@ -1,84 +1,40 @@
 import { Order } from '@/domain';
-import { createElement } from '@/common';
 import { EVENT } from '@/constant';
 import { beverageService, optionService, orders } from '@/main';
 import { nanoid } from 'nanoid';
-import { Component } from '@/components';
+import { CafeOrderListRow, Component } from '@/components';
 
 export class CafeOrderList extends Component {
   private $orderButton!: HTMLElement;
+  private $orderTable!: HTMLElement;
 
   init() {
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
+    this.$orderTable = this.$container.querySelector('#order-table') as HTMLElement;
   }
 
   events() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
 
-      const beverage = beverageService.createRandomBeverage();
-      const optionGroups = optionService.createRandomSelectedOptionGroups();
-      const order = new Order(nanoid(), beverage.id, optionGroups);
-
-      orders.add(order);
-
-      dispatchEvent(new CustomEvent(EVENT.ORDER_ADDED, { detail: { order } }));
-
-      const $orderTable = this.$container.querySelector('#order-table');
-      const $template = createElement(this.createRow(beverage.name, order));
-
-      $template.querySelector('.remove-order')?.addEventListener('click', e => {
-        e.preventDefault();
-
-        orders.remove(order);
-        $template.remove();
-
-        dispatchEvent(new CustomEvent(EVENT.ORDER_REMOVED, { detail: { order } }));
-      });
-
-      $template.querySelector('.edit-order')?.addEventListener('click', e => {
-        e.preventDefault();
-
-        const key = 'contentEditAble';
-
-        const contentEditAble = $template.getAttribute(key);
-
-        if (contentEditAble === 'true') {
-          $template.removeAttribute(key);
-        } else {
-          $template.setAttribute(key, 'true');
-        }
-      });
-
-      $orderTable?.appendChild($template);
+      this.addOrder();
     });
   }
 
-  createRow(beverageName: string, order: Order) {
-    return `
-    <div class='table-row'>
-        <div class='cell' data-title='No'>${orders.size()}</div>
-        <div class='cell' data-title='메뉴명'>${beverageName}</div>
-        <div class='cell' data-title='사이즈'>${order.getSelectedOptionValue('사이즈')}</div>
-        <div class='cell' data-title='샷'>${order.getSelectedOptionValue('샷')}</div>
-        <div class='cell' data-title='시럽'>${order.getSelectedOptionValue('시럽')}</div>
-        <div class='cell' data-title='ICE/HOT'>${order.getSelectedOptionValue('ICE/HOT')}</div>
-        <div class='cell' data-title='얼음 종류'>${order.getSelectedOptionValue('얼음 종류')}</div>
-        <div class='cell' data-title='휘핑 크림'>${order.getSelectedOptionValue('휘핑 크림')}</div>
-        <div class='cell' data-title='엑스트라'>${order.getSelectedOptionValue('엑스트라')}</div>
-        <div class='cell' data-title='컵'>${order.getSelectedOptionValue('컵')}</div>
-        <div class='cell' data-title='수정하기'>
-          <span class='edit-order'><i class='fa-solid fa-pen'></i></span>
-        </div>
-        <div class='cell' data-title='삭제하기'>
-          <span class='remove-order'><i class='fa-solid fa-trash-can'></i></span>
-        </div>
-    </div>
-    `;
+  addOrder() {
+    const beverage = beverageService.createRandomBeverage();
+    const optionGroups = optionService.createRandomSelectedOptionGroups();
+    const order = new Order(nanoid(), beverage.id, optionGroups);
+
+    this.$orderTable.appendChild(CafeOrderListRow.create(beverage.name, order));
+
+    orders.add(order);
+
+    dispatchEvent(new CustomEvent(EVENT.ORDER_ADDED, { detail: { order } }));
   }
 
   template() {
-    return `
+    return String.raw`
 <div class='order-list'>
   <h1>주문 목록</h1>
   <div class='order-button-area'>
