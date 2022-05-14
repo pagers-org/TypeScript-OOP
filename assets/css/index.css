@@ -32,8 +32,17 @@
 }
 
 #right-section {
+  position: relative;
   border-radius: 20px;
   background-color: #eee6d9;
+}
+
+#kitchen-cover {
+  position: absolute;
+  width: 100%;
+  height: inherit;
+  z-index: 20;
+  border-radius: inherit;
 }
 
 @media screen and (max-width: 1408px) {
