@@ -1,7 +1,8 @@
 import { ApiImpl, BeverageService, MenuService, OptionService, Orders } from '@/domain';
 import { createCustomElement } from '@/common';
-import { MenuSelect } from '@/components/MenuSelect';
-import { OrderList } from '@/components/OrderList';
+import { CafeMenuSelect } from '@/components/CafeMenuSelect';
+import { CafeOrderList } from '@/components/CafeOrderList';
+import { CafeHeader } from '@/components/CafeHeader';
 
 export const api = new ApiImpl();
 export const orders = new Orders();
@@ -11,18 +12,12 @@ export const menuService = new MenuService(api);
 export const menu = menuService.getMenu();
 
 window.addEventListener('load', () => {
-  createCustomElement('menu-select', MenuSelect);
-  createCustomElement('order-list', OrderList);
+  createCustomElement('cafe-header', CafeHeader);
+  createCustomElement('cafe-menu-select', CafeMenuSelect);
+  createCustomElement('cafe-order-list', CafeOrderList);
 });
 
 export const modalLayout = document.querySelector('.modal-layout') as HTMLDivElement;
-
-document.querySelector('header')?.addEventListener('click', (event: MouseEvent) => {
-  const $target = event.target as HTMLInputElement;
-  if (!$target.matches('[type="radio"]')) return;
-  event.preventDefault();
-  alert('아직 준비되지 않았네요🥺');
-});
 
 modalLayout.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLElement;
