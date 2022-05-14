@@ -19,7 +19,6 @@ class OrderController {
   // 이렇게 하면 view에서 사용하는 interface에 새로운 함수를 만들어 이어주면 되기 때문에 모듈형식으로 관리 가능
   drinkList: Drink[] = [];
   drinkFactory = DrinkFactory;
-  constructor() {}
 
   // view에서 받은 interaction을 통해 이 함수를 실행
   addDrink = () => {
@@ -44,8 +43,12 @@ class OrderController {
 
         this.drinkList.splice(index, 1);
       }
+
+      if (this.drinkList.length <= 0) {
+        this.observers.forEach(observer => observer.noticeDrinkEmpty());
+      }
     }
   };
 }
 
-export default OrderController;
+export default new OrderController();

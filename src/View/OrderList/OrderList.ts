@@ -6,7 +6,7 @@ import OrderController from '@/Controller/OrderController';
 class OrderList {
   orderTable = document.getElementById('order-table')!;
   newOrderButton = document.getElementById('new-order');
-  orderController = new OrderController();
+  orderController = OrderController;
 
   constructor() {
     this.events();

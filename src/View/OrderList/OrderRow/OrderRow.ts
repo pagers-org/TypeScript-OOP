@@ -1,16 +1,20 @@
 import type Drink from '@/Model/Drink';
+import OrderController from '@/Controller/OrderController';
 
 // 메뉴 하나를 담당하는 view
 // 한 줄을 만들어내는 컴포넌트에 가깝다.
 class OrderRow {
+  id: number;
   orderRowElement: HTMLDivElement;
   drinkRow: HTMLDivElement[] = [];
   isEditMode = false;
+  orderController = OrderController;
 
   constructor(id: number, drink: Drink) {
     this.orderRowElement = document.createElement('div');
     this.orderRowElement.setAttribute('class', 'table-row');
 
+    this.id = id;
     const idElement = this.createCell('id', id);
     this.drinkRow.push(idElement);
 
@@ -72,6 +76,7 @@ class OrderRow {
     }
 
     const listener = function (this: OrderRow) {
+      this.orderController.deleteDrink(this.id - 1);
       this.orderRowElement.remove();
     }.bind(this);
 
