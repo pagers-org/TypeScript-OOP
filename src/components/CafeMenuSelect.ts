@@ -9,7 +9,7 @@ const CLASS_NAME_HIDDEN = 'hidden';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class MenuSelect extends HTMLElement {
+export class CafeMenuSelect extends HTMLElement {
   private $container!: HTMLElement;
   private $buttonContainer!: HTMLElement;
   private $form!: HTMLElement;

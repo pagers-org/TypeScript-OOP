@@ -4,7 +4,7 @@ import { EVENT } from '@/constant';
 import { beverageService, optionService, orders } from '@/main';
 import { nanoid } from 'nanoid';
 
-export class OrderList extends HTMLElement {
+export class CafeOrderList extends HTMLElement {
   private $container!: HTMLElement;
   private $orderButton!: HTMLElement;
 
