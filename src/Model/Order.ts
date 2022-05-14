@@ -1,5 +1,6 @@
 import Drink from '@/Model/Drink';
 
+// 주문을 set하는 순간부터 생성
 class Order {
   id: number;
   // 한 주문에 여러개의 Drink가 가능하다.
