@@ -1,4 +1,4 @@
-import Drink from '@/Model/Drink';
+import type Drink from '@/Model/Drink';
 
 // 메뉴 하나를 담당하는 view
 // 한 줄을 만들어내는 컴포넌트에 가깝다.
