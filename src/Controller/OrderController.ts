@@ -5,6 +5,7 @@ import Kitchen from '@/View/Kitchen/Kitchen';
 export interface OrderControllerObsever {
   addDrink: (drink: Drink) => void;
   removeDrink: (drink: Drink) => void;
+  noticeDrinkEmpty: () => void;
 }
 
 class OrderController {
