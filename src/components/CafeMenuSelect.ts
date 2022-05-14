@@ -1,11 +1,10 @@
 import { createElement } from '@/common';
 import { MenuItem } from '@/domain';
-import { beverageService, menu, modalLayout, orders } from '@/main';
+import { beverageService, menu, orders } from '@/main';
 import { EVENT } from '@/constant';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
-const CLASS_NAME_HIDDEN = 'hidden';
 
 const MSG_ALERT = '주문을 추가하세요';
 
@@ -64,7 +63,7 @@ export class CafeMenuSelect extends HTMLElement {
         return alert(MSG_ALERT);
       }
 
-      modalLayout.classList.toggle(CLASS_NAME_HIDDEN);
+      dispatchEvent(new CustomEvent(EVENT.ORDER_SUBMIT));
     });
   }
 
