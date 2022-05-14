@@ -1,21 +1,21 @@
 import { createElement } from '@/common';
 import { MenuItem } from '@/domain';
-import { beverageService, menu, orders } from '@/main';
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
+import { app } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class CafeMenu extends Component {
-  private $buttonContainer!: HTMLElement;
+export class Menu extends Component {
   private $form!: HTMLElement;
+  private $buttons!: HTMLElement;
 
   init() {
-    this.$buttonContainer = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
+    this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
 
     this.toggle();
     this.createMenus();
@@ -40,11 +40,11 @@ export class CafeMenu extends Component {
       const { order } = (e as CustomEvent).detail;
       const button = this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`);
 
-      if (orders.isEmptyByBeverageId(order.beverageId)) {
+      if (app.orders.isEmptyByBeverageId(order.beverageId)) {
         button?.classList.remove(CLASS_NAME_SELECTED);
       }
 
-      if (orders.isEmpty()) {
+      if (app.orders.isEmpty()) {
         this.toggle();
       }
     });
@@ -52,7 +52,7 @@ export class CafeMenu extends Component {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (orders.isEmpty()) {
+      if (app.orders.isEmpty()) {
         return alert(MSG_ALERT);
       }
 
@@ -61,11 +61,11 @@ export class CafeMenu extends Component {
   }
 
   createMenus() {
-    menu.menuItems.forEach((menuItem: MenuItem) => {
-      const beverage = beverageService.getBeverageById(menuItem.beverageId);
+    app.menu.menuItems.forEach((menuItem: MenuItem) => {
+      const beverage = app.beverageService.getBeverageById(menuItem.beverageId);
       const button = createElement(`<button class='coffee-category-button' id='ristretto'>${beverage.name}</button>`);
       button.dataset['beverageId'] = `${beverage.id}`;
-      this.$buttonContainer.appendChild(button);
+      this.$buttons.appendChild(button);
     });
   }
 

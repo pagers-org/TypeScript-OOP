@@ -1,10 +1,10 @@
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { beverageService, optionService, orders } from '@/main';
+import { app } from '@/main';
 import { nanoid } from 'nanoid';
-import { CafeOrderListRow, Component } from '@/components';
+import { OrderListRow, Component } from '@/components';
 
-export class CafeOrderList extends Component {
+export class OrderList extends Component {
   private $orderButton!: HTMLElement;
   private $orderTable!: HTMLElement;
 
@@ -22,13 +22,13 @@ export class CafeOrderList extends Component {
   }
 
   addOrder() {
-    const beverage = beverageService.createRandomBeverage();
-    const optionGroups = optionService.createRandomSelectedOptionGroups();
+    const beverage = app.beverageService.createRandomBeverage();
+    const optionGroups = app.optionService.createRandomSelectedOptionGroups();
     const order = new Order(nanoid(), beverage.id, optionGroups);
 
-    this.$orderTable.appendChild(CafeOrderListRow.create(beverage.name, order));
+    this.$orderTable.appendChild(OrderListRow.create(beverage.name, order));
 
-    orders.add(order);
+    app.orders.add(order);
 
     dispatchEvent(new CustomEvent(EVENT.ORDER_ADDED, { detail: { order } }));
   }

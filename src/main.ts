@@ -1,19 +1,14 @@
 import { createCustomElement } from '@/common';
-import { ApiImpl, BeverageService, MenuService, OptionService, Orders } from '@/domain';
-import { CafeHeader, CafeMenu, CafeModal, CafeOrderList, CafeOrderListRow, CafeServing } from '@/components';
-
-export const api = new ApiImpl();
-export const orders = new Orders();
-export const beverageService = new BeverageService(api);
-export const optionService = new OptionService(api);
-export const menuService = new MenuService(api);
-export const menu = menuService.getMenu();
+import { Header, Menu, Modal, OrderList, OrderListRow, Serving } from '@/components';
+import { App } from '@/App';
 
 window.addEventListener('load', () => {
-  createCustomElement('cafe-header', CafeHeader);
-  createCustomElement('cafe-menu', CafeMenu);
-  createCustomElement('cafe-order-list', CafeOrderList);
-  createCustomElement('cafe-order-list-row', CafeOrderListRow);
-  createCustomElement('cafe-modal', CafeModal);
-  createCustomElement('cafe-serving', CafeServing);
+  createCustomElement('cafe-header', Header);
+  createCustomElement('cafe-menu', Menu);
+  createCustomElement('cafe-order-list', OrderList);
+  createCustomElement('cafe-order-list-row', OrderListRow);
+  createCustomElement('cafe-modal', Modal);
+  createCustomElement('cafe-serving', Serving);
 });
+
+export const app = new App();
