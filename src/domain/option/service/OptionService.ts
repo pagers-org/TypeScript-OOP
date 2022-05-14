@@ -8,7 +8,7 @@ export class OptionService {
     this.api = api;
   }
 
-  public getOptionGroups() {
+  private getOptionGroups() {
     return this.api.getOptionGroups();
   }
 

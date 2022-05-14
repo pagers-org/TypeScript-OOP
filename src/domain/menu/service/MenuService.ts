@@ -7,7 +7,7 @@ export class MenuService {
     this.api = api;
   }
 
-  public getMenuItems() {
+  private getMenuItems() {
     return this.api.getBeverages().map(item => new MenuItem(item.id));
   }
 

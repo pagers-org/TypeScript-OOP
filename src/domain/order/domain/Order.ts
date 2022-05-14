@@ -15,7 +15,7 @@ export class Order {
     this.servingTime = servingTime;
   }
 
-  public getOptionGroupByName(name: string): OptionGroup {
+  private getOptionGroupByName(name: string): OptionGroup {
     const optionGroups = this.optionGroups.filter(group => group.name === name);
 
     if (!optionGroups) {
