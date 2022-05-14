@@ -1,4 +1,4 @@
-import { Beverage, Material, Option, OptionGroup, Recipe, Api } from '@/domain';
+import { Beverage, Material, Option, OptionGroup, Recipe, Api, OptionGroupName } from '@/domain';
 
 export class ApiImpl implements Api {
   getBeverages(): Beverage[] {
@@ -144,9 +144,8 @@ export class ApiImpl implements Api {
         name: '컵',
       },
     ].map(item => {
-      const optionGroup = new OptionGroup(item.id, item.name);
+      const optionGroup = new OptionGroup(item.id, item.name as OptionGroupName);
       optionGroup.options = this.getOptions().filter(option => option.optionGroupId == item.id);
-
       return optionGroup;
     });
   }
