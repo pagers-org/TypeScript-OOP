@@ -1,0 +1,4 @@
+export const EVENT = {
+  ORDER_ADDED: 'ORDER_ADDED',
+  ORDER_REMOVED: 'ORDER_REMOVED',
+};

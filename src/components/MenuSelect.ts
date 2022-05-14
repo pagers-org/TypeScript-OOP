@@ -1,6 +1,7 @@
 import { createElement } from '@/common';
-import { MenuItem, Orders } from '@/domain';
+import { MenuItem } from '@/domain';
 import { beverageService, menu, modalLayout, orders } from '@/main';
+import { EVENT } from '@/constant';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
@@ -29,7 +30,7 @@ export class MenuSelect extends HTMLElement {
   }
 
   events() {
-    addEventListener(Orders.EVENT_ADDED, e => {
+    addEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
       if (this.$container.classList.contains(CLASS_NAME_NONE_ORDER)) {
@@ -41,7 +42,7 @@ export class MenuSelect extends HTMLElement {
       button?.classList.add(CLASS_NAME_SELECTED);
     });
 
-    addEventListener(Orders.EVENT_REMOVED, e => {
+    addEventListener(EVENT.ORDER_REMOVED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;

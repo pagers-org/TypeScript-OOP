@@ -1,5 +1,6 @@
-import { Order, Orders } from '@/domain';
+import { Order } from '@/domain';
 import { createElement } from '@/common';
+import { EVENT } from '@/constant';
 import { beverageService, optionService, orders } from '@/main';
 import { nanoid } from 'nanoid';
 
@@ -30,7 +31,7 @@ export class OrderList extends HTMLElement {
 
       orders.add(order);
 
-      dispatchEvent(new CustomEvent(Orders.EVENT_ADDED, { detail: { order } }));
+      dispatchEvent(new CustomEvent(EVENT.ORDER_ADDED, { detail: { order } }));
 
       const $orderTable = this.$container.querySelector('#order-table');
       const $template = createElement(this.createRow(beverage.name, order));
@@ -41,7 +42,7 @@ export class OrderList extends HTMLElement {
         orders.remove(order);
         $template.remove();
 
-        dispatchEvent(new CustomEvent(Orders.EVENT_REMOVED, { detail: { order } }));
+        dispatchEvent(new CustomEvent(EVENT.ORDER_REMOVED, { detail: { order } }));
       });
 
       $template.querySelector('.edit-order')?.addEventListener('click', e => {
