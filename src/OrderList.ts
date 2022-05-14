@@ -2,11 +2,10 @@ import Order from './Order';
 
 import { DOM } from './constants';
 import { $ } from './utils/dom';
-
 import { IOrder } from './@types';
 
 class OrderList {
-  #orderList: IOrder[];
+  #orderList: Order[];
 
   $table: HTMLElement;
 
@@ -18,18 +17,30 @@ class OrderList {
     this.addEvents();
   }
 
-  addEvents(): void {
-    $(`.${DOM.ORDER_BUTTON_CLASS}`).addEventListener('click', () => {
-      this.addOrder();
-      this.renderOrderList();
-    });
-
+  addEvents() {
+    $(`.${DOM.ORDER_BUTTON_CLASS}`).addEventListener('click', () => this.addOrder());
     $(`#${DOM.ORDER_TABLE_ID}`).addEventListener('click', this.handleTableClick.bind(this));
   }
 
-  addOrder(): void {
+  addOrder() {
     const newOrder = new Order();
-    this.#orderList = [...this.#orderList, newOrder.getOrder()];
+    this.#orderList = [...this.#orderList, newOrder];
+    this.renderOrderList();
+  }
+
+  removeOrder(removeId: number) {
+    this.#orderList = this.#orderList.filter(order => order.id !== removeId);
+    this.renderOrderList();
+    console.log(this.#orderList);
+  }
+
+  editOrder(editId: number) {
+    const Order = this.#orderList.find(order => order.id === editId);
+    const newOrder = $(`[data-id="${editId}"]`).children;
+    Array.from(newOrder).forEach(($el, index) => {
+      if ($el.getAttribute('data-title') === '수정하기' || $el.getAttribute('data-title') === '삭제하기') return;
+      Order?.updateOrder($el.textContent, index);
+    });
   }
 
   handleTableClick(event: Event) {
@@ -41,27 +52,41 @@ class OrderList {
   }
 
   changeTableRowToEditable(clickId: string | null | undefined) {
-    if (clickId) {
-      console.log('edit');
+    const $clickElement = $(`[data-id="${clickId}"]`);
+    const childrenNodes = $clickElement.children;
+
+    const isEdit = childrenNodes[0].getAttribute('contentEditAble');
+
+    if (isEdit) {
+      if (clickId) this.editOrder(+clickId);
+      else throw new Error('수정 할 주문이 없어요');
+      alert('수정 완료');
+    } else {
+      for (let i = 0; i < childrenNodes.length; i++) {
+        if (
+          childrenNodes[i].getAttribute('data-title') === '수정하기' ||
+          childrenNodes[i].getAttribute('data-title') === '삭제하기'
+        )
+          return;
+        childrenNodes[i].setAttribute('contentEditAble', 'true');
+      }
     }
   }
 
   removeTableRow(clickId: string | null | undefined) {
-    if (clickId) {
-      console.log('remove');
-    }
+    if (clickId) this.removeOrder(+clickId);
   }
 
   renderOrderList() {
     this.$table.innerHTML =
       this.orderTableHeaderTemplate() +
-      this.#orderList.map((order: IOrder) => this.orderTableRowTemplate(order)).join('');
+      this.#orderList.map((order: Order) => this.orderTableRowTemplate(order)).join('');
   }
 
-  orderTableRowTemplate(order: IOrder): string {
-    const { id, menuName, size, shot, syrup, ice, temporature, wippedCream, extra, cup } = order;
+  orderTableRowTemplate(order: Order): string {
+    const { id, menuName, size, shot, syrup, ice, temporature, wippedCream, extra, cup }: Order = order;
     return String.raw`
-      <div class="table-row">
+      <div class="table-row" data-id="${id}">
         <div class="cell" data-title="No">${id}</div>
         <div class="cell" data-title="메뉴명">${menuName}</div>
         <div class="cell" data-title="사이즈">${size}</div>
