@@ -6,12 +6,8 @@
     "esModuleInterop": true,
     "strict": true,
     "target": "es6",
-    "lib": [
-      "ES5",
-      "ES6",
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ES5", "ES6", "ESNext", "DOM"],
+    "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
@@ -19,21 +15,11 @@
     "isolatedModules": false,
     "outDir": "dist",
     "paths": {
-      "~/*": [
-        "*"
-      ],
-      "@/*": [
-        "src/*"
-      ],
+      "~/*": ["*"],
+      "@/*": ["src/*"]
     },
-    "typeRoots": [
-      "@types/"
-    ]
+    "typeRoots": ["@types/"]
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }
