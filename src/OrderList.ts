@@ -2,7 +2,6 @@ import Order from './Order';
 
 import { DOM } from './constants';
 import { $ } from './utils/dom';
-import { IOrder } from './@types';
 
 class OrderList {
   #orderList: Order[];
@@ -13,13 +12,6 @@ class OrderList {
     this.#orderList = [];
 
     this.$table = $(`#${DOM.ORDER_TABLE_ID}`);
-
-    this.addEvents();
-  }
-
-  addEvents() {
-    $(`.${DOM.ORDER_BUTTON_CLASS}`).addEventListener('click', () => this.addOrder());
-    $(`#${DOM.ORDER_TABLE_ID}`).addEventListener('click', this.handleTableClick.bind(this));
   }
 
   addOrder() {
@@ -43,6 +35,10 @@ class OrderList {
     });
   }
 
+  getOrderLength(): number {
+    return this.#orderList.length;
+  }
+
   handleTableClick(event: Event) {
     const clickClassName = (event.target as Element).closest('span')?.className;
     const clickId = (event.target as Element).closest('.table-row')?.childNodes[1].textContent;
@@ -59,7 +55,6 @@ class OrderList {
 
     if (isEdit) {
       if (clickId) this.editOrder(+clickId);
-      else throw new Error('수정 할 주문이 없어요');
       alert('수정 완료');
     } else {
       for (let i = 0; i < childrenNodes.length; i++) {
