@@ -11,11 +11,13 @@ import Option from '@/Model/Option';
   '리스트레또',
 */
 
-export const Drinks = [
-  '아메리카노',
-  '카페라떼',
-  '카페모카',
-] as const;
+export const DrinkMap = {
+  아메리카노: 'americano',
+  카페라떼: 'latte',
+  카페모카: 'mocha',
+} as const;
+
+export const Drinks = Object.keys(DrinkMap).map(key => key as keyof typeof DrinkMap);
 
 export type DrinkList = typeof Drinks[number];
 
