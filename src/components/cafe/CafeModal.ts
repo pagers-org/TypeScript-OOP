@@ -1,23 +1,10 @@
-import { createElement } from '@/common';
 import { EVENT } from '@/constant';
+import { Component } from '@/components';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
-export class CafeModal extends HTMLElement {
-  private $container!: HTMLElement;
-
-  connectedCallback() {
-    this.init();
-
-    this.listen();
-  }
-
-  init() {
-    this.$container = createElement(this.template());
-    this.replaceWith(this.$container);
-  }
-
-  listen() {
+export class CafeModal extends Component {
+  events() {
     addEventListener(EVENT.ORDER_SUBMIT, () => {
       this.toggle();
     });

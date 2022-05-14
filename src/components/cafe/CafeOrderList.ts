@@ -3,22 +3,13 @@ import { createElement } from '@/common';
 import { EVENT } from '@/constant';
 import { beverageService, optionService, orders } from '@/main';
 import { nanoid } from 'nanoid';
+import { Component } from '@/components';
 
-export class CafeOrderList extends HTMLElement {
-  private $container!: HTMLElement;
+export class CafeOrderList extends Component {
   private $orderButton!: HTMLElement;
 
-  connectedCallback() {
-    this.init();
-
-    this.events();
-  }
-
   init() {
-    this.$container = createElement(this.template());
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
-
-    this.replaceWith(this.$container);
   }
 
   events() {

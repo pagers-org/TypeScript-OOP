@@ -37,12 +37,8 @@
   position: relative;
 }
 
-.cafe-serving{
-  display: flex;
-  flex-direction: column;
+.CafeServing,.cafe-serving{
   width:100%;
-  align-items: center;
-  justify-content: space-evenly;
 }
 
 @media screen and (max-width: 1408px) {

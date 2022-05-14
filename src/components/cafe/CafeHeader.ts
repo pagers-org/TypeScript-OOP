@@ -1,19 +1,6 @@
-import { createElement } from '@/common';
+import { Component } from '@/components';
 
-export class CafeHeader extends HTMLElement {
-  private $container!: HTMLElement;
-
-  connectedCallback() {
-    this.init();
-
-    this.events();
-  }
-
-  init() {
-    this.$container = createElement(this.template());
-    this.replaceWith(this.$container);
-  }
-
+export class CafeHeader extends Component {
   events() {
     this.$container?.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;

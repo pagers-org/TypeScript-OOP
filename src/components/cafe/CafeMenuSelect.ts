@@ -2,30 +2,23 @@ import { createElement } from '@/common';
 import { MenuItem } from '@/domain';
 import { beverageService, menu, orders } from '@/main';
 import { EVENT } from '@/constant';
+import { Component } from '@/components';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class CafeMenuSelect extends HTMLElement {
-  private $container!: HTMLElement;
+export class CafeMenuSelect extends Component {
   private $buttonContainer!: HTMLElement;
   private $form!: HTMLElement;
 
-  connectedCallback() {
-    this.init();
-
-    this.createMenus();
-
-    this.events();
-  }
-
   init() {
-    this.$container = createElement(this.template());
     this.$buttonContainer = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
-    this.replaceWith(this.$container);
+
+    this.toggle();
+    this.createMenus();
   }
 
   events() {
@@ -52,7 +45,7 @@ export class CafeMenuSelect extends HTMLElement {
       }
 
       if (orders.isEmpty()) {
-        this.$container.classList.add(CLASS_NAME_NONE_ORDER);
+        this.toggle();
       }
     });
 
@@ -76,9 +69,13 @@ export class CafeMenuSelect extends HTMLElement {
     });
   }
 
+  toggle() {
+    this.$container.classList.toggle(CLASS_NAME_NONE_ORDER);
+  }
+
   template() {
     return `
-<div class='MenuSelect ${CLASS_NAME_NONE_ORDER}'>
+<div class='MenuSelect'>
   <h1>주방</h1>
   <div class='coffee-container'>
     <h1 class='coffee_name'>Choose your coffee</h1>

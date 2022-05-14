@@ -1,17 +1,6 @@
-import { createElement } from '@/common';
+import { Component } from '@/components';
 
-export class CafeServing extends HTMLElement {
-  private $container!: HTMLElement;
-
-  connectedCallback() {
-    this.init();
-  }
-
-  private init() {
-    this.$container = createElement(this.template());
-    this.replaceWith(this.$container);
-  }
-
+export class CafeServing extends Component {
   template() {
     return String.raw`
         <div class='cafe-serving'>

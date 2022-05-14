@@ -12,7 +12,7 @@ main#order section {
   justify-content: space-evenly;
 }
 
-.order-list, .maked-list {
+.CafeOrderList,.order-list, .maked-list {
   width: 100%;
   text-align: center;
 }
@@ -65,7 +65,7 @@ main#order section {
 
 .maked-list-view {
   opacity: 0;
-  visibility: 0;
+  visibility: hidden;
   height: 0;
   display: flex;
   justify-content: center;
@@ -348,7 +348,7 @@ input[type=number] {
   padding: 20px;
   transition: 0.3s ease-in-out;
   background-color: #ddb477;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }
 
 .coffee-add-area button:hover {
@@ -396,7 +396,7 @@ input[type=number] {
   z-index: 1;
 }
 
-.MenuSelect{
+.CafeMenuSelect {
   position: relative;
   width:100%;
   height:100%;
@@ -406,7 +406,7 @@ input[type=number] {
   justify-content: space-evenly;
 }
 
-.MenuSelect.none-order:before {
+.CafeMenuSelect.none-order:before {
   width: 100%;
   height: 100%;
   border-radius: 20px;

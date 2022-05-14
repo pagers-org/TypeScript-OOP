@@ -1,10 +1,10 @@
 import { ApiImpl, BeverageService, MenuService, OptionService, Orders } from '@/domain';
 import { createCustomElement } from '@/common';
-import { CafeMenuSelect } from '@/components/CafeMenuSelect';
-import { CafeOrderList } from '@/components/CafeOrderList';
-import { CafeHeader } from '@/components/CafeHeader';
-import { CafeModal } from '@/components/CafeModal';
-import { CafeServing } from '@/components/CafeServing';
+import { CafeMenuSelect } from '@/components/cafe/CafeMenuSelect';
+import { CafeOrderList } from '@/components/cafe/CafeOrderList';
+import { CafeHeader } from '@/components/cafe/CafeHeader';
+import { CafeModal } from '@/components/cafe/CafeModal';
+import { CafeServing } from '@/components/cafe/CafeServing';
 
 export const api = new ApiImpl();
 export const orders = new Orders();
