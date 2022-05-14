@@ -1,5 +1,5 @@
 import { Api } from '@/domain';
-import { rangeRandom } from '@/common';
+import { getRandomRange } from '@/common';
 
 export class OptionService {
   private api: Api;
@@ -16,7 +16,7 @@ export class OptionService {
     return this.getOptionGroups().map(item => {
       item.options.forEach(option => (option.selected = false));
 
-      const idx = rangeRandom(0, item.options.length - 1);
+      const idx = getRandomRange(0, item.options.length - 1);
 
       item.options[idx].selected = true;
 

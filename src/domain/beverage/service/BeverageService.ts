@@ -1,5 +1,5 @@
 import { Beverage, Recipe, Api } from '@/domain';
-import { rangeRandom } from '@/common';
+import { getRandomRange } from '@/common';
 
 export class BeverageService {
   private api: Api;
@@ -18,7 +18,7 @@ export class BeverageService {
   }
 
   public createRandomBeverage(): Beverage {
-    return this.getBeverageById(rangeRandom(1, this.beverages.length));
+    return this.getBeverageById(getRandomRange(1, this.beverages.length));
   }
 
   public getBeverageById(id: number): Beverage {
