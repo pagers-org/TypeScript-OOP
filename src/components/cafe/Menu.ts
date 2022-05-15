@@ -20,8 +20,8 @@ export class Menu extends Component {
   }
 
   createMenus() {
-    this.store.menu.toElement().forEach(menuItem => {
-      this.$buttons.appendChild(menuItem);
+    this.store.menu.getMenuItemElements().forEach($menuItem => {
+      this.$buttons.appendChild($menuItem);
     });
   }
 
@@ -29,17 +29,13 @@ export class Menu extends Component {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
-      const { order } = (e as CustomEvent).detail;
-
-      this.addOrder(order);
+      this.showAndActiveMenu(e.detail.order);
     });
 
     addCustomEventListener(EVENT.ORDER_REMOVED, e => {
       e.preventDefault();
 
-      const { order } = (e as CustomEvent).detail;
-
-      this.removeOrder(order);
+      this.hideAndUnActiveMenu(e.detail.order);
     });
 
     this.$form.addEventListener('submit', event => {
@@ -53,20 +49,23 @@ export class Menu extends Component {
     });
   }
 
-  addOrder(order: Order) {
+  showAndActiveMenu(order: Order) {
     this.show();
-
     this.activeMenu(order);
   }
 
-  removeOrder(order: Order) {
-    if (this.store.orders.isEmptyByBeverageId(order.beverageId)) {
-      this.unActiveMenu(order);
-    }
-
+  hideAndUnActiveMenu(order: Order) {
     if (this.store.orders.isEmptyOrder()) {
       this.hide();
     }
+
+    if (this.store.orders.isEmptyByBeverageId(order.beverageId)) {
+      this.unActiveMenu(order);
+    }
+  }
+
+  getMenuByOrder(order: Order): HTMLElement {
+    return this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`) as HTMLElement;
   }
 
   activeMenu(order: Order) {
@@ -75,10 +74,6 @@ export class Menu extends Component {
 
   unActiveMenu(order: Order) {
     this.getMenuByOrder(order).classList.remove(CLASS_NAME_SELECTED);
-  }
-
-  getMenuByOrder(order: Order): HTMLElement {
-    return this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`) as HTMLElement;
   }
 
   hide() {
