@@ -1,19 +1,19 @@
 import { createElement } from '@/common';
-import { Store } from '@/App';
 import { EVENT } from '@/constant';
+import { Store } from '@/app/Store';
 
 export class Component extends HTMLElement {
   protected $container!: HTMLElement;
   protected store!: Store;
 
-  setStore(store: Store) {
-    this.store = store;
-  }
-
   constructor() {
     super();
 
     dispatchEvent(new CustomEvent(EVENT.COMPONENT_INITIALIZE, { detail: { component: this } }));
+  }
+
+  setStore(store: Store) {
+    this.store = store;
   }
 
   connectedCallback() {

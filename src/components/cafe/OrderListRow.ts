@@ -1,7 +1,8 @@
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { Store } from '@/App';
+import { getBeverageName } from '@/domain/util/util';
+import { Store } from '@/app/Store';
 
 export class OrderListRow extends Component {
   public beverageName!: string;
@@ -15,9 +16,9 @@ export class OrderListRow extends Component {
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
   }
 
-  public static create(beverageName: string, order: Order, store: Store) {
+  public static create(order: Order, store: Store) {
     const instance = document.createElement('cafe-order-list-row') as OrderListRow;
-    instance.beverageName = beverageName;
+    instance.beverageName = getBeverageName(order.beverageId);
     instance.order = order;
     instance.store = store;
 
@@ -38,15 +39,12 @@ export class OrderListRow extends Component {
     });
   }
 
-  private removeOrder() {
-    this.store.orders.remove(this.order);
-
+  removeOrder() {
     this.$container.remove();
-
     dispatchEvent(new CustomEvent(EVENT.ORDER_REMOVED, { detail: { order: this.order } }));
   }
 
-  private editOrder() {
+  editOrder() {
     const key = 'contentEditAble';
 
     const contentEditAble = this.$editOrderButton.getAttribute(key);
