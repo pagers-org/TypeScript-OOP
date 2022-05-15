@@ -10,7 +10,7 @@ export function qsAll(selector: string, scope = document) {
   return Array.from(scope.querySelectorAll(selector));
 }
 
-export function on(target: Document, eventName: string, handler: (event: Event) => void) {
+export function on(target: HTMLElement, eventName: string, handler: (event: Event) => void) {
   target.addEventListener(eventName, handler);
 }
 

@@ -1,8 +1,8 @@
 import { CoffeeOptions } from 'Coffee';
-import { COFFEE, CUP, EXTRA, ICE, ICEORHOT, SIZE, SYRUP, WHIPPEDCREAM } from './utils/constants';
+import { COFFEE, CUP, EXTRA, ICE, ICEORHOT, SIZE, SYRUP, WHIPPEDCREAM, SHOT } from './utils/constants';
 import { getRandomInt } from './utils/getRandom';
 
-class Order {
+export default class Order {
   private orderList: CoffeeOptions[];
 
   constructor() {
@@ -11,15 +11,15 @@ class Order {
 
   get getRandomOrder() {
     return {
-      menu: COFFEE[getRandomInt(0, 10)],
-      size: SIZE[getRandomInt(0, 3)],
-      shot: `${getRandomInt(1, 4)}샷`,
-      syrup: SYRUP[getRandomInt(0, 3)],
-      iceOrHot: ICEORHOT[getRandomInt(0, 2)],
-      ice: ICE[getRandomInt(0, 2)],
-      whippedCream: WHIPPEDCREAM[getRandomInt(0, 3)],
-      extra: EXTRA[getRandomInt(0, 5)],
-      cup: CUP[getRandomInt(0, 2)],
+      menu: COFFEE[getRandomInt(COFFEE)],
+      size: SIZE[getRandomInt(SIZE)],
+      shot: SHOT[getRandomInt(SHOT)],
+      syrup: SYRUP[getRandomInt(SYRUP)],
+      iceOrHot: ICEORHOT[getRandomInt(ICEORHOT)],
+      ice: ICE[getRandomInt(ICE)],
+      whippedCream: WHIPPEDCREAM[getRandomInt(WHIPPEDCREAM)],
+      extra: EXTRA[getRandomInt(EXTRA)],
+      cup: CUP[getRandomInt(CUP)],
     };
   }
 
@@ -35,5 +35,3 @@ class Order {
     this.orderList.push(value);
   }
 }
-
-export default Order;

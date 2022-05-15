@@ -1,6 +1,6 @@
 import { CoffeeOptions } from 'Coffee';
 import Order from './order';
-import { qs } from './utils/helpers';
+import { qs, qsAll } from './utils/helpers';
 import View from './views/View';
 
 export default class Controller {
@@ -9,6 +9,7 @@ export default class Controller {
   private modalView;
   private order;
   private index;
+
   constructor({ mainView, headerView, modalView }: { mainView: View; headerView: View; modalView: View }) {
     this.mainView = mainView;
     this.headerView = headerView;
@@ -19,18 +20,18 @@ export default class Controller {
     this.renderMainView();
   }
 
-  renderMainView() {
+  private renderMainView() {
     this.mainView.show();
     this.headerView.show();
     this.modalView.show();
   }
 
-  subscribeViewEvents() {
+  private subscribeViewEvents() {
     addEventListener('@add', () => {
       this.addOrder();
     });
-    addEventListener('@submit', event => {
-      this.handleSubmit(event);
+    addEventListener('@submit', () => {
+      this.handleSubmit();
     });
     this.mainView.on('click', () => this.editOrder());
     this.mainView.on('click', () => this.selectCoffee());
@@ -38,7 +39,7 @@ export default class Controller {
     this.modalView.on('click', () => this.handleClose());
   }
 
-  render() {
+  private Tabrender() {
     const tabName = '재료관리';
     if (tabName === '재료관리') {
       // TODO
@@ -47,18 +48,18 @@ export default class Controller {
     this.renderMainView();
   }
 
-  editOrder() {
-    document.querySelector('.wrapper')?.addEventListener('click', event => {
+  private editOrder() {
+    qs('.wrapper')?.addEventListener('click', event => {
+      event.preventDefault();
       const $target = event.target as HTMLElement;
-
+      const tableRow = $target.closest('.table-row');
       if ($target.matches('.fa-pen')) {
-        const menuListRow = $target.parentElement?.parentElement?.parentElement?.children || [];
-        for (let i = 0; i < menuListRow.length - 2; i++) {
-          if (menuListRow[i].hasAttribute('contenteditable')) {
-            menuListRow[i].removeAttribute('contenteditable');
-          } else {
-            menuListRow[i].setAttribute('contenteditable', 'true');
-          }
+        if (tableRow?.hasAttribute('contenteditable')) {
+          alert('수정이 완료 되었습니다 😇');
+          tableRow.removeAttribute('contenteditable');
+          return;
+        } else {
+          tableRow?.setAttribute('contenteditable', 'true');
         }
       }
       if ($target.matches('.fa-trash-can')) {
@@ -70,19 +71,19 @@ export default class Controller {
     });
   }
 
-  addOrder() {
+  private addOrder() {
     this.index++;
     const randomMenu = this.order.getRandomOrder;
     this.order.addOrderItem = Object.assign(randomMenu, { id: this.index.toString() });
-    this.render();
+    this.Tabrender();
     this.renderOrderTable();
   }
 
-  selectCoffee() {
-    const coffeeFilling = qs('.filling') as HTMLDivElement;
+  private selectCoffee() {
     let currentElement: HTMLButtonElement | null = null;
+    const coffeeFilling = qs('.filling') as HTMLDivElement;
     const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
-    const buttons = document.querySelectorAll<HTMLButtonElement>('.coffee-category-button');
+    const buttons = qsAll('.coffee-category-button') as HTMLButtonElement[];
 
     buttons.forEach(button =>
       button.addEventListener('click', () => {
@@ -104,13 +105,13 @@ export default class Controller {
     );
   }
 
-  handleSubmit(event: Event) {
-    event.preventDefault();
+  private handleSubmit() {
     const modalLayout = qs('.modal-layout') as HTMLDivElement;
+
     modalLayout.classList.toggle('hidden');
   }
 
-  handleTab() {
+  private handleTab() {
     const pageNav = qs('header') as HTMLHeadElement;
     pageNav.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
@@ -120,7 +121,7 @@ export default class Controller {
     });
   }
 
-  handleClose() {
+  private handleClose() {
     const modalLayout = qs('.modal-layout') as HTMLDivElement;
     modalLayout.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLElement;
@@ -129,7 +130,7 @@ export default class Controller {
     });
   }
 
-  renderOrderTable() {
+  private renderOrderTable() {
     const $contents = `
   <div class="table-row header">
   <div class="cell">No</div>
@@ -175,7 +176,7 @@ ${this.order.getOrderItem
   )
   .join('')}
   `;
-    const $orderTable = document.querySelector('.table') as HTMLDivElement;
+    const $orderTable = qs('.table') as HTMLDivElement;
     $orderTable.innerHTML = $contents;
   }
 }

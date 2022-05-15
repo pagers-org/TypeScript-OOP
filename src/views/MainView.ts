@@ -19,7 +19,8 @@ export default class MainView extends View {
       emit('@add');
     });
     this.coffeeOptionForm.addEventListener('submit', event => {
-      emit<Event>('@submit', event);
+      event.preventDefault();
+      emit('@submit');
     });
 
     return this;
