@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build --base=./",
-    "test": "jest"
+    "test": "jest",
+    "test:w": "jest --watch"
+
   },
   "keywords": [],
   "author": "InSeong-So",
