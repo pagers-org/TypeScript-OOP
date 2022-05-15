@@ -19,7 +19,7 @@ export class Menu extends Component {
     this.createMenus();
   }
 
-  createMenus() {
+  createMenus(): void {
     this.cafe.menu.getMenuItemElements().forEach($menuItem => {
       this.$buttons.appendChild($menuItem);
     });
@@ -49,12 +49,12 @@ export class Menu extends Component {
     });
   }
 
-  showAndActiveMenu(order: Order) {
+  showAndActiveMenu(order: Order): void {
     this.show();
     this.activeMenu(order);
   }
 
-  hideAndUnActiveMenu(order: Order) {
+  hideAndUnActiveMenu(order: Order): void {
     if (this.cafe.orders.isEmptyOrder()) {
       this.hide();
     }
@@ -68,19 +68,19 @@ export class Menu extends Component {
     return this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`) as HTMLElement;
   }
 
-  activeMenu(order: Order) {
+  activeMenu(order: Order): void {
     this.getMenuByOrder(order).classList.add(CLASS_NAME_SELECTED);
   }
 
-  unActiveMenu(order: Order) {
+  unActiveMenu(order: Order): void {
     this.getMenuByOrder(order).classList.remove(CLASS_NAME_SELECTED);
   }
 
-  hide() {
+  hide(): void {
     this.$container.classList.add(CLASS_NAME_NONE_ORDER);
   }
 
-  show() {
+  show(): void {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 

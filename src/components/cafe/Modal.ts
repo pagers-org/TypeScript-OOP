@@ -25,11 +25,11 @@ export class Modal extends Component {
     });
   }
 
-  show() {
+  show(): void {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
   }
 
-  hide() {
+  hide(): void {
     this.$container.classList.add(CLASS_NAME_HIDDEN);
   }
 

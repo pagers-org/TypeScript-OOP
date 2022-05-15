@@ -7,11 +7,11 @@ export class MenuService {
     this.api = api;
   }
 
-  private getMenuItems() {
+  private getMenuItems(): MenuItem[] {
     return this.api.getBeverages().map(item => new MenuItem(item.id));
   }
 
-  public getMenu() {
+  public getMenu(): Menu {
     return new Menu(this.getMenuItems());
   }
 }

@@ -5,7 +5,7 @@ import { getBeverageName } from '@/domain/util/util';
 import { dispatchCustomEvent } from '@/common';
 import { Cafe } from '@/store/Cafe';
 
-export class OrderListRow extends Component {
+export class OrderListItem extends Component {
   private order!: Order;
 
   private $removeOrderButton!: HTMLElement;
