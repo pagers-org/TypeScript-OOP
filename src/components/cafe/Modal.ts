@@ -13,7 +13,7 @@ export class Modal extends Component {
 
   bindEvents() {
     addCustomEventListener(EVENT.ORDER_SUBMIT, () => {
-      if (this.store.orders.isEmptyOrder()) {
+      if (this.cafe.orders.isEmptyOrder()) {
         return alert('주문을 추가하세요');
       }
 

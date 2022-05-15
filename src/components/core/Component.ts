@@ -1,10 +1,10 @@
 import { createElement, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
-import { Store } from '@/app/Store';
+import { Cafe } from '@/store/Cafe';
 
 export class Component extends HTMLElement {
   protected $container!: HTMLElement;
-  protected store!: Store;
+  protected cafe!: Cafe;
 
   constructor() {
     super();
@@ -24,8 +24,8 @@ export class Component extends HTMLElement {
     //override
   }
 
-  setStore(store: Store) {
-    this.store = store;
+  setCafe(cafe: Cafe) {
+    this.cafe = cafe;
   }
 
   render() {

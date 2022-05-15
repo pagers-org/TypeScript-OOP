@@ -3,7 +3,7 @@ import { Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { getBeverageName } from '@/domain/util/util';
 import { dispatchCustomEvent } from '@/common';
-import { Store } from '@/app/Store';
+import { Cafe } from '@/store/Cafe';
 
 export class OrderListRow extends Component {
   private beverageName!: string;
@@ -17,8 +17,8 @@ export class OrderListRow extends Component {
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
   }
 
-  setStoreWithOrder(store: Store, order: Order) {
-    this.store = store;
+  setCafeWithOrder(cafe: Cafe, order: Order) {
+    this.cafe = cafe;
     this.order = order;
     this.beverageName = getBeverageName(order.beverageId);
   }
@@ -39,6 +39,7 @@ export class OrderListRow extends Component {
 
   removeOrder() {
     this.$container.remove();
+
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
@@ -59,7 +60,7 @@ export class OrderListRow extends Component {
 
     return String.raw`
 <div class='table-row'>
-    <div class='cell' data-title='No'>${this.store.orders.getOrderSize()}</div>
+    <div class='cell' data-title='No'>${this.cafe.orders.getOrderSize()}</div>
     <div class='cell' data-title='메뉴명'>${beverageName}</div>
     <div class='cell' data-title='사이즈'>${order.getSelectedOptionValue('사이즈')}</div>
     <div class='cell' data-title='샷'>${order.getSelectedOptionValue('샷')}</div>

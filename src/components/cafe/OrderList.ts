@@ -30,7 +30,7 @@ export class OrderList extends Component {
 
   createRow(order: Order) {
     const $orderRow = document.createElement('cafe-order-list-row') as OrderListRow;
-    $orderRow.setStoreWithOrder(this.store, order);
+    $orderRow.setCafeWithOrder(this.cafe, order);
 
     return $orderRow;
   }

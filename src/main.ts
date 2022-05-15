@@ -1,9 +1,8 @@
 import { createCustomElement } from '@/common';
 import { Header, Menu, Modal, OrderList, OrderListRow, Serving } from '@/components';
 import { createMenu, Orders } from '@/domain';
-import { AppEventHandler } from '@/app/AppEventHandler';
-import { App } from '@/app/App';
-import { Store } from '@/app/Store';
+import { App } from '@/App';
+import { Cafe } from '@/store/Cafe';
 
 window.addEventListener('load', () => {
   createCustomElement('cafe-header', Header);
@@ -14,6 +13,4 @@ window.addEventListener('load', () => {
   createCustomElement('cafe-serving', Serving);
 });
 
-const store = new Store(new Orders(), createMenu());
-
-new App(store, new AppEventHandler(store));
+new App(new Cafe(new Orders(), createMenu()));

@@ -20,7 +20,7 @@ export class Menu extends Component {
   }
 
   createMenus() {
-    this.store.menu.getMenuItemElements().forEach($menuItem => {
+    this.cafe.menu.getMenuItemElements().forEach($menuItem => {
       this.$buttons.appendChild($menuItem);
     });
   }
@@ -41,7 +41,7 @@ export class Menu extends Component {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.store.orders.isEmptyOrder()) {
+      if (this.cafe.orders.isEmptyOrder()) {
         return alert(MSG_ALERT);
       }
 
@@ -55,11 +55,11 @@ export class Menu extends Component {
   }
 
   hideAndUnActiveMenu(order: Order) {
-    if (this.store.orders.isEmptyOrder()) {
+    if (this.cafe.orders.isEmptyOrder()) {
       this.hide();
     }
 
-    if (this.store.orders.isEmptyByBeverageId(order.beverageId)) {
+    if (this.cafe.orders.isEmptyByBeverageId(order.beverageId)) {
       this.unActiveMenu(order);
     }
   }
