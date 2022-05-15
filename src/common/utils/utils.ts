@@ -14,10 +14,10 @@ export function createCustomElement(name: string, clazz: any) {
   }
 }
 
-export function emit(eventName: string, detail: any) {
+export function dispatchCustomEvent(eventName: string, detail: any = {}) {
   dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function on(eventName: string, callback: EventListenerOrEventListenerObject) {
+export function addCustomEventListener(eventName: string, callback: EventListenerOrEventListenerObject) {
   addEventListener(eventName, callback);
 }

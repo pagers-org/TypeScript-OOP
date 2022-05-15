@@ -1,6 +1,7 @@
 import { EVENT } from '@/constant';
 import { Component, OrderListRow } from '@/components';
 import { createRandomOrder } from '@/domain';
+import { dispatchCustomEvent } from '@/common';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -24,7 +25,7 @@ export class OrderList extends Component {
 
     this.$orderTable.appendChild(OrderListRow.create(order, this.store));
 
-    dispatchEvent(new CustomEvent(EVENT.ORDER_ADDED, { detail: { order } }));
+    dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
   }
 
   template() {

@@ -1,4 +1,4 @@
-import { createElement, emit } from '@/common';
+import { createElement, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { Store } from '@/app/Store';
 
@@ -9,7 +9,7 @@ export class Component extends HTMLElement {
   constructor() {
     super();
 
-    emit(EVENT.COMPONENT_INITIALIZE, { component: this });
+    dispatchCustomEvent(EVENT.COMPONENT_INITIALIZE, { component: this });
   }
 
   setStore(store: Store) {

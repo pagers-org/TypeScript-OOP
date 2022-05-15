@@ -1,4 +1,4 @@
-import { createElement, on } from '@/common';
+import { createElement, addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { getBeverageById, MenuItem, Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
@@ -20,7 +20,7 @@ export class Menu extends Component {
   }
 
   events() {
-    on(EVENT.ORDER_ADDED, e => {
+    addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;
@@ -28,7 +28,7 @@ export class Menu extends Component {
       this.addOrder(order);
     });
 
-    on(EVENT.ORDER_REMOVED, e => {
+    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;
@@ -43,7 +43,7 @@ export class Menu extends Component {
         return alert(MSG_ALERT);
       }
 
-      dispatchEvent(new CustomEvent(EVENT.ORDER_SUBMIT));
+      dispatchCustomEvent(EVENT.ORDER_SUBMIT);
     });
   }
 

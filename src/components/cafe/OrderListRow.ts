@@ -3,6 +3,7 @@ import { Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { getBeverageName } from '@/domain/util/util';
 import { Store } from '@/app/Store';
+import { dispatchCustomEvent } from '@/common';
 
 export class OrderListRow extends Component {
   public beverageName!: string;
@@ -41,7 +42,7 @@ export class OrderListRow extends Component {
 
   removeOrder() {
     this.$container.remove();
-    dispatchEvent(new CustomEvent(EVENT.ORDER_REMOVED, { detail: { order: this.order } }));
+    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
   editOrder() {

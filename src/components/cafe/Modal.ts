@@ -1,6 +1,6 @@
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
-import { on } from '@/common';
+import { addCustomEventListener } from '@/common';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -12,7 +12,7 @@ export class Modal extends Component {
   }
 
   events() {
-    on(EVENT.ORDER_SUBMIT, () => {
+    addCustomEventListener(EVENT.ORDER_SUBMIT, () => {
       if (this.store.orders.isEmptyOrder()) {
         return alert('주문을 추가하세요');
       }
