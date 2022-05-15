@@ -19,5 +19,9 @@
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4",
     "vite": "^2.9.6"
+  },
+  "dependencies": {
+    "@types/node": "^17.0.33",
+    "nanoid": "^3.3.4"
   }
 }
