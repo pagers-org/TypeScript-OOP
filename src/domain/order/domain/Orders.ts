@@ -22,7 +22,9 @@ export class Orders {
   }
 
   public getOrderValues() {
-    return Array.from(this.orderData.values()).reduce((list, orders) => {
+    const orderRows: Order[][] = Array.from(this.orderData.values());
+
+    return orderRows.reduce((list, orders) => {
       return [...list, ...orders];
     }, []);
   }

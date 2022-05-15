@@ -12,7 +12,7 @@ export class OrderList extends Component {
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
   }
 
-  events() {
+  bindEvents() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
 

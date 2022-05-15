@@ -1,7 +1,7 @@
 import { Component } from '@/components';
 
 export class Header extends Component {
-  events() {
+  bindEvents() {
     this.$container.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
       if (!$target.matches('[type="radio"]')) return;

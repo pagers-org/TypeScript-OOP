@@ -22,12 +22,12 @@ export class BeverageService {
   }
 
   public getBeverageById(id: number): Beverage {
-    const beverage = this.beverages.filter(beverage => beverage?.id === id);
+    const beverage = this.beverages.find(beverage => beverage?.id === id);
 
     if (!beverage) {
       throw new Error();
     }
 
-    return beverage[0];
+    return beverage;
   }
 }

@@ -26,7 +26,7 @@ export class OrderListRow extends Component {
     return instance;
   }
 
-  events() {
+  bindEvents() {
     this.$removeOrderButton.addEventListener('click', e => {
       e.preventDefault();
 

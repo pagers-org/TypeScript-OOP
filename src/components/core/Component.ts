@@ -21,7 +21,7 @@ export class Component extends HTMLElement {
 
     this.init();
 
-    this.events();
+    this.bindEvents();
   }
 
   init() {
@@ -33,7 +33,7 @@ export class Component extends HTMLElement {
     this.replaceWith(this.$container);
   }
 
-  events() {
+  bindEvents() {
     //override
   }
 

@@ -11,7 +11,7 @@ export class Modal extends Component {
     this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
   }
 
-  events() {
+  bindEvents() {
     addCustomEventListener(EVENT.ORDER_SUBMIT, () => {
       if (this.store.orders.isEmptyOrder()) {
         return alert('주문을 추가하세요');

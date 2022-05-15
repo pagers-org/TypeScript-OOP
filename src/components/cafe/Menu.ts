@@ -19,7 +19,7 @@ export class Menu extends Component {
     this.createMenus();
   }
 
-  events() {
+  bindEvents() {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
