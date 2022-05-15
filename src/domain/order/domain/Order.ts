@@ -16,13 +16,13 @@ export class Order {
   }
 
   private getOptionGroupByName(name: string): OptionGroup {
-    const optionGroups = this.optionGroups.filter(group => group.name === name);
+    const optionGroups = this.optionGroups.find(group => group.name === name);
 
     if (!optionGroups) {
       throw new Error();
     }
 
-    return optionGroups[0];
+    return optionGroups;
   }
 
   public getSelectedOptionValue(groupName: string): string {
