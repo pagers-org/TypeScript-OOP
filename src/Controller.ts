@@ -50,7 +50,7 @@ export default class Controller {
 
   private editOrder() {
     qs('.wrapper')?.addEventListener('click', event => {
-      event.preventDefault();
+      event.stopPropagation();
       const $target = event.target as HTMLElement;
       const tableRow = $target.closest('.table-row');
       if ($target.matches('.fa-pen')) {
@@ -84,14 +84,12 @@ export default class Controller {
     const coffeeFilling = qs('.filling') as HTMLDivElement;
     const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
     const buttons = qsAll('.coffee-category-button') as HTMLButtonElement[];
-
+    if (this.order.getOrderItem.length === 0) {
+      alert('주문내역이 없습니다 🥲');
+      return;
+    }
     buttons.forEach(button =>
-      button.addEventListener('click', () => {
-        if (!this.order.getOrderItem.map(item => item.menu).includes(button.innerText)) {
-          alert('주문 내역이 없습니다.');
-          return;
-        }
-
+      button.addEventListener('click', event => {
         if (currentElement) {
           currentElement.classList.remove('selected');
           coffeeFilling.classList.remove(currentElement.id);
@@ -116,8 +114,9 @@ export default class Controller {
     pageNav.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
       if (!$target.matches('[type="radio"]')) return;
-      event.preventDefault();
+
       alert('아직 준비되지 않았네요🥺');
+      return;
     });
   }
 
