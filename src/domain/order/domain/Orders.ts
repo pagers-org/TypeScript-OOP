@@ -21,14 +21,6 @@ export class Orders {
     return [...this.getListByBeverageId(beverageId)].shift();
   }
 
-  public getOrderValues(): Order[] {
-    const orderRows: Order[][] = Array.from(this.orderData.values());
-
-    return orderRows.reduce((list, orders) => {
-      return [...list, ...orders];
-    }, []);
-  }
-
   public getOrderSize(): number {
     return this.getOrderValues().length;
   }
@@ -39,5 +31,13 @@ export class Orders {
 
   public isEmptyByBeverageId(beverageId: number): boolean {
     return this.getListByBeverageId(beverageId).length == 0;
+  }
+
+  private getOrderValues(): Order[] {
+    const orderRows: Order[][] = Array.from(this.orderData.values());
+
+    return orderRows.reduce((list, orders) => {
+      return [...list, ...orders];
+    }, []);
   }
 }

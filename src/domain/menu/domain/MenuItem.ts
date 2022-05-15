@@ -2,7 +2,7 @@ import { getBeverageById } from '@/domain';
 import { createElement } from '@/common';
 
 export class MenuItem {
-  public beverageId: number;
+  private readonly beverageId: number;
 
   constructor(beverageId: number) {
     this.beverageId = beverageId;
