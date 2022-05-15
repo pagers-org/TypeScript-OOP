@@ -1,4 +1,4 @@
-import { COFFEE, ICE, COLD_HOT, SHOT, SIZE, SYRUP, CREAM, EXTRA, CUP } from '../constant';
+import { COFFEE, ICE, COLD_HOT, SHOT, SIZE, SYRUP, CREAM, EXTRA, CUP } from '@/constant';
 
 type CoffeeMenuType = typeof COFFEE[number];
 type SizeType = typeof SIZE[number];

@@ -1,7 +1,7 @@
-import { $ } from './helper/dom';
-import OrderModel from './model/order';
-import OrderView from './view/order';
-import OrderController from './controller/order';
+import { $ } from '@/helper/dom';
+import OrderModel from '@/model/order';
+import OrderView from '@/view/order';
+import OrderController from '@/controller/order';
 
 const pageNav = $<HTMLHeadElement>('header');
 pageNav.addEventListener('click', (event: MouseEvent) => {

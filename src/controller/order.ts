@@ -1,8 +1,8 @@
-import { getCoffeeNameOnly, getRandomCoffee } from '../helper/util';
-import { $, $all } from '../helper/dom';
-import OrderModel from '../model/order';
-import OrderView from '../view/order';
-import { OrderItemType } from '../@types';
+import { getCoffeeNameOnly, getRandomCoffee } from '@/helper/util';
+import { $, $all } from '@/helper/dom';
+import OrderModel from '@/model/order';
+import OrderView from '@/view/order';
+import { OrderItemType } from '@/@types';
 
 export default class OrderController {
   constructor(model: OrderModel, view: OrderView) {

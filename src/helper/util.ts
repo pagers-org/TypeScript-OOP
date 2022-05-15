@@ -1,5 +1,5 @@
-import { OrderItemType } from '../@types';
-import { COFFEE, SHOT, COLD_HOT, CUP, ICE, SIZE, CREAM, EXTRA, SYRUP } from '../constant/index';
+import { OrderItemType } from '@/@types';
+import { COFFEE, SHOT, COLD_HOT, CUP, ICE, SIZE, CREAM, EXTRA, SYRUP } from '@/constant';
 
 const getRandomNumber = (num: number): number => {
   return Math.trunc(Math.random() * num);

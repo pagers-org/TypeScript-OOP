@@ -1,6 +1,6 @@
-import { OrderItemType } from '../@types';
-import { $ } from '../helper/dom';
-import OrderModel from '../model/order';
+import { OrderItemType } from '@/@types';
+import { $ } from '@/helper/dom';
+import OrderModel from '@/model/order';
 
 export default class OrderView {
   constructor(model: OrderModel) {

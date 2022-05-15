@@ -1,4 +1,4 @@
-import { OrderItemType } from '../@types';
+import { OrderItemType } from '@/@types';
 
 export default class OrderModel {
   constructor(orders: Array<OrderItemType> = []) {
