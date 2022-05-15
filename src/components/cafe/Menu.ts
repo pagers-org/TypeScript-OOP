@@ -1,5 +1,5 @@
-import { createElement, addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { getBeverageById, MenuItem, Order } from '@/domain';
+import { addCustomEventListener, dispatchCustomEvent } from '@/common';
+import { Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
 
@@ -17,6 +17,12 @@ export class Menu extends Component {
     this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
 
     this.createMenus();
+  }
+
+  createMenus() {
+    this.store.menu.toElement().forEach(menuItem => {
+      this.$buttons.appendChild(menuItem);
+    });
   }
 
   bindEvents() {
@@ -48,38 +54,39 @@ export class Menu extends Component {
   }
 
   addOrder(order: Order) {
-    if (this.$container.classList.contains(CLASS_NAME_NONE_ORDER)) {
-      this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
-    }
+    this.show();
 
-    this.getButtonByOrder(order).classList.add(CLASS_NAME_SELECTED);
+    this.activeMenu(order);
   }
 
   removeOrder(order: Order) {
     if (this.store.orders.isEmptyByBeverageId(order.beverageId)) {
-      this.getButtonByOrder(order).classList.remove(CLASS_NAME_SELECTED);
+      this.unActiveMenu(order);
     }
 
     if (this.store.orders.isEmptyOrder()) {
-      this.toggle();
+      this.hide();
     }
   }
 
-  getButtonByOrder(order: Order): HTMLElement {
+  activeMenu(order: Order) {
+    this.getMenuByOrder(order).classList.add(CLASS_NAME_SELECTED);
+  }
+
+  unActiveMenu(order: Order) {
+    this.getMenuByOrder(order).classList.remove(CLASS_NAME_SELECTED);
+  }
+
+  getMenuByOrder(order: Order): HTMLElement {
     return this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`) as HTMLElement;
   }
 
-  createMenus() {
-    this.store.menu.menuItems.forEach((menuItem: MenuItem) => {
-      const beverage = getBeverageById(menuItem.beverageId);
-      const button = createElement(`<button class='coffee-category-button' id='ristretto'>${beverage.name}</button>`);
-      button.dataset['beverageId'] = `${beverage.id}`;
-      this.$buttons.appendChild(button);
-    });
+  hide() {
+    this.$container.classList.add(CLASS_NAME_NONE_ORDER);
   }
 
-  toggle() {
-    this.$container.classList.toggle(CLASS_NAME_NONE_ORDER);
+  show() {
+    this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 
   template() {

@@ -1,6 +1,6 @@
 import { EVENT } from '@/constant';
 import { Component, OrderListRow } from '@/components';
-import { createRandomOrder } from '@/domain';
+import { createRandomOrder, Order } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
 
 export class OrderList extends Component {
@@ -23,9 +23,16 @@ export class OrderList extends Component {
   addOrder() {
     const order = createRandomOrder();
 
-    this.$orderTable.appendChild(OrderListRow.create(order, this.store));
+    this.$orderTable.appendChild(this.createRow(order));
 
     dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
+  }
+
+  createRow(order: Order) {
+    const $orderRow = document.createElement('cafe-order-list-row') as OrderListRow;
+    $orderRow.setStoreWithOrder(this.store, order);
+
+    return $orderRow;
   }
 
   template() {

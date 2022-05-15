@@ -2,12 +2,12 @@ import { Component } from '@/components';
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { getBeverageName } from '@/domain/util/util';
-import { Store } from '@/app/Store';
 import { dispatchCustomEvent } from '@/common';
+import { Store } from '@/app/Store';
 
 export class OrderListRow extends Component {
-  public beverageName!: string;
-  public order!: Order;
+  private beverageName!: string;
+  private order!: Order;
 
   private $removeOrderButton!: HTMLElement;
   private $editOrderButton!: HTMLElement;
@@ -17,13 +17,10 @@ export class OrderListRow extends Component {
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
   }
 
-  public static create(order: Order, store: Store) {
-    const instance = document.createElement('cafe-order-list-row') as OrderListRow;
-    instance.beverageName = getBeverageName(order.beverageId);
-    instance.order = order;
-    instance.store = store;
-
-    return instance;
+  setStoreWithOrder(store: Store, order: Order) {
+    this.store = store;
+    this.order = order;
+    this.beverageName = getBeverageName(order.beverageId);
   }
 
   bindEvents() {
@@ -36,7 +33,7 @@ export class OrderListRow extends Component {
     this.$editOrderButton.addEventListener('click', e => {
       e.preventDefault();
 
-      this.editOrder();
+      this.toggleEditMode();
     });
   }
 
@@ -45,7 +42,7 @@ export class OrderListRow extends Component {
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
-  editOrder() {
+  toggleEditMode() {
     const key = 'contentEditAble';
 
     const contentEditAble = this.$editOrderButton.getAttribute(key);

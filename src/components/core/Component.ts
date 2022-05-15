@@ -12,10 +12,6 @@ export class Component extends HTMLElement {
     dispatchCustomEvent(EVENT.COMPONENT_INITIALIZE, { component: this });
   }
 
-  setStore(store: Store) {
-    this.store = store;
-  }
-
   connectedCallback() {
     this.render();
 
@@ -26,6 +22,10 @@ export class Component extends HTMLElement {
 
   init() {
     //override
+  }
+
+  setStore(store: Store) {
+    this.store = store;
   }
 
   render() {

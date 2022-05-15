@@ -24,6 +24,8 @@ export class BeverageService {
   public getBeverageById(id: number): Beverage {
     const beverage = this.beverages.find(beverage => beverage?.id === id);
 
+    console.log(beverage);
+
     if (!beverage) {
       throw new Error();
     }

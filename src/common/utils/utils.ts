@@ -4,8 +4,8 @@ export function getRandomRange(start: number, end: number) {
 
 export function createElement(html: string): HTMLElement {
   const template = document.createElement('template');
-  template.innerHTML = html;
-  return template.content.firstElementChild as HTMLElement;
+  template.insertAdjacentHTML('beforeend', html);
+  return template.children.item(0) as HTMLElement;
 }
 
 export function createCustomElement(name: string, clazz: any) {

@@ -2,9 +2,10 @@ import { EVENT } from '@/constant';
 import { AppEventHandler } from '@/app/AppEventHandler';
 import { Store } from '@/app/Store';
 import { addCustomEventListener } from '@/common';
+import { Component } from '@/components';
 
 export class App {
-  private store: Store;
+  private readonly store: Store;
 
   private eventHandler: AppEventHandler;
 
@@ -12,9 +13,13 @@ export class App {
     this.store = store;
     this.eventHandler = eventHandler;
 
+    this.init();
+  }
+
+  private init() {
     addCustomEventListener(EVENT.COMPONENT_INITIALIZE, e => {
       const { component } = (e as CustomEvent).detail;
-      component.setStore(store);
+      (component as Component).setStore(this.store);
     });
   }
 }

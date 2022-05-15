@@ -6,4 +6,8 @@ export class Menu {
   constructor(menuItems: MenuItem[]) {
     this.menuItems = menuItems;
   }
+
+  toElement(): HTMLElement[] {
+    return this.menuItems.map((menuItem: MenuItem) => menuItem.toElement());
+  }
 }
