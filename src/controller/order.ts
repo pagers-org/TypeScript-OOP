@@ -5,13 +5,13 @@ import OrderView from '@/view/order';
 import { OrderItemType } from '@/@types';
 
 export default class OrderController {
-  constructor(model: OrderModel, view: OrderView) {
+  constructor(private model: OrderModel, private view: OrderView) {
     this.model = model;
     this.view = view;
-    this.bindEvent(model, view);
+    this.bindEvent();
   }
 
-  bindEvent(model: OrderModel, view: OrderView) {
+  bindEvent() {
     let currentElement: HTMLButtonElement | null = null;
     const coffeeButtons = $all<HTMLButtonElement>('.coffee-category-button');
     const addCoffeeOptionsForm = $<HTMLFormElement>('.coffee-add-area form');
@@ -21,15 +21,15 @@ export default class OrderController {
     const coffeeFilling = $<HTMLDivElement>('.filling');
 
     orderButton.addEventListener('click', () => {
-      model.add(getRandomCoffee());
-      view.render();
-      this.bindFutureEvent(model);
-      this.controlButtons(model.orders);
+      this.model.add(getRandomCoffee());
+      this.view.render();
+      this.bindFutureEvent(this.model);
+      this.controlButtons(this.model.orders);
     });
 
     addCoffeeOptionsForm.addEventListener('submit', e => {
       e.preventDefault();
-      if (model.orders.length === 0) return alert('주문이 없어요 ☕️');
+      if (this.model.orders.length === 0) return alert('주문이 없어요 ☕️');
 
       modalLayout.classList.toggle('hidden');
     });

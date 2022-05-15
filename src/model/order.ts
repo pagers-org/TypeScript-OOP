@@ -1,7 +1,7 @@
 import { OrderItemType } from '@/@types';
 
 export default class OrderModel {
-  constructor(orders: Array<OrderItemType> = []) {
+  constructor(private orders: Array<OrderItemType> = []) {
     this.orders = orders;
   }
   add(order: OrderItemType) {

@@ -3,7 +3,7 @@ import { $ } from '@/helper/dom';
 import OrderModel from '@/model/order';
 
 export default class OrderView {
-  constructor(model: OrderModel) {
+  constructor(private model: OrderModel) {
     this.model = model;
     this.rootNode = $<HTMLDivElement>('.order-list');
     this.rootNode.innerHTML += this.orderTable();
