@@ -1,6 +1,6 @@
 import { COFFEE, ICE, COLD_HOT, SHOT, SIZE, SYRUP, CREAM, EXTRA, CUP } from '../constant';
 
-type CoffeMenuType = typeof COFFEE[number];
+type CoffeeMenuType = typeof COFFEE[number];
 type SizeType = typeof SIZE[number];
 type ShotType = typeof SHOT[number];
 type SyrupType = typeof SYRUP[number];
@@ -12,7 +12,7 @@ type CupType = typeof CUP[number];
 
 export type OrderItemType = {
   _id: string;
-  menu: CoffeMenuType;
+  menu: CoffeeMenuType;
   size: SizeType;
   cup: CupType;
   iceOrHot: IceOrHotType;
