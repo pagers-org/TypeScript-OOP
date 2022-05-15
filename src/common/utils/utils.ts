@@ -1,3 +1,7 @@
+interface CustomEventListener {
+  (evt: CustomEvent): void;
+}
+
 export function getRandomRange(start: number, end: number) {
   return Math.floor(Math.random() * (end - start + 1) + start);
 }
@@ -18,6 +22,8 @@ export function dispatchCustomEvent(eventName: string, detail: any = {}) {
   dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function addCustomEventListener(eventName: string, callback: EventListenerOrEventListenerObject) {
-  addEventListener(eventName, callback);
+export function addCustomEventListener(eventName: string, callback: CustomEventListener) {
+  addEventListener(eventName, e => {
+    callback(e as CustomEvent);
+  });
 }

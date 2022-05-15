@@ -13,15 +13,11 @@ export class AppEventHandler {
 
   handle() {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      const { order } = (e as CustomEvent).detail;
-
-      this.store.orders.add(order);
+      this.store.orders.add(e.detail.order);
     });
 
     addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      const { order } = (e as CustomEvent).detail;
-
-      this.store.orders.remove(order);
+      this.store.orders.remove(e.detail.order);
     });
   }
 }
