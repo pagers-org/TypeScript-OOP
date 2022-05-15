@@ -59,6 +59,7 @@ declare module 'ObjectInterface' {
   // ExtraIngredient 에서 정의한 selectable
   export interface ExtraSelectable {
     select: (option: SelectedOption) => void;
-    getSelected: () => SelectedOption;
+    getType: () => string;
+    getSelected: () => string;
   }
 }
