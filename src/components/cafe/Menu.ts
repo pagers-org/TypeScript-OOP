@@ -1,8 +1,8 @@
 import { createElement } from '@/common';
-import { MenuItem } from '@/domain';
+import { MenuItem, Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
-import { app } from '@/main';
+import { beverageService } from '@/App';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
@@ -25,34 +25,23 @@ export class Menu extends Component {
     addEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
-      if (this.$container.classList.contains(CLASS_NAME_NONE_ORDER)) {
-        this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
-      }
-
       const { order } = (e as CustomEvent).detail;
-      const button = this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`);
-      button?.classList.add(CLASS_NAME_SELECTED);
+
+      this.addOrder(order);
     });
 
     addEventListener(EVENT.ORDER_REMOVED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;
-      const button = this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`);
 
-      if (app.orders.isEmptyByBeverageId(order.beverageId)) {
-        button?.classList.remove(CLASS_NAME_SELECTED);
-      }
-
-      if (app.orders.isEmpty()) {
-        this.toggle();
-      }
+      this.removeOrder(order);
     });
 
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (app.orders.isEmpty()) {
+      if (this.store.orders.isEmptyOrder()) {
         return alert(MSG_ALERT);
       }
 
@@ -60,9 +49,30 @@ export class Menu extends Component {
     });
   }
 
+  private removeOrder(order: Order) {
+    const button = this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`);
+
+    if (this.store.orders.isEmptyByBeverageId(order.beverageId)) {
+      button?.classList.remove(CLASS_NAME_SELECTED);
+    }
+
+    if (this.store.orders.isEmptyOrder()) {
+      this.toggle();
+    }
+  }
+
+  private addOrder(order: Order) {
+    if (this.$container.classList.contains(CLASS_NAME_NONE_ORDER)) {
+      this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
+    }
+
+    const button = this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`);
+    button?.classList.add(CLASS_NAME_SELECTED);
+  }
+
   createMenus() {
-    app.menu.menuItems.forEach((menuItem: MenuItem) => {
-      const beverage = app.beverageService.getBeverageById(menuItem.beverageId);
+    this.store.menu.menuItems.forEach((menuItem: MenuItem) => {
+      const beverage = beverageService.getBeverageById(menuItem.beverageId);
       const button = createElement(`<button class='coffee-category-button' id='ristretto'>${beverage.name}</button>`);
       button.dataset['beverageId'] = `${beverage.id}`;
       this.$buttons.appendChild(button);

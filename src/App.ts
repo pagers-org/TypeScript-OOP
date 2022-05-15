@@ -1,18 +1,28 @@
 import { ApiImpl, BeverageService, Menu, MenuService, OptionService, Orders } from '@/domain';
+import { EVENT } from '@/constant';
 
-export class App {
+const api = new ApiImpl();
+export const beverageService = new BeverageService(api);
+export const optionService = new OptionService(api);
+export const menuService = new MenuService(api);
+
+export class Store {
   public orders: Orders;
-  public beverageService: BeverageService;
-  public optionService: OptionService;
-  public menuService: MenuService;
   public menu: Menu;
 
   constructor() {
-    const api = new ApiImpl();
     this.orders = new Orders();
-    this.beverageService = new BeverageService(api);
-    this.optionService = new OptionService(api);
-    this.menuService = new MenuService(api);
-    this.menu = this.menuService.getMenu();
+    this.menu = menuService.getMenu();
+  }
+}
+
+export class App {
+  constructor() {
+    const store = new Store();
+
+    addEventListener(EVENT.COMPONENT_INITIALIZE, e => {
+      const { component } = (e as CustomEvent).detail;
+      component.setStore(store);
+    });
   }
 }

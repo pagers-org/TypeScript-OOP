@@ -11,4 +11,4 @@ window.addEventListener('load', () => {
   createCustomElement('cafe-serving', Serving);
 });
 
-export const app = new App();
+new App();

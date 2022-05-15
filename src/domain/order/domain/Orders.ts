@@ -1,46 +1,41 @@
 import { Order } from '@/domain';
 
 export class Orders {
-  public static EVENT_ADDED = 'orderAdded';
-  public static EVENT_REMOVED = 'orderRemoved';
-
   public orderData = new Map<number, Order[]>();
 
   public add(order: Order) {
-    this.orderData.set(order.beverageId, [...this.getList(order.beverageId), order]);
+    this.orderData.set(order.beverageId, [...this.getListByBeverageId(order.beverageId), order]);
   }
 
-  public getList(beverageId: number) {
+  public remove(order: Order) {
+    const filteredList = this.getListByBeverageId(order.beverageId).filter(item => item.id !== order.id);
+    this.orderData.set(order.beverageId, [...filteredList]);
+  }
+
+  public getListByBeverageId(beverageId: number) {
     const result = this.orderData.get(beverageId);
     return result ? result : [];
   }
 
-  public getFirst(beverageId: number) {
-    return [...this.getList(beverageId)].shift();
+  public getFirstByBeverageId(beverageId: number) {
+    return [...this.getListByBeverageId(beverageId)].shift();
   }
 
-  public remove(order: Order) {
-    const filteredList = this.getList(order.beverageId).filter(item => item.id !== order.id);
-    this.orderData.set(order.beverageId, [...filteredList]);
-  }
-
-  public values() {
+  public getOrderValues() {
     return Array.from(this.orderData.values()).reduce((list, orders) => {
       return [...list, ...orders];
     }, []);
   }
 
-  public size() {
-    return this.values().length;
+  public getOrderSize() {
+    return this.getOrderValues().length;
   }
 
-  public isEmpty() {
-    return this.size() == 0;
+  public isEmptyOrder() {
+    return this.getOrderSize() == 0;
   }
 
   public isEmptyByBeverageId(beverageId: number) {
-    console.log(this.getList(beverageId));
-
-    return this.getList(beverageId).length == 0;
+    return this.getListByBeverageId(beverageId).length == 0;
   }
 }

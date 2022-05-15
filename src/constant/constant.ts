@@ -2,4 +2,5 @@ export const EVENT = {
   ORDER_ADDED: 'ORDER_ADDED',
   ORDER_REMOVED: 'ORDER_REMOVED',
   ORDER_SUBMIT: 'ORDER_SUBMIT',
+  COMPONENT_INITIALIZE: 'Component.initialize',
 };

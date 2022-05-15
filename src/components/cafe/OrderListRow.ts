@@ -1,7 +1,7 @@
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { app } from '@/main';
+import { Store } from '@/App';
 
 export class OrderListRow extends Component {
   public beverageName!: string;
@@ -15,10 +15,11 @@ export class OrderListRow extends Component {
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
   }
 
-  public static create(beverageName: string, order: Order) {
+  public static create(beverageName: string, order: Order, store: Store) {
     const instance = document.createElement('cafe-order-list-row') as OrderListRow;
     instance.beverageName = beverageName;
     instance.order = order;
+    instance.store = store;
 
     return instance;
   }
@@ -38,7 +39,7 @@ export class OrderListRow extends Component {
   }
 
   private removeOrder() {
-    app.orders.remove(this.order);
+    this.store.orders.remove(this.order);
 
     this.$container.remove();
 
@@ -62,7 +63,7 @@ export class OrderListRow extends Component {
 
     return String.raw`
 <div class='table-row'>
-    <div class='cell' data-title='No'>${app.orders.size()}</div>
+    <div class='cell' data-title='No'>${this.store.orders.getOrderSize()}</div>
     <div class='cell' data-title='메뉴명'>${beverageName}</div>
     <div class='cell' data-title='사이즈'>${order.getSelectedOptionValue('사이즈')}</div>
     <div class='cell' data-title='샷'>${order.getSelectedOptionValue('샷')}</div>

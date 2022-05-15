@@ -1,6 +1,5 @@
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
-import { app } from '@/main';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -13,7 +12,7 @@ export class Modal extends Component {
 
   events() {
     addEventListener(EVENT.ORDER_SUBMIT, () => {
-      if (app.orders.isEmpty()) {
+      if (this.store.orders.isEmptyOrder()) {
         return alert('주문을 추가하세요');
       }
 
@@ -31,7 +30,7 @@ export class Modal extends Component {
 
   template() {
     return String.raw`
-<div class="modal-layout hidden">
+<div class="modal-layout hidden cafe-modal">
   <div class="modal-header">
     <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>
     <h1>아메리카노 옵션</h1>

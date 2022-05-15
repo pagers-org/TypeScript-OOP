@@ -1,7 +1,20 @@
 import { createElement } from '@/common';
+import { Store } from '@/App';
+import { EVENT } from '@/constant';
 
 export class Component extends HTMLElement {
   protected $container!: HTMLElement;
+  protected store!: Store;
+
+  setStore(store: Store) {
+    this.store = store;
+  }
+
+  constructor() {
+    super();
+
+    dispatchEvent(new CustomEvent(EVENT.COMPONENT_INITIALIZE, { detail: { component: this } }));
+  }
 
   connectedCallback() {
     this.render();
@@ -12,7 +25,7 @@ export class Component extends HTMLElement {
   }
 
   init() {
-    //
+    //override
   }
 
   render() {
@@ -21,7 +34,7 @@ export class Component extends HTMLElement {
   }
 
   events() {
-    //
+    //override
   }
 
   template(): string {
