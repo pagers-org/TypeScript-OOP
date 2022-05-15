@@ -13,3 +13,11 @@ export function createCustomElement(name: string, clazz: any) {
     customElements.define(name, clazz);
   }
 }
+
+export function emit(eventName: string, detail: any) {
+  dispatchEvent(new CustomEvent(eventName, { detail }));
+}
+
+export function on(eventName: string, callback: EventListenerOrEventListenerObject) {
+  addEventListener(eventName, callback);
+}

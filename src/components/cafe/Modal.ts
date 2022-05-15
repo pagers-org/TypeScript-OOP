@@ -1,5 +1,6 @@
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
+import { on } from '@/common';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -11,21 +12,25 @@ export class Modal extends Component {
   }
 
   events() {
-    addEventListener(EVENT.ORDER_SUBMIT, () => {
+    on(EVENT.ORDER_SUBMIT, () => {
       if (this.store.orders.isEmptyOrder()) {
         return alert('주문을 추가하세요');
       }
 
-      this.toggle();
+      this.show();
     });
 
     this.$closeButton.addEventListener('click', () => {
-      this.toggle();
+      this.hide();
     });
   }
 
-  toggle() {
-    this.$container.classList.toggle(CLASS_NAME_HIDDEN);
+  show() {
+    this.$container.classList.remove(CLASS_NAME_HIDDEN);
+  }
+
+  hide() {
+    this.$container.classList.add(CLASS_NAME_HIDDEN);
   }
 
   template() {

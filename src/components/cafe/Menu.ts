@@ -1,4 +1,4 @@
-import { createElement } from '@/common';
+import { createElement, on } from '@/common';
 import { getBeverageById, MenuItem, Order } from '@/domain';
 import { EVENT } from '@/constant';
 import { Component } from '@/components';
@@ -16,12 +16,11 @@ export class Menu extends Component {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
     this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
 
-    this.toggle();
     this.createMenus();
   }
 
   events() {
-    addEventListener(EVENT.ORDER_ADDED, e => {
+    on(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;
@@ -29,7 +28,7 @@ export class Menu extends Component {
       this.addOrder(order);
     });
 
-    addEventListener(EVENT.ORDER_REMOVED, e => {
+    on(EVENT.ORDER_REMOVED, e => {
       e.preventDefault();
 
       const { order } = (e as CustomEvent).detail;
@@ -85,7 +84,7 @@ export class Menu extends Component {
 
   template() {
     return `
-<div class='MenuSelect'>
+<div class='MenuSelect none-order'>
   <h1>주방</h1>
   <div class='coffee-container'>
     <h1 class='coffee_name'>Choose your coffee</h1>

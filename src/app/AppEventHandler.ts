@@ -1,5 +1,6 @@
 import { EVENT } from '@/constant';
 import { Store } from '@/app/Store';
+import { on } from '@/common';
 
 export class AppEventHandler {
   private store: Store;
@@ -11,13 +12,13 @@ export class AppEventHandler {
   }
 
   handle() {
-    addEventListener(EVENT.ORDER_ADDED, e => {
+    on(EVENT.ORDER_ADDED, e => {
       const { order } = (e as CustomEvent).detail;
 
       this.store.orders.add(order);
     });
 
-    addEventListener(EVENT.ORDER_REMOVED, e => {
+    on(EVENT.ORDER_REMOVED, e => {
       const { order } = (e as CustomEvent).detail;
 
       this.store.orders.remove(order);
