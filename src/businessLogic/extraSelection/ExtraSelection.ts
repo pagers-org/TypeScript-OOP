@@ -1,7 +1,7 @@
 import { ExtraIngredientRecord, SelectedOption } from 'dto';
-import { ExtraSelectable } from 'ObjectInterface';
+import { Comparable, ExtraSelectable } from 'ObjectInterface';
 
-export default class ExtraSelection implements ExtraSelectable {
+export default class ExtraSelection implements ExtraSelectable, Comparable<ExtraSelection> {
   private _selected: string;
   private readonly _type: string;
   constructor(private readonly extraIngredientRecord: ExtraIngredientRecord) {
@@ -9,6 +9,9 @@ export default class ExtraSelection implements ExtraSelectable {
     this._type = this.extraIngredientRecord.type;
   }
 
+  equal(there: ExtraSelection) {
+    return this.getType() === there.getType() && this.getSelected() === there.getSelected();
+  }
   getSelected() {
     return this._selected;
   }

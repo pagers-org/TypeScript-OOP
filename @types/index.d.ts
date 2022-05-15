@@ -37,7 +37,7 @@ declare module 'dto' {
   export interface Beverage extends BaseId {
     completedAt: Date; // 의문 -> 음료자체에 완성된 시간을 가지고 있는게 의미가 맞는가...?
     menu: Menu;
-    contains: Ingredient[];
+    contains: SelectedOption[];
   }
 
   export interface CompletedMenuRecord extends BaseId {
@@ -49,8 +49,11 @@ declare module 'dto' {
 
 declare module 'ObjectInterface' {
   // 객체 인터페이스
-  import { SelectedOption } from 'dto';
+  import { Beverage, Menu, Order, SelectedOption } from 'dto';
 
+  export interface Comparable<T> {
+    equal: (there: T) => boolean;
+  }
   export interface KitchenManager {
     choice: (menu: Menu) => void;
     createBeverage: (order: Order) => Beverage;

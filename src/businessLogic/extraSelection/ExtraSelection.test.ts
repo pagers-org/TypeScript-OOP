@@ -41,4 +41,35 @@ describe('extraSelection test', () => {
       }).toThrow();
     });
   });
+  describe('equal', () => {
+    test('동일한 타입과 동일한 선택을 했으면 같다.', () => {
+      const SAME_EXTRA_OPTION = EXTRA_OPTIONS[0];
+      const a = new ExtraSelection(SAME_EXTRA_OPTION);
+      const b = new ExtraSelection(SAME_EXTRA_OPTION);
+      expect(a.equal(b)).toBeTruthy();
+    });
+    test('동일한 타입과 다른 선택을 했으면 false.', () => {
+      const SAME_EXTRA_OPTION = EXTRA_OPTIONS[0];
+      const a = new ExtraSelection(SAME_EXTRA_OPTION);
+      const b = new ExtraSelection(SAME_EXTRA_OPTION);
+
+      // 다른 선택으로 바꿈
+      const diffSelect = SAME_EXTRA_OPTION.selectableList[1];
+      expect(diffSelect).not.toEqual(b.getSelected());
+
+      b.select({ selected: diffSelect, type: SAME_EXTRA_OPTION.type });
+      expect(a.equal(b)).toBeFalsy();
+    });
+    test('다른 타입, 동일한 선택을 했으면 false.', () => {
+      const SAME_EXTRA_OPTION = EXTRA_OPTIONS[0];
+      const a = new ExtraSelection(SAME_EXTRA_OPTION);
+
+      // 다른 선택으로 바꿈
+      const diffType = '다른타입';
+      expect(diffType).not.toEqual(a.getType());
+      const b = new ExtraSelection({ ...SAME_EXTRA_OPTION, type: diffType });
+
+      expect(a.equal(b)).toBeFalsy();
+    });
+  });
 });
