@@ -6,7 +6,6 @@ import { dispatchCustomEvent } from '@/common';
 import { Cafe } from '@/store/Cafe';
 
 export class OrderListRow extends Component {
-  private beverageName!: string;
   private order!: Order;
 
   private $removeOrderButton!: HTMLElement;
@@ -20,7 +19,6 @@ export class OrderListRow extends Component {
   setCafeWithOrder(cafe: Cafe, order: Order) {
     this.cafe = cafe;
     this.order = order;
-    this.beverageName = getBeverageName(order.beverageId);
   }
 
   bindEvents() {
@@ -56,7 +54,8 @@ export class OrderListRow extends Component {
   }
 
   template() {
-    const { order, beverageName } = this;
+    const order = this.order;
+    const beverageName = getBeverageName(order.beverageId);
 
     return String.raw`
 <div class='table-row'>
