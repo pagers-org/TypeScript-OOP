@@ -1,26 +1,28 @@
 import { Order } from '@/domain';
 
 export class OrderGroup {
-  private readonly orderList: Order[];
+  private readonly id: number;
+  private orderList: Order[];
 
-  constructor(orderList: Order[] = []) {
+  constructor(id: number, orderList: Order[] = []) {
     this.orderList = orderList;
+    this.id = id;
   }
 
-  public add(order: Order): OrderGroup {
-    return new OrderGroup([...this.orderList, order]);
+  public getId() {
+    return this.id;
   }
 
-  public remove(order: Order): OrderGroup {
-    return new OrderGroup(this.orderList.filter(item => item.id !== order.id));
+  public add(order: Order): void {
+    this.orderList = [...this.orderList, order];
   }
 
-  public first(): Order | undefined {
-    return this.orderList.shift();
+  public remove(order: Order): void {
+    this.orderList = this.orderList.filter(item => item.id !== order.id);
   }
 
-  public getOrderList(): Order[] {
-    return this.orderList;
+  public first(): Order {
+    return this.orderList[0];
   }
 
   public size(): number {

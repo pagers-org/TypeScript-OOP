@@ -1,4 +1,5 @@
 import { OptionGroup } from '@/domain';
+import { OptionGroupName, OptionName } from '@/@types';
 
 export class Order {
   public id: string;
@@ -25,7 +26,21 @@ export class Order {
     return optionGroups;
   }
 
-  public getSelectedOptionValue(groupName: string): string {
+  public setSelectedOptionValue(groupName: OptionGroupName, value: string): void {
+    this.getOptionGroupByName(groupName).setSelectedOptionValue(value);
+  }
+
+  public getSelectedOptionValue(groupName: OptionGroupName): string {
     return this.getOptionGroupByName(groupName).getSelectedOptionValue();
+  }
+
+  public isSelectedOptionEquals(groupName: OptionGroupName, target: OptionName): boolean {
+    const group = this.getOptionGroupByName(groupName);
+
+    if (group.type === 'multiple') {
+      return group.getSelectedOptionValue().includes(target);
+    } else {
+      return this.getSelectedOptionValue(groupName) === target;
+    }
   }
 }

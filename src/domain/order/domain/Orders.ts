@@ -2,26 +2,43 @@ import { Order } from '@/domain';
 import { OrderGroup } from '@/domain/order/domain/OrderGroup';
 
 export class Orders {
-  private orderData = new Map<number, OrderGroup>();
+  private orderGroups: OrderGroup[] = [];
 
   public add(order: Order): void {
-    this.orderData.set(order.beverageId, this.getOrderGroup(order.beverageId).add(order));
+    const orderGroup = this.getOrderGroup(order.beverageId);
+
+    if (orderGroup.isEmpty()) {
+      this.orderGroups.push(orderGroup);
+    }
+
+    orderGroup.add(order);
+  }
+
+  public firstOrder(): Order {
+    const order = this.orderGroups[0].first();
+
+    if (!order) {
+      throw new Error();
+    }
+
+    return order;
   }
 
   public remove(order: Order): void {
-    this.orderData.set(order.beverageId, this.getOrderGroup(order.beverageId).remove(order));
+    const orderGroup = this.getOrderGroup(order.beverageId);
+    orderGroup.remove(order);
+
+    if (orderGroup.isEmpty()) {
+      this.orderGroups = this.orderGroups.filter(orderGroup => orderGroup.getId() !== order.beverageId);
+    }
   }
 
   public getOrderGroup(beverageId: number): OrderGroup {
-    const result = this.orderData.get(beverageId);
-    return result ? result : new OrderGroup();
-  }
-
-  public size(): number {
-    return Array.from(this.orderData.values()).reduce((a, b) => a + b.size(), 0);
+    const result = this.orderGroups.find(orderGroup => orderGroup.getId() === beverageId);
+    return result ? result : new OrderGroup(beverageId);
   }
 
   public isEmpty(): boolean {
-    return this.size() == 0;
+    return this.orderGroups.length == 0;
   }
 }

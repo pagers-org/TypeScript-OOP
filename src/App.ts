@@ -2,6 +2,7 @@ import { EVENT } from '@/constant';
 import { addCustomEventListener } from '@/common';
 import { Component } from '@/components';
 import { Cafe } from '@/cafe';
+import { OrderChangeType } from '@/@types';
 
 export class App {
   private readonly cafe: Cafe;
@@ -24,6 +25,11 @@ export class App {
 
     addCustomEventListener(EVENT.ORDER_REMOVED, e => {
       this.cafe.orders.remove(e.detail.order);
+    });
+
+    addCustomEventListener(EVENT.CHANGE_OPTION, e => {
+      const { order, groupName, value }: OrderChangeType = e.detail;
+      order.setSelectedOptionValue(groupName, value);
     });
   }
 }

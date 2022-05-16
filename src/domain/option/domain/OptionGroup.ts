@@ -1,25 +1,50 @@
 import { Option } from '@/domain';
-
-export type OptionGroupName = '사이즈' | '얼음 종류' | '샷' | '휘핑 크림' | '시럽' | '엑스트라' | 'ICE/HOT';
+import { OptionGroupName } from '@/@types';
 
 export class OptionGroup {
   public id: number;
   public name: OptionGroupName;
   public options: Option[];
+  public type?: string;
 
-  constructor(id: number, name: OptionGroupName, options: Option[] = []) {
+  constructor(id: number, name: OptionGroupName, type?: string, options: Option[] = []) {
     this.id = id;
     this.name = name;
     this.options = options;
-  }
-
-  private getSelectedOptions() {
-    return this.options.filter(item => item.selected);
+    this.type = type;
   }
 
   public getSelectedOptionValue(): string {
     return this.getSelectedOptions()
       .map(item => item.name)
       .join(',');
+  }
+
+  private getSelectedOptions(): Option[] {
+    return this.options.filter(item => item.selected);
+  }
+
+  public setSelectedOptionValue(value: string): void {
+    if (this.type === 'multiple') {
+      this.setMultipleOptionValue(value);
+    } else {
+      this.setSingleOptionValue(value);
+    }
+  }
+
+  private setSingleOptionValue(value: string): void {
+    this.options.forEach(option => {
+      option.selected = option.name == value;
+    });
+  }
+
+  private setMultipleOptionValue(value: string): void {
+    const option = this.options.find(option => option.name === value);
+
+    if (!option) {
+      throw new Error();
+    }
+
+    option.selected = !option.selected;
   }
 }

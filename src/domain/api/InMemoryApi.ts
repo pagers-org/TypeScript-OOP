@@ -1,16 +1,7 @@
-import {
-  Beverage,
-  Material,
-  Option,
-  OptionGroup,
-  Recipe,
-  Api,
-  OptionGroupName,
-  BeverageName,
-  MaterialName,
-} from '@/domain';
+import { Beverage, Material, Option, OptionGroup, Recipe, Api } from '@/domain';
+import { BeverageName, MaterialName, OptionGroupName } from '@/@types';
 
-export class ApiImpl implements Api {
+export class InMemoryApi implements Api {
   getBeverages(): Beverage[] {
     return [
       {
@@ -144,6 +135,7 @@ export class ApiImpl implements Api {
       {
         id: 6,
         name: '엑스트라',
+        type: 'multiple',
       },
       {
         id: 7,
@@ -154,7 +146,7 @@ export class ApiImpl implements Api {
         name: '컵',
       },
     ].map(item => {
-      const optionGroup = new OptionGroup(item.id, item.name as OptionGroupName);
+      const optionGroup = new OptionGroup(item.id, item.name as OptionGroupName, item.type);
       optionGroup.options = this.getOptions().filter(option => option.optionGroupId == item.id);
       return optionGroup;
     });

@@ -1,7 +1,7 @@
-import { BeverageService, ApiImpl, Order, Orders, Recipe } from '@/domain';
+import { BeverageService, InMemoryApi, Order, Orders, Recipe } from '@/domain';
 
 describe('app 테스트', () => {
-  const beverageService = new BeverageService(new ApiImpl());
+  const beverageService = new BeverageService(new InMemoryApi());
 
   describe('음료 테스트', () => {
     it('음료 가저오기 테스트', () => {
@@ -27,11 +27,21 @@ describe('app 테스트', () => {
     orders.add(order2);
     orders.add(order3);
 
-    const getOrder1 = orders.getFirstByBeverageId(1);
+    const getOrder1 = orders.getOrderGroup(1).first();
     expect(getOrder1?.id).toEqual('1');
     if (getOrder1) orders.remove(getOrder1);
 
-    const getOrder2 = orders.getFirstByBeverageId(1);
+    const getOrder2 = orders.getOrderGroup(1).first();
     expect(getOrder2?.id).toEqual('3');
+  });
+
+  describe('임시', () => {
+    const api = new InMemoryApi();
+    console.log(
+      api
+        .getOptions()
+        .map(o => `'${o.name}'`)
+        .join(','),
+    );
   });
 });

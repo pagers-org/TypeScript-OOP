@@ -17,6 +17,8 @@ export class Component extends HTMLElement {
 
     this.init();
 
+    this.bindListener();
+
     this.bindEvents();
   }
 
@@ -31,6 +33,10 @@ export class Component extends HTMLElement {
   render() {
     this.$container = createElement(this.template());
     this.replaceWith(this.$container);
+  }
+
+  bindListener() {
+    //override
   }
 
   bindEvents() {

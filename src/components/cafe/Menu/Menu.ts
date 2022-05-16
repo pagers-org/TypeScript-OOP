@@ -1,8 +1,9 @@
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { Component } from '@/components';
+import { Component, Modal } from '@/components';
 import { template } from './Menu.template';
+import { getBeverageById } from '@/cafe';
+import { Order } from '@/domain';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 const CLASS_NAME_SELECTED = 'selected';
@@ -45,6 +46,11 @@ export class Menu extends Component {
       if (this.cafe.orders.isEmpty()) {
         return alert(MSG_ALERT);
       }
+
+      const order = this.cafe.orders.firstOrder();
+      const beverage = getBeverageById(order.beverageId);
+
+      (document.createElement('cafe-modal') as Modal).open(order, beverage);
 
       dispatchCustomEvent(EVENT.ORDER_SUBMIT);
     });

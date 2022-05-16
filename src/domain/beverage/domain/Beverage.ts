@@ -1,14 +1,4 @@
-export type BeverageName =
-  | '아메리카노'
-  | '카페오레'
-  | '카푸치노'
-  | '코레또'
-  | '에스프레소'
-  | '카페 라떼'
-  | '룽고'
-  | '마끼야또'
-  | '카페 모카'
-  | '리스트레또';
+import { BeverageName } from '@/@types';
 
 export class Beverage {
   public id: number;
