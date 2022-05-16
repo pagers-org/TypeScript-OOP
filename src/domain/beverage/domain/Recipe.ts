@@ -1,8 +1,8 @@
 export class Recipe {
-  public id: number;
-  public beverageId: number;
-  public materialId: number;
-  public count: number;
+  private id: number;
+  private beverageId: number;
+  private materialId: number;
+  private count: number;
 
   constructor(id: number, beverageId: number, materialId: number, count: number) {
     this.id = id;

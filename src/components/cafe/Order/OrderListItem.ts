@@ -13,18 +13,18 @@ export class OrderListItem extends Component {
   private $editOrderButton!: HTMLElement;
   private $no!: HTMLElement;
 
-  init() {
+  public setCafeWithOrder(cafe: Cafe, order: Order) {
+    this.cafe = cafe;
+    this.order = order;
+  }
+
+  protected initElements() {
     this.$removeOrderButton = this.$container.querySelector('.remove-order') as HTMLElement;
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
     this.$no = this.$container.querySelector('[data-title="No"]') as HTMLElement;
   }
 
-  setCafeWithOrder(cafe: Cafe, order: Order) {
-    this.cafe = cafe;
-    this.order = order;
-  }
-
-  bindListener() {
+  protected bindListener() {
     addCustomEventListener(EVENT.CHANGE_OPTION, e => {
       const { order }: OrderChangeType = e.detail;
 
@@ -34,7 +34,7 @@ export class OrderListItem extends Component {
     });
   }
 
-  bindEvents() {
+  protected bindEvents() {
     this.$removeOrderButton.addEventListener('click', e => {
       e.preventDefault();
 
@@ -48,14 +48,14 @@ export class OrderListItem extends Component {
     });
   }
 
-  updateOptions() {
+  private updateOptions() {
     OPTION_GROUP_NAMES.forEach(optionGroupName => {
       const $el = this.$container.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
       $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
     });
   }
 
-  removeOrder() {
+  private removeOrder() {
     dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { orderListItem: this });
 
     this.$container.remove();
@@ -63,11 +63,11 @@ export class OrderListItem extends Component {
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
-  setNo(no: number) {
+  private setNo(no: number) {
     this.$no.textContent = no + '';
   }
 
-  toggleEditMode() {
+  private toggleEditMode() {
     const key = 'contentEditAble';
 
     const contentEditAble = this.$editOrderButton.getAttribute(key);
@@ -79,7 +79,7 @@ export class OrderListItem extends Component {
     }
   }
 
-  template() {
+  protected template() {
     const order = this.order;
     const beverageName = getBeverageName(order.beverageId);
 

@@ -15,35 +15,41 @@ export class Component extends HTMLElement {
   connectedCallback() {
     this.render();
 
-    this.init();
+    this.initElements();
+
+    this.mounted();
 
     this.bindListener();
 
     this.bindEvents();
   }
 
-  init() {
+  protected initElements() {
     //override
   }
 
-  setCafe(cafe: Cafe) {
+  public setCafe(cafe: Cafe) {
     this.cafe = cafe;
   }
 
-  render() {
+  protected render() {
     this.$container = createElement(this.template());
     this.replaceWith(this.$container);
   }
 
-  bindListener() {
+  protected bindListener() {
     //override
   }
 
-  bindEvents() {
+  protected bindEvents() {
     //override
   }
 
-  template(): string {
+  protected template(): string {
     return '';
+  }
+
+  protected mounted() {
+    //
   }
 }

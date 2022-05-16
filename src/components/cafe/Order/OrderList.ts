@@ -10,12 +10,12 @@ export class OrderList extends Component {
   private $orderButton!: HTMLElement;
   private $orderListItems: OrderListItem[] = [];
 
-  init() {
+  protected initElements() {
     this.$orderTable = this.$container.querySelector('#order-table') as HTMLElement;
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
   }
 
-  bindListener() {
+  protected bindListener() {
     addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
       const orderListItem = e.detail.orderListItem;
 
@@ -24,7 +24,7 @@ export class OrderList extends Component {
     });
   }
 
-  bindEvents() {
+  protected bindEvents() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
 
@@ -33,22 +33,22 @@ export class OrderList extends Component {
     });
   }
 
-  removeOrderListItem(orderListItem: OrderListItem) {
+  private removeOrderListItem(orderListItem: OrderListItem) {
     this.$orderListItems = this.$orderListItems.filter(o => o !== orderListItem);
   }
 
-  addOrder(order: Order): void {
+  private addOrder(order: Order): void {
     this.$orderTable.appendChild(this.createListItem(order));
     dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
   }
 
-  updateListItemNo() {
+  private updateListItemNo() {
     this.$orderListItems.forEach((orderListItem, index) => {
       orderListItem.setNo(index + 1);
     });
   }
 
-  createListItem(order: Order): OrderListItem {
+  private createListItem(order: Order): OrderListItem {
     const $orderListItem = document.createElement('cafe-order-list-item') as OrderListItem;
     $orderListItem.setCafeWithOrder(this.cafe, order);
 
@@ -57,7 +57,7 @@ export class OrderList extends Component {
     return $orderListItem;
   }
 
-  template() {
+  protected template() {
     return template;
   }
 }

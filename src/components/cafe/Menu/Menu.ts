@@ -14,20 +14,25 @@ export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
 
-  init() {
+  protected initElements() {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
     this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
+  }
 
+  protected mounted() {
     this.createMenus();
   }
 
-  createMenus(): void {
-    this.cafe.menu.getMenuItemElements().forEach($menuItem => {
-      this.$buttons.appendChild($menuItem);
-    });
+  private createMenus(): void {
+    this.cafe
+      .getMenu()
+      .getMenuItemElements()
+      .forEach($menuItem => {
+        this.$buttons.appendChild($menuItem);
+      });
   }
 
-  bindListener() {
+  protected bindListener() {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
@@ -41,16 +46,16 @@ export class Menu extends Component {
     });
   }
 
-  bindEvents() {
+  protected bindEvents() {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.cafe.orders.isEmpty()) {
+      if (this.cafe.getOrders().isEmpty()) {
         return alert(MSG_ALERT);
       }
 
-      const order = this.cafe.orders.firstOrder();
-      const beverage = getBeverageById(order.beverageId);
+      const order = this.cafe.getOrders().firstOrder();
+      const beverage = getBeverageById(order.getBeverageId());
 
       (document.createElement('cafe-modal') as Modal).open(order, beverage);
 
@@ -58,42 +63,42 @@ export class Menu extends Component {
     });
   }
 
-  showAndActiveMenu(order: Order): void {
+  private showAndActiveMenu(order: Order): void {
     this.show();
     this.activeMenu(order);
   }
 
-  hideAndUnActiveMenu(order: Order): void {
-    if (this.cafe.orders.isEmpty()) {
+  private hideAndUnActiveMenu(order: Order): void {
+    if (this.cafe.getOrders().isEmpty()) {
       this.hide();
     }
 
-    if (this.cafe.orders.getOrderGroup(order.beverageId).isEmpty()) {
+    if (this.cafe.getOrders().getOrderGroup(order.getBeverageId()).isEmpty()) {
       this.unActiveMenu(order);
     }
   }
 
-  getMenuByOrder(order: Order): HTMLElement {
-    return this.$container.querySelector(`[data-beverage-id="${order.beverageId}"]`) as HTMLElement;
+  private getMenuByOrder(order: Order): HTMLElement {
+    return this.$container.querySelector(`[data-beverage-id="${order.getBeverageId()}"]`) as HTMLElement;
   }
 
-  activeMenu(order: Order): void {
+  private activeMenu(order: Order): void {
     this.getMenuByOrder(order).classList.add(CLASS_NAME_SELECTED);
   }
 
-  unActiveMenu(order: Order): void {
+  private unActiveMenu(order: Order): void {
     this.getMenuByOrder(order).classList.remove(CLASS_NAME_SELECTED);
   }
 
-  hide(): void {
+  private hide(): void {
     this.$container.classList.add(CLASS_NAME_NONE_ORDER);
   }
 
-  show(): void {
+  private show(): void {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 
-  template() {
+  protected template() {
     return template;
   }
 }

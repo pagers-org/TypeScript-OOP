@@ -2,7 +2,7 @@ import { Component } from '@/components';
 import { template } from './Header.template';
 
 export class Header extends Component {
-  bindEvents() {
+  protected bindEvents() {
     this.$container.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
       if (!$target.matches('[type="radio"]')) return;
@@ -11,7 +11,7 @@ export class Header extends Component {
     });
   }
 
-  template() {
+  protected template() {
     return template;
   }
 }

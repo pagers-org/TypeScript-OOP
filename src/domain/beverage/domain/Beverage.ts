@@ -1,13 +1,19 @@
 import { BeverageName } from '@/@types';
 
 export class Beverage {
-  public id: number;
-  public name: BeverageName;
-  public price: number;
+  private readonly id: number;
+  private readonly name: BeverageName;
 
-  constructor(id: number, name: BeverageName, price: number) {
+  constructor(id: number, name: BeverageName) {
     this.id = id;
     this.name = name;
-    this.price = price;
+  }
+
+  public getId() {
+    return this.id;
+  }
+
+  public getName() {
+    return this.name;
   }
 }

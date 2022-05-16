@@ -1,15 +1,11 @@
 import { MaterialName } from '@/@types';
 
 export class Material {
-  public id: number;
-  public name: MaterialName;
-  public description: string;
-  public price: number;
+  private id: number;
+  private name: MaterialName;
 
-  constructor(id: number, name: MaterialName, description: string, price: number) {
+  constructor(id: number, name: MaterialName) {
     this.id = id;
     this.name = name;
-    this.description = description;
-    this.price = price;
   }
 }

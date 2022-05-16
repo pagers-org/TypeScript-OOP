@@ -5,7 +5,7 @@ export class Orders {
   private orderGroups: OrderGroup[] = [];
 
   public add(order: Order): void {
-    const orderGroup = this.getOrderGroup(order.beverageId);
+    const orderGroup = this.getOrderGroup(order.getBeverageId());
 
     if (orderGroup.isEmpty()) {
       this.orderGroups.push(orderGroup);
@@ -25,11 +25,11 @@ export class Orders {
   }
 
   public remove(order: Order): void {
-    const orderGroup = this.getOrderGroup(order.beverageId);
+    const orderGroup = this.getOrderGroup(order.getBeverageId());
     orderGroup.remove(order);
 
     if (orderGroup.isEmpty()) {
-      this.orderGroups = this.orderGroups.filter(orderGroup => orderGroup.getId() !== order.beverageId);
+      this.orderGroups = this.orderGroups.filter(orderGroup => orderGroup.getId() !== order.getBeverageId());
     }
   }
 

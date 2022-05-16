@@ -20,11 +20,11 @@ export class App {
     });
 
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      this.cafe.orders.add(e.detail.order);
+      this.cafe.getOrders().add(e.detail.order);
     });
 
     addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      this.cafe.orders.remove(e.detail.order);
+      this.cafe.getOrders().remove(e.detail.order);
     });
 
     addCustomEventListener(EVENT.CHANGE_OPTION, e => {

@@ -2,11 +2,11 @@ import { OptionGroup } from '@/domain';
 import { OptionGroupName, OptionName } from '@/@types';
 
 export class Order {
-  public id: string;
-  public beverageId: number;
-  public optionGroups: OptionGroup[] = [];
-  public orderTime?: Date = new Date();
-  public servingTime?: Date;
+  private readonly id: string;
+  private readonly beverageId: number;
+  private optionGroups: OptionGroup[] = [];
+  private orderTime?: Date = new Date();
+  private servingTime?: Date;
 
   constructor(id: string, beverage: number, optionGroups: OptionGroup[] = [], orderTime?: Date, servingTime?: Date) {
     this.id = id;
@@ -17,7 +17,7 @@ export class Order {
   }
 
   private getOptionGroupByName(name: string): OptionGroup {
-    const optionGroups = this.optionGroups.find(group => group.name === name);
+    const optionGroups = this.optionGroups.find(group => group.getName() === name);
 
     if (!optionGroups) {
       throw new Error();
@@ -37,10 +37,18 @@ export class Order {
   public isSelectedOptionEquals(groupName: OptionGroupName, target: OptionName): boolean {
     const group = this.getOptionGroupByName(groupName);
 
-    if (group.type === 'multiple') {
+    if (group.getType() === 'multiple') {
       return group.getSelectedOptionValue().includes(target);
     } else {
       return this.getSelectedOptionValue(groupName) === target;
     }
+  }
+
+  public getBeverageId() {
+    return this.beverageId;
+  }
+
+  public getId() {
+    return this.id;
   }
 }

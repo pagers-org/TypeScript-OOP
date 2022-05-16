@@ -7,7 +7,7 @@ describe('app 테스트', () => {
     it('음료 가저오기 테스트', () => {
       const beverage = beverageService.getBeverageById(1);
 
-      expect(beverage?.name).toEqual('아메리카노');
+      expect(beverage?.getName()).toEqual('아메리카노');
     });
 
     it('레시피 가저오기 테스트', () => {
@@ -28,11 +28,11 @@ describe('app 테스트', () => {
     orders.add(order3);
 
     const getOrder1 = orders.getOrderGroup(1).first();
-    expect(getOrder1?.id).toEqual('1');
+    expect(getOrder1?.getId()).toEqual('1');
     if (getOrder1) orders.remove(getOrder1);
 
     const getOrder2 = orders.getOrderGroup(1).first();
-    expect(getOrder2?.id).toEqual('3');
+    expect(getOrder2?.getId()).toEqual('3');
   });
 
   describe('임시', () => {
@@ -40,7 +40,7 @@ describe('app 테스트', () => {
     console.log(
       api
         .getOptions()
-        .map(o => `'${o.name}'`)
+        .map(o => `'${o.getName()}'`)
         .join(','),
     );
   });

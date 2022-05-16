@@ -14,11 +14,11 @@ export class OptionService {
 
   public createRandomSelectedOptionGroups() {
     return this.getOptionGroups().map(item => {
-      item.options.forEach(option => (option.selected = false));
+      item.getOptions().forEach(option => option.setSelected(false));
 
-      const idx = getRandomRange(0, item.options.length - 1);
+      const idx = getRandomRange(0, item.getOptions().length - 1);
 
-      item.options[idx].selected = true;
+      item.getOptions()[idx].setSelected(true);
 
       return item;
     });

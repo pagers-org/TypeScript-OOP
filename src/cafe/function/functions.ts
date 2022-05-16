@@ -16,7 +16,7 @@ export function createRandomOrder(): Order {
   const beverage = beverageService().createRandomBeverage();
   const optionGroups = optionService().createRandomSelectedOptionGroups();
 
-  return new Order(nanoid(), beverage.id, optionGroups);
+  return new Order(nanoid(), beverage.getId(), optionGroups);
 }
 
 export function getBeverageById(beverageId: number): Beverage {
@@ -24,5 +24,5 @@ export function getBeverageById(beverageId: number): Beverage {
 }
 
 export function getBeverageName(beverageId: number): BeverageName {
-  return getBeverageById(beverageId).name;
+  return getBeverageById(beverageId).getName();
 }

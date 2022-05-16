@@ -2,10 +2,10 @@ import { Option } from '@/domain';
 import { OptionGroupName } from '@/@types';
 
 export class OptionGroup {
-  public id: number;
-  public name: OptionGroupName;
-  public options: Option[];
-  public type?: string;
+  private id: number;
+  private name: OptionGroupName;
+  private options: Option[];
+  private readonly type?: string;
 
   constructor(id: number, name: OptionGroupName, type?: string, options: Option[] = []) {
     this.id = id;
@@ -14,14 +14,18 @@ export class OptionGroup {
     this.type = type;
   }
 
+  public setOptions(options: Option[]) {
+    this.options = options;
+  }
+
   public getSelectedOptionValue(): string {
     return this.getSelectedOptions()
-      .map(item => item.name)
+      .map(item => item.getName())
       .join(',');
   }
 
   private getSelectedOptions(): Option[] {
-    return this.options.filter(item => item.selected);
+    return this.options.filter(item => item.isSelected());
   }
 
   public setSelectedOptionValue(value: string): void {
@@ -34,17 +38,29 @@ export class OptionGroup {
 
   private setSingleOptionValue(value: string): void {
     this.options.forEach(option => {
-      option.selected = option.name == value;
+      option.setSelected(option.getName() == value);
     });
   }
 
   private setMultipleOptionValue(value: string): void {
-    const option = this.options.find(option => option.name === value);
+    const option = this.options.find(option => option.getName() === value);
 
     if (!option) {
       throw new Error();
     }
 
-    option.selected = !option.selected;
+    option.setSelected(!option.isSelected());
+  }
+
+  public getOptions() {
+    return this.options;
+  }
+
+  public getType() {
+    return this.type;
+  }
+
+  public getName() {
+    return this.name;
   }
 }

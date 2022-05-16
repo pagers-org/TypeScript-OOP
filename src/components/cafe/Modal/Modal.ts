@@ -15,25 +15,29 @@ export class Modal extends Component {
   private order!: Order;
   private beverage!: Beverage;
 
-  init() {
+  public setOrderWithBeverage(order: Order, beverage: Beverage) {
+    this.order = order;
+    this.beverage = beverage;
+  }
+
+  public open(order: Order, beverage: Beverage) {
+    this.setOrderWithBeverage(order, beverage);
+    document.body.appendChild(this);
+    this.updateOrderInfo();
+    this.show();
+  }
+
+  public close() {
+    this.$container.remove();
+  }
+
+  protected initElements() {
     this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
     this.$optionGroups = Array.from(this.$container.querySelectorAll('.option-group'));
     this.$orderInfo = this.$container.querySelector('.order-info') as HTMLElement;
   }
 
-  setOrderWithBeverage(order: Order, beverage: Beverage) {
-    this.order = order;
-    this.beverage = beverage;
-  }
-
-  updateOrderInfo() {
-    OPTION_GROUP_NAMES.forEach(optionGroupName => {
-      const $el = this.$orderInfo.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
-      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
-    });
-  }
-
-  bindEvents() {
+  protected bindEvents() {
     this.$closeButton.addEventListener('click', () => {
       this.close();
     });
@@ -54,26 +58,22 @@ export class Modal extends Component {
     });
   }
 
-  show(): void {
+  private updateOrderInfo() {
+    OPTION_GROUP_NAMES.forEach(optionGroupName => {
+      const $el = this.$orderInfo.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
+      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
+    });
+  }
+
+  private show(): void {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
   }
 
-  hide(): void {
+  private hide(): void {
     this.$container.classList.add(CLASS_NAME_HIDDEN);
   }
 
-  open(order: Order, beverage: Beverage) {
-    this.setOrderWithBeverage(order, beverage);
-    document.body.appendChild(this);
-    this.updateOrderInfo();
-    this.show();
-  }
-
-  close() {
-    this.$container.remove();
-  }
-
-  template() {
+  protected template() {
     return template(this.order, this.beverage);
   }
 }

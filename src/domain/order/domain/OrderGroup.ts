@@ -18,7 +18,7 @@ export class OrderGroup {
   }
 
   public remove(order: Order): void {
-    this.orderList = this.orderList.filter(item => item.id !== order.id);
+    this.orderList = this.orderList.filter(item => item.getId() !== order.getId());
   }
 
   public first(): Order {
