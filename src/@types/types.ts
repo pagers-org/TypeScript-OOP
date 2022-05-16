@@ -64,3 +64,7 @@ export type OrderChangeType = {
   groupName: OptionGroupName;
   value: string;
 };
+
+export interface CustomEventListener {
+  (evt: CustomEvent): void;
+}

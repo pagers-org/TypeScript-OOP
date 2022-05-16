@@ -27,7 +27,7 @@ export class Menu extends Component {
     });
   }
 
-  bindEvents() {
+  bindListener() {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
@@ -39,7 +39,9 @@ export class Menu extends Component {
 
       this.hideAndUnActiveMenu(e.detail.order);
     });
+  }
 
+  bindEvents() {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 

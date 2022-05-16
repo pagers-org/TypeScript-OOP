@@ -15,18 +15,20 @@ export class OrderList extends Component {
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
   }
 
+  bindListener() {
+    addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
+      const orderListItem = e.detail.orderListItem;
+
+      this.removeOrderListItem(orderListItem);
+      this.updateListItemNo();
+    });
+  }
+
   bindEvents() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
 
       this.addOrder(createRandomOrder());
-      this.updateListItemNo();
-    });
-
-    addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
-      const orderListItem = e.detail.orderListItem;
-
-      this.removeOrderListItem(orderListItem);
       this.updateListItemNo();
     });
   }
