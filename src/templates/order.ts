@@ -4,7 +4,7 @@ const ORDER_TEMPLATE = Object.freeze({
   order(order: Order, index: number) {
     const { id, menuName, size, shot, syrup, ice, temporature, wippedCream, extra, cup }: Order = order;
     return String.raw`
-      <div class="table-row" id="${id}">
+      <div class="table-row" data-id="${id}">
         <div class="cell" data-title="No">${index}</div>
         <div class="cell" data-title="메뉴명">${menuName}</div>
         <div class="cell" data-title="사이즈">${size}</div>

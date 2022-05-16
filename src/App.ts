@@ -27,8 +27,8 @@ class App {
   handleAppClick(event: MouseEvent) {
     const target = event.target as Element;
 
-    if (target.className === DOM.ORDER_EDIT_BUTTON_CLASS) {
-      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.id;
+    if (target.closest('span')?.className === DOM.ORDER_EDIT_BUTTON_CLASS) {
+      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
       this.orderList.changeTableRowToEditable(clickId);
     }
     if (target.closest('span')?.className === DOM.ORDER_REMOVE_BUTTON_CLASS) {
