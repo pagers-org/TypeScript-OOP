@@ -32,7 +32,7 @@ class App {
       this.orderList.changeTableRowToEditable(clickId);
     }
     if (target.closest('span')?.className === DOM.ORDER_REMOVE_BUTTON_CLASS) {
-      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.id;
+      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
       this.orderList.removeTableRow(clickId);
       this.checkKitchen();
     }
