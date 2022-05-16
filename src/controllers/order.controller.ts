@@ -15,11 +15,11 @@ export class OrderController {
 
     this.onOrderListChanged(this.orderService.coffees);
   }
-  onOrderListChanged(coffees: CoffeeDTO[]) {
+  onOrderListChanged = (coffees: CoffeeDTO[]) => {
     this.orderView.createOrderTable(coffees);
   }
-  handleAddCoffee(coffee: CoffeeDTO) {
+  handleAddCoffee = (coffee: CoffeeDTO) => {
     console.log(`handleAddCoffee: ${JSON.stringify(coffee)}`);
-    this.orderService.console();
+    this.orderService.addCoffee(coffee);
   }
 }

@@ -52,17 +52,13 @@ export class OrderView {
     const orderButton = $(".order-button") as HTMLButtonElement;
     orderButton.addEventListener("click", (event) => {
       event.preventDefault();
-      const newCoffee: CoffeeDTO = createRandomOrder(this.coffeeIndex);
+      const newCoffee: CoffeeDTO = createRandomOrder(this.coffeeIndex+1);
       console.log(`bindOrderEvent: ${JSON.stringify(newCoffee)}`);
+      this.coffeeIndex++;
       handler(newCoffee);
     });
   }
   createOrderTable(coffees: CoffeeDTO[]) {
-    console.log(`createOrderTable: ${JSON.stringify(coffees)}`);
-    coffees.map((coffee) => {
-      console.log(coffee);
-    });
-
     const orderTable = $("#order-table") as HTMLDivElement;
     const content = `
       <div class="table-row header">
@@ -79,30 +75,32 @@ export class OrderView {
         <div class="cell">수정하기</div>
         <div class="cell">삭제하기</div>
       </div>
-      <div class="table-row">
-        ${this.createCoffeeRow(coffees)}
-      </div>`;
+      
+      ${this.createCoffeeRow(coffees)}
+    `;
     orderTable.innerHTML = content;
   }
   createCoffeeRow(coffees: CoffeeDTO[]) {
     let content = "";
     coffees.map((coffee) => {
       content += `
-        <div class="cell" data-title="No">${coffee.id}</div>
-          <div class="cell" data-title="메뉴명">${coffee.name}</div>
-          <div class="cell" data-title="사이즈">${coffee.size}</div>
-          <div class="cell" data-title="샷">${coffee.shot}</div>
-          <div class="cell" data-title="시럽">${coffee.syrup}</div>
-          <div class="cell" data-title="ICE/HOT">${coffee.icehot}</div>
-          <div class="cell" data-title="얼음 종류">${coffee.ice}</div>
-          <div class="cell" data-title="휘핑 크림">${coffee.whippedcream}</div>
-          <div class="cell" data-title="엑스트라">${coffee.extra}</div>
-          <div class="cell" data-title="컵">${coffee.cup}</div>
-          <div class="cell" data-title="수정하기">
-            <span class="edit-order"><i class="fa-solid fa-pen"></i></span>
+        <div class="table-row">
+          <div class="cell" data-title="No">${coffee.id}</div>
+            <div class="cell" data-title="메뉴명">${coffee.name}</div>
+            <div class="cell" data-title="사이즈">${coffee.size}</div>
+            <div class="cell" data-title="샷">${coffee.shot}</div>
+            <div class="cell" data-title="시럽">${coffee.syrup}</div>
+            <div class="cell" data-title="ICE/HOT">${coffee.icehot}</div>
+            <div class="cell" data-title="얼음 종류">${coffee.ice}</div>
+            <div class="cell" data-title="휘핑 크림">${coffee.whippedcream}</div>
+            <div class="cell" data-title="엑스트라">${coffee.extra}</div>
+            <div class="cell" data-title="컵">${coffee.cup}</div>
+            <div class="cell" data-title="수정하기">
+              <span class="edit-order"><i class="fa-solid fa-pen"></i></span>
+            </div>
+            <div class="cell" data-title="삭제하기">
+              <span class="remove-order"><i class="fa-solid fa-trash-can"></i></span>
           </div>
-          <div class="cell" data-title="삭제하기">
-            <span class="remove-order"><i class="fa-solid fa-trash-can"></i></span>
         </div>
       `;
     });
