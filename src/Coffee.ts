@@ -19,7 +19,6 @@ interface CoffeeMenuType {
   extra?: typeof extraOption[number];
   cup: typeof cupType[number];
 }
-type ValueOf<T> = T[keyof T];
 
 export class Coffee {
   constructor() {

@@ -1,4 +1,5 @@
 import { Coffee } from './Coffee';
+import {OrderManagement} from "./OrderManagement";
 
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
@@ -9,6 +10,9 @@ const buttons = document.querySelectorAll<HTMLButtonElement>('.coffee-category-b
 const addCoffeeOptionsForm = document.querySelector('.coffee-add-area form') as HTMLFormElement;
 const modalLayout = document.querySelector('.modal-layout') as HTMLDivElement;
 
+const coffee = new Coffee();
+const orderManagement = new OrderManagement();
+
 pageNav.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLInputElement;
   if (!$target.matches('[type="radio"]')) return;
@@ -18,11 +22,11 @@ pageNav.addEventListener('click', (event: MouseEvent) => {
 
 // 주문 목록
 orderButton.addEventListener('click', () => {
-  const coffee = new Coffee();
   const randomMenu = coffee.randomMenu;
+  const orderCount = orderManagement.orderCount;
   const $orderTable = document.querySelector('#order-table');
   const coffeeOrder = `
-    <div class="cell" data-title="No">1</div>
+    <div class="cell" data-title="No">${orderCount + 1}</div>
     <div class="cell" data-title="메뉴명">${randomMenu.name}</div>
     <div class="cell" data-title="사이즈">${randomMenu.size}</div>
     <div class="cell" data-title="샷">${randomMenu.shot ?? '-'}</div>
@@ -40,36 +44,40 @@ orderButton.addEventListener('click', () => {
     </div>
   `
   const coffeeRow = document.createElement('div');
-  coffeeRow.className = 'table-row';
+  coffeeRow.className = `table-row ${randomMenu.name}-${orderCount + 1}`;
   coffeeRow.innerHTML = coffeeOrder;
   $orderTable?.insertAdjacentElement('beforeend', coffeeRow);
+
+  const $coffees = document.querySelectorAll('.coffee-category-button');
+  $coffees.forEach(coffee => {
+    coffee.classList.remove('selected');
+    coffeeFilling.classList.remove(coffee.id);
+  });
+
+  // @ts-ignore
+  const [target] = [...document.querySelectorAll('.coffee-category-button')]
+    .filter(a => a.textContent.includes(`${randomMenu.name}`))
+  target.classList.add('selected');
+  coffeeFilling.classList.remove(target.id);
 });
-
-// 주방
-// 커피 선택
-buttons.forEach(button =>
-  button.addEventListener('click', () => {
-    if (currentElement) {
-      currentElement.classList.remove('selected');
-      coffeeFilling.classList.remove(currentElement.id);
-    }
-
-    currentElement = button;
-    coffeeFilling.classList.add(currentElement.id);
-    currentElement.classList.add('selected');
-    coffeeName.innerText = button.innerText;
-  }),
-);
 
 // 만들기 모달 열기
 addCoffeeOptionsForm.addEventListener('submit', event => {
   event.preventDefault();
+  if (!orderManagement.orderCount) {
+    alert('주문을 먼저 받은 후에 만들어 주세요.');
+    return;
+  }
   modalLayout.classList.toggle('hidden');
 });
 
 
 modalLayout.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLElement;
+
+  // todo: 커피 옵션 채워지게 하기, 서빙완료된 커피로 이동하기
+  orderManagement.deleteOrder();
+
   if (!$target.matches('#close-icon')) return;
   modalLayout.classList.toggle('hidden');
 });
