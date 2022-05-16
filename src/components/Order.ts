@@ -1,4 +1,5 @@
 import { pickRandomInArray, pickRandomUniqueId } from '../utils/random.js';
+import { ORDER } from '../constants/index.js';
 
 import { MenuName, MenuSize, Shot, Syrup, Temporature, Ice, WippedCream, Extra, Cup } from '../@types/index.js';
 
@@ -15,27 +16,16 @@ class Order {
   cup: Cup;
 
   constructor() {
-    this.id = pickRandomUniqueId(); // TODO: 랜덤 값 생성
-    this.menuName = pickRandomInArray<MenuName>([
-      '룽고',
-      '리스트레또',
-      '마끼야또',
-      '아메리카노',
-      '에스프레소',
-      '카페 라떼',
-      '카페 모카',
-      '카페 오레',
-      '카푸치노',
-      '코레또',
-    ]);
-    this.size = pickRandomInArray<MenuSize>(['Grande', 'Tall', 'Venti']);
-    this.shot = pickRandomInArray<Shot>(['1샷', '2샷', '3샷']);
-    this.syrup = pickRandomInArray<Syrup>(['바닐라', '헤이즐넛', '카라멜']);
-    this.temporature = pickRandomInArray<Temporature>(['ICE', 'HOT']);
-    this.ice = pickRandomInArray<Ice>(['기본 얼음', '각 얼음']);
-    this.wippedCream = pickRandomInArray<WippedCream>(['없음', '보통', '많이']);
-    this.extra = pickRandomInArray<Extra>(['시나몬', '아몬드', '자바칩', '초코드리즐', '카라멜드리즐']);
-    this.cup = pickRandomInArray<Cup>(['1회용컵', '머그컵', '재사용컵', '텀블러']);
+    this.id = pickRandomUniqueId();
+    this.menuName = pickRandomInArray<MenuName>(ORDER.MENU_NAME);
+    this.size = pickRandomInArray<MenuSize>(ORDER.MENU_SIZE);
+    this.shot = pickRandomInArray<Shot>(ORDER.MENU_SHOT);
+    this.syrup = pickRandomInArray<Syrup>(ORDER.MENU_SYRUP);
+    this.temporature = pickRandomInArray<Temporature>(ORDER.MENU_TEMPORATURE);
+    this.ice = pickRandomInArray<Ice>(ORDER.MENU_ICE);
+    this.wippedCream = pickRandomInArray<WippedCream>(ORDER.MENU_WIPPED_CREAM);
+    this.extra = pickRandomInArray<Extra>(ORDER.MENU_EXTRA);
+    this.cup = pickRandomInArray<Cup>(ORDER.MENU_CUP);
   }
 
   // TODO: any 고쳐야함
