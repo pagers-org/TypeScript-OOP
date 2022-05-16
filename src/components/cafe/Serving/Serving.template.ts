@@ -1,8 +1,4 @@
-import { Component } from '@/components';
-
-export class Serving extends Component {
-  template() {
-    return String.raw`
+export const template = String.raw`
 <div class='cafe-serving'>
   <span class="maked-list-view">
     <button>현재까지 서빙된 커피 확인하기</button>
@@ -33,6 +29,4 @@ export class Serving extends Component {
     </div>
   </div>
 </div>
-    `;
-  }
-}
+`;

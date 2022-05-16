@@ -1,40 +1,4 @@
-import { EVENT } from '@/constant';
-import { Component } from '@/components';
-import { addCustomEventListener } from '@/common';
-
-const CLASS_NAME_HIDDEN = 'hidden';
-
-export class Modal extends Component {
-  private $closeButton!: HTMLElement;
-
-  init() {
-    this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
-  }
-
-  bindEvents() {
-    addCustomEventListener(EVENT.ORDER_SUBMIT, () => {
-      if (this.cafe.orders.isEmptyOrder()) {
-        return alert('주문을 추가하세요');
-      }
-
-      this.show();
-    });
-
-    this.$closeButton.addEventListener('click', () => {
-      this.hide();
-    });
-  }
-
-  show(): void {
-    this.$container.classList.remove(CLASS_NAME_HIDDEN);
-  }
-
-  hide(): void {
-    this.$container.classList.add(CLASS_NAME_HIDDEN);
-  }
-
-  template() {
-    return String.raw`
+export const template = String.raw`
 <div class="modal-layout hidden cafe-modal">
   <div class="modal-header">
     <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>
@@ -219,7 +183,4 @@ export class Modal extends Component {
   <div class="coffee-serve-area">
     <a href="#"><span>커피 서빙하기</span></a>
   </div>
-</div>
-    `;
-  }
-}
+</div>`;
