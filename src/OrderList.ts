@@ -74,7 +74,7 @@ class OrderList {
   renderOrderList() {
     this.$table.innerHTML =
       ORDER_TEMPLATE.orderTableRowHeader() +
-      this.#orderList.map((order: Order) => ORDER_TEMPLATE.order(order)).join('');
+      this.#orderList.map((order: Order, index: number) => ORDER_TEMPLATE.order(order, index + 1)).join('');
   }
 }
 

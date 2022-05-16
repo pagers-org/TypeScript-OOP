@@ -38,7 +38,7 @@ class App {
 
   handleTableClick(event: Event) {
     const clickClassName = (event.target as Element).closest('span')?.className;
-    const clickId = (event.target as Element).closest('.table-row')?.childNodes[1].textContent;
+    const clickId = (event.target as Element).closest('.table-row')?.id;
 
     if (clickClassName === DOM.ORDER_EDIT_BUTTON_CLASS) {
       this.orderList.changeTableRowToEditable(clickId);
