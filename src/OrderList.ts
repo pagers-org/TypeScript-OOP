@@ -3,6 +3,8 @@ import Order from './Order';
 import { DOM } from './constants';
 import { $ } from './utils/dom';
 
+import type { MenuName } from './@types';
+
 class OrderList {
   #orderList: Order[];
 
@@ -20,13 +22,13 @@ class OrderList {
     this.renderOrderList();
   }
 
-  removeOrder(removeId: number) {
+  removeOrder(removeId: string) {
     this.#orderList = this.#orderList.filter(order => order.id !== removeId);
     this.renderOrderList();
     console.log(this.#orderList);
   }
 
-  editOrder(editId: number) {
+  editOrder(editId: string) {
     const Order = this.#orderList.find(order => order.id === editId);
     const newOrder = $(`[data-id="${editId}"]`).children;
     Array.from(newOrder).forEach(($el, index) => {
@@ -39,12 +41,8 @@ class OrderList {
     return this.#orderList.length;
   }
 
-  handleTableClick(event: Event) {
-    const clickClassName = (event.target as Element).closest('span')?.className;
-    const clickId = (event.target as Element).closest('.table-row')?.childNodes[1].textContent;
-
-    if (clickClassName === DOM.ORDER_EDIT_BUTTON_CLASS) this.changeTableRowToEditable(clickId);
-    if (clickClassName === DOM.ORDER_REMOVE_BUTTON_CLASS) this.removeTableRow(clickId);
+  getCurrentOrderMenuNames(): MenuName[] {
+    return this.#orderList.map(order => order.menuName);
   }
 
   changeTableRowToEditable(clickId: string | null | undefined) {
@@ -54,7 +52,7 @@ class OrderList {
     const isEdit = childrenNodes[0].getAttribute('contentEditAble');
 
     if (isEdit) {
-      if (clickId) this.editOrder(+clickId);
+      if (clickId) this.editOrder(clickId);
       alert('수정 완료');
     } else {
       for (let i = 0; i < childrenNodes.length; i++) {
@@ -69,7 +67,7 @@ class OrderList {
   }
 
   removeTableRow(clickId: string | null | undefined) {
-    if (clickId) this.removeOrder(+clickId);
+    if (clickId) this.removeOrder(clickId);
   }
 
   renderOrderList() {

@@ -3,7 +3,7 @@ import { pickRandomInArray } from './utils/random.js';
 import { MenuName, MenuSize, Shot, Syrup, Temporature, Ice, WippedCream, Extra, Cup } from './@types/index.js';
 
 class Order {
-  id: number;
+  id: string;
   menuName: MenuName;
   size: MenuSize;
   shot: Shot;
@@ -15,7 +15,7 @@ class Order {
   cup: Cup;
 
   constructor() {
-    this.id = Math.floor(Math.random() * 100); // TODO: 랜덤 값 생성
+    this.id = String(Math.floor(Math.random() * 100)); // TODO: 랜덤 값 생성
     this.menuName = pickRandomInArray<MenuName>([
       '룽고',
       '리스트레또',

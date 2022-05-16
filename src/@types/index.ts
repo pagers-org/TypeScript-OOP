@@ -1,5 +1,5 @@
 export interface IOrder {
-  id: number;
+  id: string;
   menuName: MenuName;
   size: MenuSize;
   shot: Shot;
