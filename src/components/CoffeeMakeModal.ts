@@ -1,4 +1,4 @@
-import { $ } from './utils/dom';
+import { $ } from '../utils/dom';
 
 class CoffeeMakeModal {
   $modalLayout: HTMLDivElement;

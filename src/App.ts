@@ -1,78 +1,70 @@
-import OrderList from './OrderList';
-import Kitchen from './Kitchen';
-import CoffeeMakeModal from './CoffeeMakeModal';
+import { CoffeeMakeModal, OrderList, Kitchen } from './components';
 
-import { DOM } from './constants';
+import { DOM, ERROR } from './constants';
 import { $ } from './utils/dom';
 import { MenuName } from './@types';
+
 class App {
   $target;
-  $coffeMakeModal;
+  coffeMakeModal;
   orderList;
   kitchen;
 
   constructor($target: HTMLDivElement) {
     this.$target = $target;
-    this.$coffeMakeModal = new CoffeeMakeModal();
+    this.coffeMakeModal = new CoffeeMakeModal();
     this.orderList = new OrderList();
     this.kitchen = new Kitchen();
-
     this.addEvents();
     this.checkKitchen();
   }
 
   addEvents() {
-    $(`.${DOM.ORDER_BUTTON_CLASS}`).addEventListener('click', () => {
-      this.orderList.addOrder();
-      this.checkKitchen();
-    });
-    $(`#${DOM.ORDER_TABLE_ID}`).addEventListener('click', event => {
-      this.handleTableClick(event);
-      this.checkKitchen();
-    });
-    $(`#${DOM.KITCHEN_SECTION_ID}`).addEventListener('click', event => {
-      this.handleCoffeeCategoryClick(event);
-    });
-    $(`#${DOM.KITCHEN_SECTION_ID}`).addEventListener('submit', this.handleCoffeeAddOptionButtonClick.bind(this));
+    $(`#${DOM.APP_ID}`).addEventListener('click', this.handleAppClick.bind(this));
+    $(`#${DOM.APP_ID}`).addEventListener('submit', this.handleAppSubmit.bind(this));
   }
 
-  handleTableClick(event: Event) {
-    const clickClassName = (event.target as Element).closest('span')?.className;
-    const clickId = (event.target as Element).closest('.table-row')?.id;
+  handleAppClick(event: MouseEvent) {
+    const target = event.target as Element;
 
-    if (clickClassName === DOM.ORDER_EDIT_BUTTON_CLASS) {
+    if (target.className === DOM.ORDER_EDIT_BUTTON_CLASS) {
+      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.id;
       this.orderList.changeTableRowToEditable(clickId);
     }
-    if (clickClassName === DOM.ORDER_REMOVE_BUTTON_CLASS) {
+    if (target.closest('span')?.className === DOM.ORDER_REMOVE_BUTTON_CLASS) {
+      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.id;
       this.orderList.removeTableRow(clickId);
+      this.checkKitchen();
     }
-  }
-
-  handleCoffeeCategoryClick(event: Event) {
-    const clickClassName = (event.target as Element).classList;
-    const clickCoffeeName = (event.target as Element).textContent as MenuName;
-
-    if (clickClassName.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
-      if (!this.kitchen.isExistClickMenuName(this.orderList.getCurrentOrderMenuNames(), clickCoffeeName)) {
-        alert('선택된 커피의 주문이 없습니다.');
+    if (target.className === DOM.ORDER_BUTTON_CLASS) {
+      this.orderList.addOrder();
+      this.checkKitchen();
+    }
+    if (target.classList.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
+      const clickCoffeName = target.textContent as MenuName;
+      if (!this.kitchen.isExistClickMenuName(this.orderList.getCurrentOrderMenuNames(), clickCoffeName)) {
+        alert(ERROR.NON_EXIST_SELECTED_COFFEE_ORDER);
         return;
       }
-
       this.kitchen.fillingCoffee(event.target as HTMLButtonElement);
     }
   }
 
-  handleCoffeeAddOptionButtonClick(event: Event) {
+  handleAppSubmit(event: SubmitEvent) {
     event.preventDefault();
-    if (!this.kitchen.$currentElement) {
-      alert('선택된 커피가 없습니다.');
-      return;
+    const target = event.target as Element;
+
+    if (target.id === DOM.KITCHEN_COFFEE_MAKE_BUTTON_ID) {
+      if (!this.kitchen.$selectedCoffee) {
+        alert(ERROR.NON_EXIST_SELECTED_COFFEE);
+        return;
+      }
+      this.coffeMakeModal.toggleModal();
     }
-    this.$coffeMakeModal.toggleModal();
   }
 
   checkKitchen() {
-    if (!this.orderList.getOrderLength()) this.kitchen.closeKitchen();
+    if (!this.orderList.getOrderTotalLength()) this.kitchen.closeKitchen();
     else this.kitchen.openKitchen();
   }
 }

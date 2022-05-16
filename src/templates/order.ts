@@ -1,4 +1,4 @@
-import Order from '../Order';
+import { Order } from '../components';
 
 const ORDER_TEMPLATE = Object.freeze({
   order(order: Order, index: number) {

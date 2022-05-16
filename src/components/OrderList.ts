@@ -1,19 +1,17 @@
 import Order from './Order';
 
-import { DOM } from './constants';
-import { $ } from './utils/dom';
-import { ORDER_TEMPLATE } from './templates';
+import { DOM } from '../constants';
+import { $ } from '../utils/dom';
+import { ORDER_TEMPLATE } from '../templates';
 
-import type { MenuName } from './@types';
+import type { MenuName } from '../@types';
 
 class OrderList {
   #orderList: Order[];
-
   $table: HTMLElement;
 
   constructor() {
     this.#orderList = [];
-
     this.$table = $(`#${DOM.ORDER_TABLE_ID}`);
   }
 
@@ -38,7 +36,7 @@ class OrderList {
     });
   }
 
-  getOrderLength(): number {
+  getOrderTotalLength(): number {
     return this.#orderList.length;
   }
 
@@ -50,9 +48,9 @@ class OrderList {
     const $clickElement = $(`[data-id="${clickId}"]`);
     const childrenNodes = $clickElement.children;
 
-    const isEdit = childrenNodes[0].getAttribute('contentEditAble');
+    const isEditing = childrenNodes[0].getAttribute('contentEditAble');
 
-    if (isEdit) {
+    if (isEditing) {
       if (clickId) this.editOrder(clickId);
       alert('수정 완료');
     } else {

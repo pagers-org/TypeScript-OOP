@@ -1,6 +1,8 @@
 export default Object.freeze({
   APP_ID: 'app',
 
+  ORDER_PAGE_ID: 'order',
+
   ORDER_BUTTON_CLASS: 'order-button',
   ORDER_TABLE_ROW_CLASS: 'table-row',
   ORDER_TABLE_ID: 'order-table',
@@ -10,4 +12,5 @@ export default Object.freeze({
   KITCHEN_SECTION_ID: 'right-section',
   KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS: 'coffee-category-button',
   KITCHEN_COFFEE_ADD_OPTIONS_BUTTON_CLASS: 'coffee-add-options-button',
+  KITCHEN_COFFEE_MAKE_BUTTON_ID: 'coffee-make-button',
 });

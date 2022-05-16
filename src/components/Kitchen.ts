@@ -1,17 +1,15 @@
-import { $ } from './utils/dom.js';
-import { KITCHEN_TEMPLATE } from './templates/';
+import { $ } from '../utils/dom.js';
+import { KITCHEN_TEMPLATE } from '../templates';
 
-import { MenuName } from './@types/index.js';
+import { MenuName } from '../@types/index.js';
 
 class Kitchen {
   $target: HTMLElement;
-  $currentElement: HTMLButtonElement | null;
-  $modalLayout: HTMLDivElement;
+  $selectedCoffee: HTMLButtonElement | null;
 
   constructor() {
     this.$target = $(`#right-section`);
-    this.$currentElement = null;
-    this.$modalLayout = $('.modal-layout') as HTMLDivElement;
+    this.$selectedCoffee = null;
   }
 
   closeKitchen() {
@@ -26,14 +24,14 @@ class Kitchen {
     const $coffeeFilling = $('.filling') as HTMLDivElement;
     const $coffeeName = $('.coffee_name') as HTMLHeadingElement;
 
-    if (this.$currentElement) {
-      this.$currentElement.classList.remove('selected');
-      $coffeeFilling.classList.remove(this.$currentElement.id);
+    if (this.$selectedCoffee) {
+      this.$selectedCoffee.classList.remove('selected');
+      $coffeeFilling.classList.remove(this.$selectedCoffee.id);
     }
 
-    this.$currentElement = clickButton;
-    $coffeeFilling.classList.add(this.$currentElement.id);
-    this.$currentElement.classList.add('selected');
+    this.$selectedCoffee = clickButton;
+    $coffeeFilling.classList.add(this.$selectedCoffee.id);
+    this.$selectedCoffee.classList.add('selected');
     $coffeeName.innerText = clickButton.innerText;
   }
 

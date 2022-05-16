@@ -1,6 +1,6 @@
-import { pickRandomInArray, pickRandomUniqueId } from './utils/random.js';
+import { pickRandomInArray, pickRandomUniqueId } from '../utils/random.js';
 
-import { MenuName, MenuSize, Shot, Syrup, Temporature, Ice, WippedCream, Extra, Cup } from './@types/index.js';
+import { MenuName, MenuSize, Shot, Syrup, Temporature, Ice, WippedCream, Extra, Cup } from '../@types/index.js';
 
 class Order {
   id: string;

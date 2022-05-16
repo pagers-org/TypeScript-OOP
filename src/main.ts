@@ -1,4 +1,4 @@
-import App from './App';
+import App from './app';
 
 import { DOM } from './constants';
 import { $ } from './utils/dom';
