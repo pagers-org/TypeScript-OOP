@@ -1,25 +1,6 @@
 import { Order } from '@/domain';
 
-export type OrderChangeType = {
-  order: Order;
-  groupName: OptionGroupName;
-  value: string;
-};
-
-export const OPTION_GROUP_NAMES = [
-  '사이즈',
-  '얼음 종류',
-  '샷',
-  '휘핑 크림',
-  '시럽',
-  '엑스트라',
-  'ICE/HOT',
-  '컵',
-] as const;
-export type OptionGroupName = typeof OPTION_GROUP_NAMES[number];
-
 export const MATERIAL_NAMES = ['물', '커피', '우유', '데운 우유', '밀크 폼', '리퀴르', '초콜릿', '휘핑 크림'] as const;
-export type MaterialName = typeof MATERIAL_NAMES[number];
 
 export const BEVERAGE_NAMES = [
   '아메리카노',
@@ -33,7 +14,17 @@ export const BEVERAGE_NAMES = [
   '카페 모카',
   '리스트레또',
 ] as const;
-export type BeverageName = typeof BEVERAGE_NAMES[number];
+
+export const OPTION_GROUP_NAMES = [
+  '사이즈',
+  '얼음 종류',
+  '샷',
+  '휘핑 크림',
+  '시럽',
+  '엑스트라',
+  'ICE/HOT',
+  '컵',
+] as const;
 
 export const OPTION_NAMES = [
   'Tall',
@@ -62,4 +53,14 @@ export const OPTION_NAMES = [
   '머그컵',
   '재활용 컵',
 ];
+
+export type OptionGroupName = typeof OPTION_GROUP_NAMES[number];
+export type MaterialName = typeof MATERIAL_NAMES[number];
+export type BeverageName = typeof BEVERAGE_NAMES[number];
 export type OptionName = typeof OPTION_NAMES[number];
+
+export type OrderChangeType = {
+  order: Order;
+  groupName: OptionGroupName;
+  value: string;
+};
