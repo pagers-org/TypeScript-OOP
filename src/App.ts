@@ -1,7 +1,7 @@
 import { EVENT } from '@/constant';
 import { addCustomEventListener } from '@/common';
 import { Component } from '@/components';
-import { Cafe } from '@/store/Cafe';
+import { Cafe } from '@/cafe';
 
 export class App {
   private readonly cafe: Cafe;

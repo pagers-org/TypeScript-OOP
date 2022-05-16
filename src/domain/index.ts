@@ -19,4 +19,4 @@ export * from '@/domain/beverage/service/BeverageService';
 export * from '@/domain/order/domain/Order';
 export * from '@/domain/order/domain/Orders';
 
-export * from '@/domain/util/util';
+export * from '@/cafe/function/util';

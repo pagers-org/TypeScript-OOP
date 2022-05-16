@@ -1,7 +1,8 @@
 import { EVENT } from '@/constant';
 import { Component, OrderListItem } from '@/components';
-import { createRandomOrder, Order } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
+import { createRandomOrder } from '@/cafe';
+import { Order } from '@/domain';
 import { template } from './OrderList.template';
 
 export class OrderList extends Component {

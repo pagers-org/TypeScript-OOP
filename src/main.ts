@@ -1,8 +1,8 @@
 import { createCustomElement } from '@/common';
 import { Header, Menu, Modal, OrderList, OrderListItem, Serving } from '@/components';
-import { createMenu, Orders } from '@/domain';
 import { App } from '@/App';
-import { Cafe } from '@/store/Cafe';
+import { Cafe, createMenu } from '@/cafe';
+import { Orders } from '@/domain';
 
 window.addEventListener('load', () => {
   createCustomElement('cafe-header', Header);

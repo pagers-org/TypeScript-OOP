@@ -1,10 +1,10 @@
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { getBeverageName } from '@/domain/util/util';
+import { getBeverageName } from '@/cafe/function/util';
 import { dispatchCustomEvent } from '@/common';
-import { Cafe } from '@/store/Cafe';
 import { template } from './OrderListItem.template';
+import { Cafe } from '@/cafe';
 
 export class OrderListItem extends Component {
   private order!: Order;
