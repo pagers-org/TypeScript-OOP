@@ -1,10 +1,9 @@
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { EVENT } from '@/constant';
-import { getBeverageName } from '@/cafe/function/util';
 import { dispatchCustomEvent } from '@/common';
 import { template } from './OrderListItem.template';
-import { Cafe } from '@/cafe';
+import { Cafe, getBeverageName } from '@/cafe';
 
 export class OrderListItem extends Component {
   private order!: Order;
@@ -58,6 +57,6 @@ export class OrderListItem extends Component {
     const order = this.order;
     const beverageName = getBeverageName(order.beverageId);
 
-    return template(this.cafe.orders.getOrderSize() + 1, beverageName, order);
+    return template(this.cafe.orders.size() + 1, beverageName, order);
   }
 }

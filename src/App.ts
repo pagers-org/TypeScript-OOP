@@ -17,5 +17,13 @@ export class App {
       const { component } = (e as CustomEvent).detail;
       (component as Component).setCafe(this.cafe);
     });
+
+    addCustomEventListener(EVENT.ORDER_ADDED, e => {
+      this.cafe.orders.add(e.detail.order);
+    });
+
+    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
+      this.cafe.orders.remove(e.detail.order);
+    });
   }
 }

@@ -42,7 +42,7 @@ export class Menu extends Component {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.cafe.orders.isEmptyOrder()) {
+      if (this.cafe.orders.isEmpty()) {
         return alert(MSG_ALERT);
       }
 
@@ -56,11 +56,11 @@ export class Menu extends Component {
   }
 
   hideAndUnActiveMenu(order: Order): void {
-    if (this.cafe.orders.isEmptyOrder()) {
+    if (this.cafe.orders.isEmpty()) {
       this.hide();
     }
 
-    if (this.cafe.orders.isEmptyByBeverageId(order.beverageId)) {
+    if (this.cafe.orders.getOrderGroup(order.beverageId).isEmpty()) {
       this.unActiveMenu(order);
     }
   }

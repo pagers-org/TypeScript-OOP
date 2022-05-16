@@ -1,5 +1,5 @@
-import { getBeverageById } from '@/domain';
 import { createElement } from '@/common';
+import { getBeverageById } from '@/cafe';
 
 export class MenuItem {
   private readonly beverageId: number;

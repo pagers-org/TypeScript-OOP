@@ -1,43 +1,27 @@
 import { Order } from '@/domain';
+import { OrderGroup } from '@/domain/order/domain/OrderGroup';
 
 export class Orders {
-  private orderData = new Map<number, Order[]>();
+  private orderData = new Map<number, OrderGroup>();
 
   public add(order: Order): void {
-    this.orderData.set(order.beverageId, [...this.getListByBeverageId(order.beverageId), order]);
+    this.orderData.set(order.beverageId, this.getOrderGroup(order.beverageId).add(order));
   }
 
   public remove(order: Order): void {
-    const filteredList = this.getListByBeverageId(order.beverageId).filter(item => item.id !== order.id);
-    this.orderData.set(order.beverageId, [...filteredList]);
+    this.orderData.set(order.beverageId, this.getOrderGroup(order.beverageId).remove(order));
   }
 
-  public getListByBeverageId(beverageId: number): Order[] {
+  public getOrderGroup(beverageId: number): OrderGroup {
     const result = this.orderData.get(beverageId);
-    return result ? result : [];
+    return result ? result : new OrderGroup();
   }
 
-  public getFirstByBeverageId(beverageId: number): Order | undefined {
-    return [...this.getListByBeverageId(beverageId)].shift();
+  public size(): number {
+    return Array.from(this.orderData.values()).reduce((a, b) => a + b.size(), 0);
   }
 
-  public getOrderSize(): number {
-    return this.getOrderValues().length;
-  }
-
-  public isEmptyOrder(): boolean {
-    return this.getOrderSize() == 0;
-  }
-
-  public isEmptyByBeverageId(beverageId: number): boolean {
-    return this.getListByBeverageId(beverageId).length == 0;
-  }
-
-  private getOrderValues(): Order[] {
-    const orderRows: Order[][] = Array.from(this.orderData.values());
-
-    return orderRows.reduce((list, orders) => {
-      return [...list, ...orders];
-    }, []);
+  public isEmpty(): boolean {
+    return this.size() == 0;
   }
 }
