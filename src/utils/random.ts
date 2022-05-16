@@ -1,0 +1,29 @@
+import {
+  COFFEE,
+  SIZE,
+  SHOT,
+  ICE_HOT,
+  CUP,
+  SYRUP,
+  ICE,
+  WHIPPED_CREAM,
+  EXTRA,
+} from "../constant/coffee";
+
+function random(array: string[]) {
+  return Math.floor(Math.random() * array.length);
+}
+export function createRandomOrder(id: number) {
+    return {
+      id: id,
+      name: COFFEE[random(COFFEE)],
+      size: SIZE[random(SIZE)],
+      shot: SHOT[random(SHOT)],
+      icehot: ICE_HOT[random(ICE_HOT)],
+      cup: CUP[random(CUP)],
+      ice: ICE[random(ICE)],
+      syrup: SYRUP[random(SYRUP)],
+      whippedcream: WHIPPED_CREAM[random(WHIPPED_CREAM)],
+      extra: EXTRA[random(EXTRA)],
+    };
+  }
