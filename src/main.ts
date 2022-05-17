@@ -1,11 +1,7 @@
 import { v4 } from 'uuid';
 import { COFFEE, SIZE, WHIPPEDCREAM, EXTRA, ICE, CUP, SYRUP, ICEORHOT, SHOT } from './constants';
 
-let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
-const coffeeName = document.querySelector('.coffee_name') as HTMLHeadingElement;
-const coffeeFilling = document.querySelector('.filling') as HTMLDivElement;
-const buttons = document.querySelectorAll<HTMLButtonElement>('.coffee-category-button');
 const addCoffeeOptionsForm = document.querySelector('.coffee-add-area form') as HTMLFormElement;
 const modalLayout = document.querySelector('.modal-layout') as HTMLDivElement;
 
@@ -15,20 +11,6 @@ pageNav.addEventListener('click', (event: MouseEvent) => {
   event.preventDefault();
   alert('아직 준비되지 않았네요🥺');
 });
-
-buttons.forEach(button =>
-  button.addEventListener('click', () => {
-    if (currentElement) {
-      currentElement.classList.remove('selected');
-      coffeeFilling.classList.remove(currentElement.id);
-    }
-
-    currentElement = button;
-    coffeeFilling.classList.add(currentElement.id);
-    currentElement.classList.add('selected');
-    coffeeName.innerText = button.innerText;
-  }),
-);
 
 addCoffeeOptionsForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -45,7 +27,7 @@ export const getRandomItem = (inventory: string[]) => {
   return inventory[Math.floor(Math.random() * inventory.length)];
 };
 
-export const getOrder = () => {
+export const generateRandomOrder = () => {
   const generateOrder = [COFFEE, SIZE, SHOT, SYRUP, ICEORHOT, ICE, WHIPPEDCREAM, EXTRA, CUP].map(item =>
     getRandomItem(item),
   );
@@ -58,7 +40,7 @@ export const getOrderListDOM = () => {
   return $itemList;
 };
 
-export const getItemNum = () => {
+export const getItemIndex = () => {
   const $itemList = getOrderListDOM();
   return $itemList.length + 1;
 };
@@ -69,8 +51,8 @@ export const addEvent = () => {
 
   btnsEdit.forEach(btn => {
     btn.addEventListener('click', e => {
-      const cur = (e.target as HTMLDivElement).closest('.table-row');
-      const targetId = (cur as HTMLTableRowElement).id;
+      const cur = (e.target as HTMLElement).closest('.table-row');
+      const targetId = (cur as HTMLElement).id;
       editItem(targetId);
     });
   });
@@ -103,44 +85,62 @@ export const editItem = (itemId: string) => {
   addEvent();
 };
 
+export const reorderItemList = () => {
+  const $orderRows = document.querySelectorAll('.ordered-item');
+  let orderIndex = 1;
+  $orderRows.forEach(orderRow => {
+    if (orderRow.firstElementChild) orderRow.firstElementChild.textContent = '' + orderIndex++;
+  });
+};
+
 export const removeItem = (itemId: string) => {
+  const $orderTable = document.querySelector('#order-table');
+  const $targetNode = document.getElementById(itemId);
+
+  if ($targetNode) $orderTable?.removeChild($targetNode);
+
+  addEvent();
+  reorderItemList();
+  setKitchen();
+};
+
+let current: Element | null = null;
+
+export const setAvailable = () => {
   const $itemList = getOrderListDOM();
-  let $newList = '';
+  const $coffeeList = document.querySelectorAll('.coffee-category-button');
+  const coffeeFilling = document.querySelector('.filling') as HTMLDivElement;
+  const availableList: string[] = [];
+
   $itemList.forEach(item => {
-    if (itemId !== item.id) {
-      $newList += `<div id="${v4()}" class="table-row ordered-item">${item.innerHTML}</div></div>`;
+    if (!availableList.includes(item.firstElementChild?.nextElementSibling?.textContent || '')) {
+      availableList.push(item.firstElementChild?.nextElementSibling?.textContent || '');
     }
   });
 
-  const $table = document.querySelector('#order-table');
-  if ($table)
-    $table.innerHTML = `<div class="table-row header">
-                <div class="cell">No</div>
-                <div class="cell">메뉴명</div>
-                <div class="cell">사이즈</div>
-                <div class="cell">샷</div>
-                <div class="cell">시럽</div>
-                <div class="cell">ICE/HOT</div>
-                <div class="cell">얼음 종류</div>
-                <div class="cell">휘핑 크림</div>
-                <div class="cell">엑스트라</div>
-                <div class="cell">컵</div>
-                <div class="cell">수정하기</div>
-                <div class="cell">삭제하기</div>
-              </div> ${$newList}`;
-
-  addEvent();
+  $coffeeList.forEach(coffee => {
+    coffee.addEventListener('click', () => {
+      if (current) {
+        coffeeFilling.classList.remove(current.id);
+        current.classList.remove('selected');
+      }
+      if (coffee.textContent && !availableList.includes(coffee.textContent)) {
+        alert('경고창 : Cannot make Error');
+      } else {
+        current = coffee;
+        coffeeFilling.classList.add(current.id);
+        current.classList.add('selected');
+      }
+    });
+  });
 };
 
 export const setKitchen = () => {
   const $kitchen = document.querySelector('#right-section');
-  const $coffeeList = document.querySelectorAll('.coffee-category-button');
   const $itemList = getOrderListDOM();
+
   if ($itemList.length === 0) {
-    if ($kitchen)
-      $kitchen.innerHTML = `
-  <div id="none-order">
-`;
+    if ($kitchen) $kitchen.innerHTML = `<div id="none-order">`;
   } else {
     if ($kitchen)
       $kitchen.innerHTML = `
@@ -186,19 +186,22 @@ export const setKitchen = () => {
             </div>
           </div>
         </div>`;
-
-    // 커피 선택 버튼 버튼
-    $itemList.forEach(item => {
-      console.log(item.firstElementChild?.nextElementSibling?.textContent);
-    });
-
-    $coffeeList.forEach(coffee => {
-      coffee.addEventListener('click', () => {
-        coffee.setAttribute('disabled', 'true');
-        alert('경고창');
-      });
-    });
   }
+  setAvailable();
+
+  const $btnMakeCoffee = document.querySelector('.coffee-add-options-button');
+  $btnMakeCoffee?.addEventListener('click', e => {
+    const selectedItem = document.querySelector('.selected');
+    // if ($itemList.length === 0) {
+    //   alert('경고창 : No Order List Error');
+    // }
+    e.preventDefault();
+    if (current === null || !selectedItem) {
+      alert('경고창 : Nothing selected Error');
+    } else {
+      alert(`Success : ${selectedItem.textContent}`);
+    }
+  });
 };
 
 setKitchen();
@@ -206,13 +209,13 @@ setKitchen();
 export const btnOrder = document.querySelector('.order-button') as HTMLButtonElement;
 
 btnOrder.addEventListener('click', () => {
-  const orderItems = getOrder();
+  const orderItems = generateRandomOrder();
   const $orderTable = document.querySelector('.table') as HTMLTableElement;
   const $newRow = document.createElement('div');
   $newRow.id = v4();
   $newRow.className = 'table-row';
   $newRow.classList.add('ordered-item');
-  $newRow.innerHTML = `<div class="cell" data-title="No">${getItemNum()}</div>
+  $newRow.innerHTML = `<div class="cell" data-title="No">${getItemIndex()}</div>
                 <div class="cell" data-title="메뉴명">${orderItems[0]}</div>
                 <div class="cell" data-title="사이즈">${orderItems[1]}</div>
                 <div class="cell" data-title="샷">${orderItems[2]}</div>
