@@ -16,7 +16,7 @@ export class Modal extends Component {
   private order!: Order;
   private beverage!: Beverage;
 
-  protected initElements() {
+  protected bindElements() {
     this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
     this.$optionGroups = Array.from(this.$container.querySelectorAll('.option-group'));
     this.$orderInfo = this.$container.querySelector('.order-info') as HTMLElement;

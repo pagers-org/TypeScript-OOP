@@ -16,7 +16,7 @@ export class Component extends HTMLElement {
   connectedCallback() {
     this.render();
 
-    this.initElements();
+    this.bindElements();
 
     this.mounted();
 
@@ -25,7 +25,7 @@ export class Component extends HTMLElement {
     this.bindEvents();
   }
 
-  protected initElements() {
+  protected bindElements() {
     //override
   }
 

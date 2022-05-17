@@ -42,8 +42,4 @@ export class Cafe {
   public addServing(serving: Serving) {
     this.servings.add(serving);
   }
-
-  getServings() {
-    return this.servings;
-  }
 }

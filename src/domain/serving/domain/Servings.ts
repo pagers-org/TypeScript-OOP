@@ -6,8 +6,4 @@ export class Servings {
   public add(serving: Serving) {
     this.servingList.push(serving);
   }
-
-  public toElements(): HTMLElement[] {
-    return this.servingList.map((item: Serving) => item.toElement());
-  }
 }

@@ -10,7 +10,7 @@ export class OrderList extends Component {
   private $orderButton!: HTMLElement;
   private $orderListItems: OrderListItem[] = [];
 
-  protected initElements() {
+  protected bindElements() {
     this.$orderTable = this.$container.querySelector('#order-table') as HTMLElement;
     this.$orderButton = this.$container.querySelector('.order-button') as HTMLElement;
   }

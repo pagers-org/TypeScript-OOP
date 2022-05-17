@@ -14,7 +14,7 @@ export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
 
-  protected initElements(): void {
+  protected bindElements(): void {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
     this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
   }

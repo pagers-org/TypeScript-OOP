@@ -18,7 +18,7 @@ export class OrderListItem extends Component {
     this.order = order;
   }
 
-  protected initElements() {
+  protected bindElements() {
     this.$removeOrderButton = this.$container.querySelector('.remove-order') as HTMLElement;
     this.$editOrderButton = this.$container.querySelector('.edit-order') as HTMLElement;
     this.$no = this.$container.querySelector('[data-title="No"]') as HTMLElement;
@@ -44,12 +44,14 @@ export class OrderListItem extends Component {
     this.$editOrderButton.addEventListener('click', e => {
       e.preventDefault();
 
+      console.log(1);
+
       this.toggleEditMode();
     });
   }
 
   public setNo(no: number) {
-    this.$no.textContent = no + '';
+    this.$no.textContent = `${no}`;
   }
 
   public getDataId() {
@@ -74,12 +76,14 @@ export class OrderListItem extends Component {
   private toggleEditMode() {
     const key = 'contentEditAble';
 
-    const contentEditAble = this.$editOrderButton.getAttribute(key);
+    const contentEditAble = this.$container.getAttribute(key);
 
     if (contentEditAble === 'true') {
-      this.$editOrderButton.removeAttribute(key);
+      this.order.validate();
+
+      this.$container.removeAttribute(key);
     } else {
-      this.$editOrderButton.setAttribute(key, 'true');
+      this.$container.setAttribute(key, 'true');
     }
   }
 

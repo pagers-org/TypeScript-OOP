@@ -3,6 +3,7 @@ import { addCustomEventListener } from '@/common';
 import { Component } from '@/components';
 import { Cafe } from '@/cafe';
 import { OrderChangeType } from '@/@types';
+import { Serving } from '@/domain';
 
 export class App {
   private readonly cafe: Cafe;
@@ -30,6 +31,11 @@ export class App {
     addCustomEventListener(EVENT.CHANGE_OPTION, e => {
       const { order, groupName, value }: OrderChangeType = e.detail;
       order.setSelectedOptionValue(groupName, value);
+    });
+
+    addCustomEventListener(EVENT.SERVED, e => {
+      const serving = e.detail.serving as Serving;
+      this.cafe.addServing(serving);
     });
   }
 }
