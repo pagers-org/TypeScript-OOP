@@ -1,9 +1,9 @@
 import { Component } from '@/components';
-import { template } from './Served.template';
+import { servedView } from './ServedView';
 import { Serving } from '@/domain';
 import { addCustomEventListener } from '@/common';
 import { EVENT } from '@/constant';
-import { ServedItem } from '@/components/cafe/Serving/ServedItem';
+import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
 
 export class Served extends Component {
   private $makedTable!: HTMLElement;
@@ -36,7 +36,7 @@ export class Served extends Component {
     });
   }
 
-  protected template() {
-    return template();
+  protected view() {
+    return servedView();
   }
 }

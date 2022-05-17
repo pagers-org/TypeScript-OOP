@@ -3,7 +3,7 @@ import { Component } from '@/components';
 import { Order } from '@/domain';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { Cafe, getBeverageName } from '@/cafe';
-import { template } from './OrderListItem.template';
+import { orderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
 
 export class OrderListItem extends Component {
@@ -28,9 +28,11 @@ export class OrderListItem extends Component {
     addCustomEventListener(EVENT.CHANGE_OPTION, e => {
       const { order }: OrderChangeType = e.detail;
 
-      if (order === this.order) {
-        this.updateOptions();
+      if (order !== this.order) {
+        return;
       }
+
+      this.updateOptions();
     });
   }
 
@@ -94,10 +96,10 @@ export class OrderListItem extends Component {
     }
   }
 
-  protected template() {
+  protected view() {
     const order = this.order;
     const beverageName = getBeverageName(order.getBeverageId());
 
-    return template(beverageName, order);
+    return orderListItemView(beverageName, order);
   }
 }

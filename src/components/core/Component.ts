@@ -34,7 +34,7 @@ export class Component extends HTMLElement {
   }
 
   protected render() {
-    this.$container = createElement(this.template());
+    this.$container = createElement(this.view());
     this.replaceWith(this.$container);
   }
 
@@ -50,7 +50,7 @@ export class Component extends HTMLElement {
     //override
   }
 
-  protected template(): string {
+  protected view(): string {
     return '';
   }
 }

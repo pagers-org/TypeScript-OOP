@@ -1,7 +1,7 @@
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { Component, Modal } from '@/components';
-import { template } from './Menu.template';
+import { menuView } from './MenuView';
 import { getBeverageById } from '@/cafe';
 import { Order } from '@/domain';
 
@@ -95,7 +95,7 @@ export class Menu extends Component {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 
-  protected template(): string {
-    return template;
+  protected view(): string {
+    return menuView;
   }
 }

@@ -3,7 +3,7 @@ import { Header, Menu, Modal, OrderList, OrderListItem, Served } from '@/compone
 import { App } from '@/App';
 import { Cafe, createMenu } from '@/cafe';
 import { Orders, Servings } from '@/domain';
-import { ServedItem } from '@/components/cafe/Serving/ServedItem';
+import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
 
 window.addEventListener('load', () => {
   createCustomElement('cafe-header', Header);

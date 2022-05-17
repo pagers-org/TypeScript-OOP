@@ -1,7 +1,7 @@
 import { Serving } from '@/domain';
 import { getBeverageById } from '@/cafe';
 
-export const template = (serving: Serving) => {
+export const servedItemView = (serving: Serving) => {
   const beverage = getBeverageById(serving.getBeverageId());
 
   return `

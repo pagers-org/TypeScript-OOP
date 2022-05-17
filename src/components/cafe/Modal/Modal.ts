@@ -1,5 +1,5 @@
 import { Component } from '@/components';
-import { template } from './Modal.template';
+import { modalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
@@ -95,7 +95,7 @@ export class Modal extends Component {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
   }
 
-  protected template() {
-    return template(this.order, this.beverage);
+  protected view() {
+    return modalView(this.order, this.beverage);
   }
 }

@@ -1,4 +1,4 @@
-export const template = String.raw`
+export const menuView = String.raw`
 <div class='MenuSelect none-order'>
   <h1>주방</h1>
   <div class='coffee-container'>

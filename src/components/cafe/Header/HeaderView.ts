@@ -1,4 +1,4 @@
-export const template = String.raw`
+export const headerView = String.raw`
 <header>
   <h1>☕ OOP 카페 ☕</h1>
   <nav>

@@ -1,6 +1,6 @@
 import { Component } from '@/components';
 import { Serving } from '@/domain';
-import { template } from './ServedItem.template';
+import { servedItemView } from './ServedItemView';
 
 export class ServedItem extends Component {
   private serving!: Serving;
@@ -9,8 +9,8 @@ export class ServedItem extends Component {
     this.serving = serving;
   }
 
-  protected template(): string {
-    return template(this.serving);
+  protected view(): string {
+    return servedItemView(this.serving);
   }
 
   setNo(no: number) {

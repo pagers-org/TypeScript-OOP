@@ -3,7 +3,7 @@ import { Component, OrderListItem } from '@/components';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { createRandomOrder } from '@/cafe';
 import { Order, Serving } from '@/domain';
-import { template } from './OrderList.template';
+import { orderListView } from './OrderListView';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -80,7 +80,7 @@ export class OrderList extends Component {
     });
   }
 
-  protected template() {
-    return template;
+  protected view() {
+    return orderListView;
   }
 }
