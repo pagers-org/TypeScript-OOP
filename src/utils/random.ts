@@ -10,8 +10,8 @@ import {
   EXTRA,
 } from "../constant/coffee";
 
-function random(array: string[]) {
-  return Math.floor(Math.random() * array.length);
+function random(coffeeMenuArr: string[]) {
+  return Math.floor(Math.random() * coffeeMenuArr.length);
 }
 export function createRandomOrder(id: number) {
     return {

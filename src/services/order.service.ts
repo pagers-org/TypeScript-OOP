@@ -1,6 +1,5 @@
 import { CoffeeDTO } from "@/@types";
 
-
 export class OrderService {
   public coffees: CoffeeDTO[] = [];
   private onOrderListChanged!: Function;
@@ -16,6 +15,6 @@ export class OrderService {
     console.log(`addCoffee: ${JSON.stringify(coffee)}`);
     this.coffees = [...this.coffees, { ...coffee }];
     console.log(`수정된 커피 값 ${JSON.stringify(this.coffees)}`);
-    this._commit(this.coffees);
+    this.onOrderListChanged(coffee);
   }
 }

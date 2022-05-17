@@ -12,14 +12,11 @@ export class OrderController {
     this.orderView.bindMakeCoffeeEvent();
     this.orderView.bindModalEvent();
     this.orderView.bindOrderEvent(this.handleAddCoffee);
-
-    this.onOrderListChanged(this.orderService.coffees);
   }
-  onOrderListChanged = (coffees: CoffeeDTO[]) => {
-    this.orderView.createOrderTable(coffees);
+  onOrderListChanged = (coffee: CoffeeDTO) => {
+    this.orderView.createOrderTable(coffee);
   }
   handleAddCoffee = (coffee: CoffeeDTO) => {
-    console.log(`handleAddCoffee: ${JSON.stringify(coffee)}`);
     this.orderService.addCoffee(coffee);
   }
 }
