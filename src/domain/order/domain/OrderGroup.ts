@@ -25,6 +25,10 @@ export class OrderGroup {
     return this.orderList[0];
   }
 
+  public shift(): Order | undefined {
+    return this.orderList.shift();
+  }
+
   public size(): number {
     return this.orderList.length;
   }

@@ -28,7 +28,7 @@ export class Orders {
   }
 
   public firstOrderShift() {
-    return this.orderGroups.shift()?.first();
+    return this.orderGroups[0]?.shift();
   }
 
   public firstOrder(): Order {
