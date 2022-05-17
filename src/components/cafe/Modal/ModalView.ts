@@ -1,6 +1,6 @@
 import { Beverage, Order } from '@/domain';
 
-export const modalView = (order: Order, beverage: Beverage) => String.raw`
+export const ModalView = (order: Order, beverage: Beverage) => String.raw`
 <div class="modal-layout hidden cafe-modal">
   <div class="modal-header">
     <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>

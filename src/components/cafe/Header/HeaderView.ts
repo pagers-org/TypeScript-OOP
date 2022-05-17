@@ -1,4 +1,4 @@
-export const headerView = String.raw`
+export const HeaderView = () => String.raw`
 <header>
   <h1>☕ OOP 카페 ☕</h1>
   <nav>

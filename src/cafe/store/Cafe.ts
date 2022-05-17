@@ -1,4 +1,4 @@
-import { Menu, Order, Orders, Serving, Servings } from '@/domain';
+import { Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
 
 export class Cafe {
   private readonly menu: Menu;
@@ -12,8 +12,8 @@ export class Cafe {
     this.servings = servings;
   }
 
-  public menuItemElements(): HTMLElement[] {
-    return this.menu.toMenuItemElements();
+  public menuItems(): MenuItem[] {
+    return this.menu.getMenuItems();
   }
 
   public firstOrder(): Order {

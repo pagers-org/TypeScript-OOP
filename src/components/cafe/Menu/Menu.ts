@@ -1,18 +1,18 @@
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
-import { Component, Modal } from '@/components';
-import { menuView } from './MenuView';
+import { Component, MenuButton, Modal } from '@/components';
+import { MenuView } from './MenuView';
 import { getBeverageById } from '@/cafe';
 import { Order } from '@/domain';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
-const CLASS_NAME_SELECTED = 'selected';
 
 const MSG_ALERT = '주문을 추가하세요';
 
 export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
+  private $menuButtons: MenuButton[] = [];
 
   protected bindElements(): void {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
@@ -20,7 +20,7 @@ export class Menu extends Component {
   }
 
   protected mounted(): void {
-    this.createMenuItems();
+    this.createMenuButtons();
   }
 
   protected bindListeners(): void {
@@ -52,21 +52,34 @@ export class Menu extends Component {
       const order = this.cafe.firstOrder();
       const beverage = getBeverageById(order.getBeverageId());
 
-      (document.createElement('cafe-modal') as Modal).open(order, beverage);
+      (this.createComponent('cafe-modal') as Modal).open(order, beverage);
 
       dispatchCustomEvent(EVENT.ORDER_SUBMIT);
     });
   }
 
-  private createMenuItems(): void {
-    this.cafe.menuItemElements().forEach($menuItem => {
-      this.$buttons.appendChild($menuItem);
+  private createMenuButtons(): void {
+    this.cafe.menuItems().forEach(menuItem => {
+      const $button = this.createMenuButton(menuItem.getBeverageId());
+
+      this.$menuButtons.push($button);
+      this.$buttons.appendChild($button);
     });
+  }
+
+  private createMenuButton(beverageId: number) {
+    const beverage = getBeverageById(beverageId);
+    const $button = this.createComponent('cafe-menu-button') as MenuButton;
+
+    $button.setMenuId(beverage.getId());
+    $button.setMenuName(beverage.getName());
+
+    return $button;
   }
 
   private showAndActiveMenu(order: Order): void {
     this.show();
-    this.activeMenu(order);
+    this.findMenuButton(order.getBeverageId()).active();
   }
 
   private hideAndUnActiveMenu(order: Order): void {
@@ -75,20 +88,12 @@ export class Menu extends Component {
     }
 
     if (this.cafe.isEmptyOrderGroup(order.getBeverageId())) {
-      this.unActiveMenu(order);
+      this.findMenuButton(order.getBeverageId()).unActive();
     }
   }
 
-  private getMenuByOrder(order: Order): HTMLElement {
-    return this.$container.querySelector(`[data-beverage-id="${order.getBeverageId()}"]`) as HTMLElement;
-  }
-
-  private activeMenu(order: Order): void {
-    this.getMenuByOrder(order).classList.add(CLASS_NAME_SELECTED);
-  }
-
-  private unActiveMenu(order: Order): void {
-    this.getMenuByOrder(order).classList.remove(CLASS_NAME_SELECTED);
+  private findMenuButton(beverageId: number): MenuButton {
+    return this.$menuButtons.find(button => button.getMenuId() === beverageId) as MenuButton;
   }
 
   private hide(): void {
@@ -100,6 +105,6 @@ export class Menu extends Component {
   }
 
   protected view(): string {
-    return menuView;
+    return MenuView();
   }
 }

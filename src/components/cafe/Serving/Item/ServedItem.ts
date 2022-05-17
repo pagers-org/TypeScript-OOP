@@ -1,6 +1,6 @@
 import { Component } from '@/components';
 import { Serving } from '@/domain';
-import { servedItemView } from './ServedItemView';
+import { ServedItemView } from './ServedItemView';
 
 export class ServedItem extends Component {
   private serving!: Serving;
@@ -15,6 +15,6 @@ export class ServedItem extends Component {
   }
 
   protected view(): string {
-    return servedItemView(this.serving);
+    return ServedItemView(this.serving);
   }
 }

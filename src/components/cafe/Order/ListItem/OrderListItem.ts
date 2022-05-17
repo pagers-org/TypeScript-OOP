@@ -2,8 +2,8 @@ import { EVENT } from '@/constant';
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { Cafe, getBeverageName } from '@/cafe';
-import { orderListItemView } from './OrderListItemView';
+import { getBeverageName } from '@/cafe';
+import { OrderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
 
 export class OrderListItem extends Component {
@@ -13,8 +13,7 @@ export class OrderListItem extends Component {
   private $editOrderButton!: HTMLElement;
   private $no!: HTMLElement;
 
-  public setCafeWithOrder(cafe: Cafe, order: Order) {
-    this.cafe = cafe;
+  public setOrder(order: Order) {
     this.order = order;
   }
 
@@ -100,6 +99,6 @@ export class OrderListItem extends Component {
     const order = this.order;
     const beverageName = getBeverageName(order.getBeverageId());
 
-    return orderListItemView(beverageName, order);
+    return OrderListItemView(beverageName, order);
   }
 }

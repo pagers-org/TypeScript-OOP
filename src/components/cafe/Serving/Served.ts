@@ -1,5 +1,5 @@
 import { Component } from '@/components';
-import { servedView } from './ServedView';
+import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
 import { addCustomEventListener } from '@/common';
 import { EVENT } from '@/constant';
@@ -22,9 +22,8 @@ export class Served extends Component {
   }
 
   private add(serving: Serving) {
-    const servingElement = document.createElement('cafe-served-item') as ServedItem;
+    const servingElement = this.createComponent('cafe-served-item') as ServedItem;
     servingElement.setServing(serving);
-    servingElement.setCafe(this.cafe);
 
     this.$servedList.push(servingElement);
     this.$makedTable.appendChild(servingElement);
@@ -37,6 +36,6 @@ export class Served extends Component {
   }
 
   protected view() {
-    return servedView();
+    return ServedView();
   }
 }

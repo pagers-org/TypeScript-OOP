@@ -1,6 +1,6 @@
 import { Serving } from '@/domain';
 
-export const servedItemView = (serving: Serving) => {
+export const ServedItemView = (serving: Serving) => {
   return `
     <div class="table-row" data-id='${serving.getOrderId()}'>
       <div class="cell" data-title="No"></div>

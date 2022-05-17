@@ -3,7 +3,7 @@ import { Component, OrderListItem } from '@/components';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { createRandomOrder } from '@/cafe';
 import { Order, Serving } from '@/domain';
-import { orderListView } from './OrderListView';
+import { OrderListView } from './OrderListView';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -64,8 +64,8 @@ export class OrderList extends Component {
   }
 
   private createListItem(order: Order): OrderListItem {
-    const $orderListItem = document.createElement('cafe-order-list-item') as OrderListItem;
-    $orderListItem.setCafeWithOrder(this.cafe, order);
+    const $orderListItem = this.createComponent('cafe-order-list-item') as OrderListItem;
+    $orderListItem.setOrder(order);
     return $orderListItem;
   }
 
@@ -81,6 +81,6 @@ export class OrderList extends Component {
   }
 
   protected view() {
-    return orderListView;
+    return OrderListView();
   }
 }

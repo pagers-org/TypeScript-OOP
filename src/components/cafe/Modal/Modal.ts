@@ -1,5 +1,5 @@
 import { Component } from '@/components';
-import { modalView } from './ModalView';
+import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
@@ -112,6 +112,6 @@ export class Modal extends Component {
   }
 
   protected view() {
-    return modalView(this.order, this.beverage);
+    return ModalView(this.order, this.beverage);
   }
 }

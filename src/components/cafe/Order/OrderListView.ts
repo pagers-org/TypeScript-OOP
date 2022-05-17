@@ -1,4 +1,4 @@
-export const orderListView = String.raw`
+export const OrderListView = () => String.raw`
 <div class='order-list'>
   <h1>주문 목록</h1>
   <div class='order-button-area'>

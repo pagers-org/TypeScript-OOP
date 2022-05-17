@@ -13,7 +13,6 @@ export * from '@/domain/option/service/OptionService';
 
 export * from '@/domain/menu/domain/Menu';
 export * from '@/domain/menu/domain/MenuItem';
-export * from '@/domain/menu/service/MenuService';
 
 export * from '@/domain/order/domain/Order';
 export * from '@/domain/order/domain/Orders';

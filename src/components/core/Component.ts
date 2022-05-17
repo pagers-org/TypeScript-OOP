@@ -18,11 +18,13 @@ export class Component extends HTMLElement {
 
     this.bindElements();
 
-    this.mounted();
-
     this.bindListeners();
 
     this.bindEvents();
+
+    setTimeout(() => {
+      this.mounted();
+    });
   }
 
   protected bindElements() {
@@ -52,6 +54,13 @@ export class Component extends HTMLElement {
 
   protected view(): string {
     return '';
+  }
+
+  protected createComponent<T extends Component>(tagName: string): T {
+    const component = document.createElement(tagName) as Component;
+    component.setCafe(this.cafe);
+
+    return <T>component;
   }
 
   public remove() {

@@ -1,5 +1,5 @@
 import { Component } from '@/components';
-import { headerView } from './HeaderView';
+import { HeaderView } from './HeaderView';
 
 export class Header extends Component {
   protected bindEvents() {
@@ -14,6 +14,6 @@ export class Header extends Component {
   }
 
   protected view() {
-    return headerView;
+    return HeaderView();
   }
 }
