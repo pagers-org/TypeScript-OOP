@@ -1,7 +1,4 @@
-import moment from 'moment';
 import { BeverageName } from '@/@types';
-
-const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 export class Serving {
   private readonly orderId: string;
@@ -17,11 +14,11 @@ export class Serving {
   }
 
   public getOrderTime() {
-    return moment(this.orderTime).format(DATE_FORMAT);
+    return this.orderTime;
   }
 
   public getServingTime() {
-    return moment(this.servingTime).format(DATE_FORMAT);
+    return this.servingTime;
   }
 
   public getBeverageName() {
