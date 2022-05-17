@@ -28,11 +28,11 @@ export class Orders {
   }
 
   public firstOrderShift() {
-    return this.orderGroups[0]?.shift();
+    return this.firstOrderGroup().shift();
   }
 
   public firstOrder(): Order {
-    const order = this.orderGroups[0].first();
+    const order = this.firstOrderGroup().first();
 
     if (!order) {
       throw new Error();
@@ -43,6 +43,14 @@ export class Orders {
 
   public isEmpty(): boolean {
     return this.orderGroups.length == 0;
+  }
+
+  private firstOrderGroup(): OrderGroup {
+    if (this.isEmpty()) {
+      throw new Error();
+    }
+
+    return this.orderGroups[0];
   }
 
   private getOrderGroup(beverageId: number): OrderGroup {

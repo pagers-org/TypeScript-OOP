@@ -22,6 +22,10 @@ export class OrderGroup {
   }
 
   public first(): Order {
+    if (this.isEmpty()) {
+      throw new Error();
+    }
+
     return this.orderList[0];
   }
 
