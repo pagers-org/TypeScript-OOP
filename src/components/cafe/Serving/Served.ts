@@ -1,11 +1,12 @@
-import { Component } from '@/components';
+import { BaseComponent } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
-import { addCustomEventListener } from '@/common';
+import { addCustomEventListener, Component } from '@/common';
 import { EVENT } from '@/constant';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
 
-export class Served extends Component {
+@Component('cafe-served')
+export class Served extends BaseComponent {
   private $makedTable!: HTMLElement;
   private $servedList: ServedItem[] = [];
 

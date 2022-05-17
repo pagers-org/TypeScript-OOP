@@ -2,7 +2,7 @@ import { createElement, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { Cafe } from '@/cafe';
 
-export class Component extends HTMLElement {
+export class BaseComponent extends HTMLElement {
   protected $container!: HTMLElement;
   protected cafe!: Cafe;
 
@@ -56,8 +56,8 @@ export class Component extends HTMLElement {
     return '';
   }
 
-  protected createComponent<T extends Component>(tagName: string): T {
-    const component = document.createElement(tagName) as Component;
+  protected createComponent<T extends BaseComponent>(tagName: string): T {
+    const component = document.createElement(tagName) as BaseComponent;
     component.setCafe(this.cafe);
 
     return <T>component;

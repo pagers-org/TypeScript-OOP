@@ -1,7 +1,9 @@
-import { Component } from '@/components';
+import { BaseComponent } from '@/components';
 import { HeaderView } from './HeaderView';
+import { Component } from '@/common';
 
-export class Header extends Component {
+@Component('cafe-header')
+export class Header extends BaseComponent {
   protected bindEvents() {
     this.$container.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;

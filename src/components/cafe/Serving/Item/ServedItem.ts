@@ -1,8 +1,10 @@
-import { Component } from '@/components';
+import { BaseComponent } from '@/components';
 import { Serving } from '@/domain';
 import { ServedItemView } from './ServedItemView';
+import { Component } from '@/common';
 
-export class ServedItem extends Component {
+@Component('cafe-served-item')
+export class ServedItem extends BaseComponent {
   private serving!: Serving;
 
   public setServing(serving: Serving) {

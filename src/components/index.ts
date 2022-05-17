@@ -1,4 +1,4 @@
-export * from '@/components/core/Component';
+export * from '@/components/core/BaseComponent';
 
 export * from '@/components/cafe/Header/Header';
 

@@ -1,14 +1,15 @@
-import { Component } from '@/components';
+import { BaseComponent } from '@/components';
 import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
-import { dispatchCustomEvent } from '@/common';
+import { Component, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { OPTION_GROUP_NAMES } from '@/@types';
 import { getBeverageName } from '@/cafe';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
-export class Modal extends Component {
+@Component('cafe-modal')
+export class Modal extends BaseComponent {
   private $closeButton!: HTMLElement;
   private $servingButton!: HTMLElement;
   private $optionGroups!: HTMLElement[];

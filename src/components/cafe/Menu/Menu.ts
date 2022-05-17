@@ -1,6 +1,6 @@
-import { addCustomEventListener, dispatchCustomEvent } from '@/common';
+import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
-import { Component, MenuButton, Modal } from '@/components';
+import { BaseComponent, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
 import { getBeverageById } from '@/cafe';
 import { Order } from '@/domain';
@@ -9,7 +9,8 @@ const CLASS_NAME_NONE_ORDER = 'none-order';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class Menu extends Component {
+@Component('cafe-menu')
+export class Menu extends BaseComponent {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
   private $menuButtons: MenuButton[] = [];
