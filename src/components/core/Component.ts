@@ -12,7 +12,6 @@ export class Component extends HTMLElement {
     dispatchCustomEvent(EVENT.COMPONENT_INITIALIZE, { component: this });
   }
 
-  // noinspection JSUnusedGlobalSymbols
   connectedCallback() {
     this.render();
 

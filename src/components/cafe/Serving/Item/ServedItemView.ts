@@ -1,7 +1,7 @@
 import { Serving } from '@/domain';
 
 export const ServedItemView = (serving: Serving) => {
-  return `
+  return String.raw`
     <div class="table-row" data-id='${serving.getOrderId()}'>
       <div class="cell" data-title="No"></div>
       <div class="cell" data-title="메뉴">${serving.getBeverageName()}</div>
