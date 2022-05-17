@@ -9,12 +9,12 @@ export class ServedItem extends Component {
     this.serving = serving;
   }
 
-  protected view(): string {
-    return servedItemView(this.serving);
-  }
-
-  setNo(no: number) {
+  public setNo(no: number) {
     const $el = this.$container.querySelector('[data-title="No"]') as HTMLElement;
     $el.textContent = `${no + 1}`;
+  }
+
+  protected view(): string {
+    return servedItemView(this.serving);
   }
 }

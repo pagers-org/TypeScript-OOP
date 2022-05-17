@@ -59,6 +59,7 @@ export class Modal extends Component {
 
           this.cafe.addServing(serving);
           this.close();
+          alert('서빙이 완료되었습니다');
 
           dispatchCustomEvent(EVENT.SERVED, { serving });
         }
