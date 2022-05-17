@@ -1,47 +1,53 @@
-import { BeverageService, InMemoryApi, Order, Orders, Recipe } from '@/domain';
+import { InMemoryApi, Order, Orders, Serving } from '@/domain';
 
-describe('app 테스트', () => {
-  const beverageService = new BeverageService(new InMemoryApi());
+describe('카페 테스트', () => {
+  const api = new InMemoryApi();
+  let orders: Orders;
 
-  describe('음료 테스트', () => {
-    it('음료 가저오기 테스트', () => {
-      const beverage = beverageService.getBeverageById(1);
-
-      expect(beverage?.getName()).toEqual('아메리카노');
-    });
-
-    it('레시피 가저오기 테스트', () => {
-      const recipes = beverageService.getRecipesByBeverageId(1);
-      expect(recipes).toEqual([new Recipe(1, 1, 1, 6), new Recipe(2, 1, 2, 4)]);
-    });
+  beforeEach(() => {
+    orders = new Orders();
   });
 
-  describe('주문 테스트', () => {
-    const orders = new Orders();
+  it('음료 테스트', () => {
+    const beverage = api.findBeverage(1);
 
+    expect(beverage.getName()).toEqual('아메리카노');
+  });
+
+  it('주문 테스트', () => {
     const order1 = new Order('1', 1);
     const order2 = new Order('2', 2);
     const order3 = new Order('3', 1);
 
-    orders.add(order1);
-    orders.add(order2);
-    orders.add(order3);
+    orders.addOrderGroup(order1);
+    orders.addOrderGroup(order2);
+    orders.addOrderGroup(order3);
 
-    const getOrder1 = orders.getOrderGroup(1).first();
-    expect(getOrder1?.getId()).toEqual('1');
-    if (getOrder1) orders.remove(getOrder1);
+    const firstOrder = orders.firstOrder();
+    expect(firstOrder.getId()).toEqual('1');
 
-    const getOrder2 = orders.getOrderGroup(1).first();
-    expect(getOrder2?.getId()).toEqual('3');
+    const firstOrderShift = orders.firstOrderShift();
+    expect(firstOrder).toEqual(firstOrderShift);
+
+    orders.firstOrderShift();
+    orders.firstOrderShift();
+
+    expect(orders.isEmpty()).toBeTruthy();
   });
 
-  describe('임시', () => {
-    const api = new InMemoryApi();
-    console.log(
-      api
-        .getOptions()
-        .map(o => `'${o.getName()}'`)
-        .join(','),
+  it('서빙 테스트', () => {
+    const order = new Order('1', 1);
+    orders.addOrderGroup(order);
+
+    const servingOrder = orders.firstOrderShift();
+
+    const serving = new Serving(
+      servingOrder.getId(),
+      api.findBeverageName(servingOrder.getBeverageId()),
+      servingOrder.getOrderTime(),
     );
+
+    expect(orders.isEmpty()).toBeTruthy();
+    expect(serving.getBeverageName()).toEqual('아메리카노');
   });
 });
