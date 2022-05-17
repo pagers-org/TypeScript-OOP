@@ -12,6 +12,7 @@ export class Component extends HTMLElement {
     dispatchCustomEvent(EVENT.COMPONENT_INITIALIZE, { component: this });
   }
 
+  // noinspection JSUnusedGlobalSymbols
   connectedCallback() {
     this.render();
 
@@ -19,7 +20,7 @@ export class Component extends HTMLElement {
 
     this.mounted();
 
-    this.bindListener();
+    this.bindListeners();
 
     this.bindEvents();
   }
@@ -37,7 +38,11 @@ export class Component extends HTMLElement {
     this.replaceWith(this.$container);
   }
 
-  protected bindListener() {
+  protected mounted() {
+    //
+  }
+
+  protected bindListeners() {
     //override
   }
 
@@ -47,9 +52,5 @@ export class Component extends HTMLElement {
 
   protected template(): string {
     return '';
-  }
-
-  protected mounted() {
-    //
   }
 }

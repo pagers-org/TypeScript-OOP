@@ -17,3 +17,6 @@ export * from '@/domain/menu/service/MenuService';
 
 export * from '@/domain/order/domain/Order';
 export * from '@/domain/order/domain/Orders';
+
+export * from '@/domain/serving/domain/Serving';
+export * from '@/domain/serving/domain/Servings';

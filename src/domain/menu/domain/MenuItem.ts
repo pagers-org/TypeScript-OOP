@@ -14,7 +14,6 @@ export class MenuItem {
       `<button class='coffee-category-button' id='ristretto'>${beverage.getName()}</button>`,
     );
     $button.dataset['beverageId'] = `${beverage.getId()}`;
-
     return $button;
   }
 }

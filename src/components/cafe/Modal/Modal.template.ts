@@ -22,7 +22,7 @@ export const template = (order: Order, beverage: Beverage) => String.raw`
       </div>
       <div class="table-row order-info">
         <div class="cell" data-title="No">1</div>
-        <div class="cell" data-title="메뉴명">${beverage.name}</div>
+        <div class="cell" data-title="메뉴명">${beverage.getName()}</div>
         <div class="cell" data-title="사이즈"></div>
         <div class="cell" data-title="샷"></div>
         <div class="cell" data-title="시럽"></div>
@@ -211,6 +211,6 @@ export const template = (order: Order, beverage: Beverage) => String.raw`
     </form>
   </div>
   <div class="coffee-serve-area">
-    <a href="#"><span>커피 서빙하기</span></a>
+    <a href="#" class='serving-button'><span>커피 서빙하기</span></a>
   </div>
 </div>`;

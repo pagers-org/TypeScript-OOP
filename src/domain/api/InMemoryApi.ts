@@ -1,4 +1,4 @@
-import { Beverage, Material, Option, OptionGroup, Recipe, Api } from '@/domain';
+import { Api, Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
 import { BeverageName, MaterialName, OptionGroupName } from '@/@types';
 
 export class InMemoryApi implements Api {
@@ -120,9 +120,8 @@ export class InMemoryApi implements Api {
         name: '컵',
       },
     ].map(item => {
-      const optionGroup = new OptionGroup(item.id, item.name as OptionGroupName, item.type);
-      optionGroup.setOptions(this.getOptions().filter(option => option.getGroupId() == item.id));
-      return optionGroup;
+      const options = this.getOptions().filter(option => option.getGroupId() == item.id);
+      return new OptionGroup(item.id, item.name as OptionGroupName, item.type, options);
     });
   }
 

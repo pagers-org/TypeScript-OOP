@@ -5,9 +5,11 @@ export class Header extends Component {
   protected bindEvents() {
     this.$container.addEventListener('click', (event: MouseEvent) => {
       const $target = event.target as HTMLInputElement;
-      if (!$target.matches('[type="radio"]')) return;
-      event.preventDefault();
-      alert('아직 준비되지 않았네요🥺');
+      if ($target.id === 'order-management') {
+        console.log('주문 관리');
+      } else {
+        console.log('재료 관리');
+      }
     });
   }
 

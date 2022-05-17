@@ -1,6 +1,6 @@
 import { CustomEventListener } from '@/@types';
 
-export function getRandomRange(start: number, end: number) {
+export function getRandomRange(start: number, end: number): number {
   return Math.floor(Math.random() * (end - start + 1) + start);
 }
 
@@ -10,17 +10,17 @@ export function createElement(html: string): HTMLElement {
   return template.children.item(0) as HTMLElement;
 }
 
-export function createCustomElement(name: string, clazz: any) {
+export function createCustomElement(name: string, customElementConstructor: CustomElementConstructor): void {
   if (!customElements.get(name)) {
-    customElements.define(name, clazz);
+    customElements.define(name, customElementConstructor);
   }
 }
 
-export function dispatchCustomEvent(eventName: string, detail: any = {}) {
+export function dispatchCustomEvent(eventName: string, detail: any = {}): void {
   dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function addCustomEventListener(eventName: string, callback: CustomEventListener) {
+export function addCustomEventListener(eventName: string, callback: CustomEventListener): void {
   addEventListener(eventName, e => {
     callback(e as CustomEvent);
   });

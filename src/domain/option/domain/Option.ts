@@ -1,7 +1,7 @@
 import { OptionName } from '@/@types';
 
 export class Option {
-  private id: number;
+  private readonly id: number;
   private readonly optionGroupId: number;
   private readonly name: OptionName;
   private selected = false;
@@ -12,19 +12,19 @@ export class Option {
     this.name = name;
   }
 
-  public isSelected() {
+  public isSelected(): boolean {
     return this.selected;
   }
 
-  public getName() {
+  public getName(): OptionName {
     return this.name;
   }
 
-  public setSelected(selected: boolean) {
+  public setSelected(selected: boolean): void {
     this.selected = selected;
   }
 
-  public getGroupId() {
+  public getGroupId(): number {
     return this.optionGroupId;
   }
 }

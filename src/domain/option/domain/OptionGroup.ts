@@ -1,11 +1,14 @@
 import { Option } from '@/domain';
 import { OptionGroupName } from '@/@types';
+import { getRandomRange } from '@/common';
+
+const TYPE_MULTIPLE = 'multiple';
 
 export class OptionGroup {
-  private id: number;
-  private name: OptionGroupName;
-  private options: Option[];
+  private readonly id: number;
+  private readonly name: OptionGroupName;
   private readonly type?: string;
+  private readonly options: Option[];
 
   constructor(id: number, name: OptionGroupName, type?: string, options: Option[] = []) {
     this.id = id;
@@ -14,11 +17,37 @@ export class OptionGroup {
     this.type = type;
   }
 
-  public setOptions(options: Option[]) {
-    this.options = options;
+  public getName(): OptionGroupName {
+    return this.name;
   }
 
-  public getSelectedOptionValue(): string {
+  public isMultiple(): boolean {
+    return this.type === TYPE_MULTIPLE;
+  }
+
+  public isEmptySelected() {
+    return this.options.filter(option => option.isSelected()).length === 0;
+  }
+
+  public resetSelected(): void {
+    this.options.forEach(option => option.setSelected(false));
+  }
+
+  public randomSelected(): void {
+    const idx = getRandomRange(0, this.options.length - 1);
+    this.options[idx].setSelected(true);
+  }
+
+  public setSelected(value: string): void {
+    if (this.isMultiple()) {
+      this.setMultipleOptionValue(value);
+      return;
+    }
+
+    this.setSingleOptionValue(value);
+  }
+
+  public getSelected(): string {
     return this.getSelectedOptions()
       .map(item => item.getName())
       .join(',');
@@ -26,14 +55,6 @@ export class OptionGroup {
 
   private getSelectedOptions(): Option[] {
     return this.options.filter(item => item.isSelected());
-  }
-
-  public setSelectedOptionValue(value: string): void {
-    if (this.type === 'multiple') {
-      this.setMultipleOptionValue(value);
-    } else {
-      this.setSingleOptionValue(value);
-    }
   }
 
   private setSingleOptionValue(value: string): void {
@@ -50,17 +71,5 @@ export class OptionGroup {
     }
 
     option.setSelected(!option.isSelected());
-  }
-
-  public getOptions() {
-    return this.options;
-  }
-
-  public getType() {
-    return this.type;
-  }
-
-  public getName() {
-    return this.name;
   }
 }

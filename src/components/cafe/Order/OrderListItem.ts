@@ -24,7 +24,7 @@ export class OrderListItem extends Component {
     this.$no = this.$container.querySelector('[data-title="No"]') as HTMLElement;
   }
 
-  protected bindListener() {
+  protected bindListeners() {
     addCustomEventListener(EVENT.CHANGE_OPTION, e => {
       const { order }: OrderChangeType = e.detail;
 
@@ -48,23 +48,27 @@ export class OrderListItem extends Component {
     });
   }
 
-  private updateOptions() {
-    OPTION_GROUP_NAMES.forEach(optionGroupName => {
-      const $el = this.$container.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
-      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
-    });
+  public setNo(no: number) {
+    this.$no.textContent = no + '';
   }
 
-  private removeOrder() {
-    dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { orderListItem: this });
+  public getDataId() {
+    return `${this.$container.dataset['orderId']}`;
+  }
+
+  public removeOrder() {
+    dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { order: this.order });
 
     this.$container.remove();
 
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
-  private setNo(no: number) {
-    this.$no.textContent = no + '';
+  private updateOptions() {
+    OPTION_GROUP_NAMES.forEach(optionGroupName => {
+      const $el = this.$container.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
+      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
+    });
   }
 
   private toggleEditMode() {
@@ -81,7 +85,7 @@ export class OrderListItem extends Component {
 
   protected template() {
     const order = this.order;
-    const beverageName = getBeverageName(order.beverageId);
+    const beverageName = getBeverageName(order.getBeverageId());
 
     return template(beverageName, order);
   }

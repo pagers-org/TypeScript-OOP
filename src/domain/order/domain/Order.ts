@@ -4,16 +4,22 @@ import { OptionGroupName, OptionName } from '@/@types';
 export class Order {
   private readonly id: string;
   private readonly beverageId: number;
-  private optionGroups: OptionGroup[] = [];
-  private orderTime?: Date = new Date();
-  private servingTime?: Date;
+  private readonly optionGroups: OptionGroup[] = [];
+  private readonly orderTime: Date;
 
-  constructor(id: string, beverage: number, optionGroups: OptionGroup[] = [], orderTime?: Date, servingTime?: Date) {
+  constructor(id: string, beverage: number, optionGroups: OptionGroup[] = [], orderTime: Date = new Date()) {
     this.id = id;
     this.beverageId = beverage;
     this.optionGroups = optionGroups;
     this.orderTime = orderTime;
-    this.servingTime = servingTime;
+  }
+
+  public validate() {
+    this.optionGroups.forEach(optionGroup => {
+      if (optionGroup.isEmptySelected()) {
+        throw new Error(`${optionGroup.getName()} 옵션을 선택하세요`);
+      }
+    });
   }
 
   private getOptionGroupByName(name: string): OptionGroup {
@@ -27,18 +33,18 @@ export class Order {
   }
 
   public setSelectedOptionValue(groupName: OptionGroupName, value: string): void {
-    this.getOptionGroupByName(groupName).setSelectedOptionValue(value);
+    this.getOptionGroupByName(groupName).setSelected(value);
   }
 
   public getSelectedOptionValue(groupName: OptionGroupName): string {
-    return this.getOptionGroupByName(groupName).getSelectedOptionValue();
+    return this.getOptionGroupByName(groupName).getSelected();
   }
 
   public isSelectedOptionEquals(groupName: OptionGroupName, target: OptionName): boolean {
     const group = this.getOptionGroupByName(groupName);
 
-    if (group.getType() === 'multiple') {
-      return group.getSelectedOptionValue().includes(target);
+    if (group.isMultiple()) {
+      return group.getSelected().includes(target);
     } else {
       return this.getSelectedOptionValue(groupName) === target;
     }
@@ -50,5 +56,9 @@ export class Order {
 
   public getId() {
     return this.id;
+  }
+
+  public getOrderTime() {
+    return this.orderTime;
   }
 }

@@ -9,11 +9,11 @@ export class Beverage {
     this.name = name;
   }
 
-  public getId() {
+  public getId(): number {
     return this.id;
   }
 
-  public getName() {
+  public getName(): BeverageName {
     return this.name;
   }
 }

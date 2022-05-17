@@ -13,16 +13,12 @@ export class BeverageService {
     this.recipes = this.api.getRecipes();
   }
 
-  public getRecipesByBeverageId(beverageId: number): Recipe[] {
-    return this.recipes.filter(recipe => recipe.beverageId == beverageId);
-  }
-
   public createRandomBeverage(): Beverage {
     return this.getBeverageById(getRandomRange(1, this.beverages.length));
   }
 
   public getBeverageById(id: number): Beverage {
-    const beverage = this.beverages.find(beverage => beverage?.id === id);
+    const beverage = this.beverages.find(beverage => beverage.getId() === id);
 
     if (!beverage) {
       throw new Error();

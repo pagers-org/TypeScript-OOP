@@ -7,7 +7,7 @@ export class Menu {
     this.menuItems = menuItems;
   }
 
-  public getMenuItemElements(): HTMLElement[] {
+  public toMenuItemElements(): HTMLElement[] {
     return this.menuItems.map((menuItem: MenuItem) => menuItem.toElement());
   }
 }

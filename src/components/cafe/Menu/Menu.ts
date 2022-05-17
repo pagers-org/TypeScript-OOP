@@ -14,25 +14,16 @@ export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
 
-  protected initElements() {
+  protected initElements(): void {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
     this.$buttons = this.$container.querySelector('.select-coffee-container .buttons') as HTMLElement;
   }
 
-  protected mounted() {
-    this.createMenus();
+  protected mounted(): void {
+    this.createMenuItems();
   }
 
-  private createMenus(): void {
-    this.cafe
-      .getMenu()
-      .getMenuItemElements()
-      .forEach($menuItem => {
-        this.$buttons.appendChild($menuItem);
-      });
-  }
-
-  protected bindListener() {
+  protected bindListeners(): void {
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
@@ -46,20 +37,26 @@ export class Menu extends Component {
     });
   }
 
-  protected bindEvents() {
+  protected bindEvents(): void {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.cafe.getOrders().isEmpty()) {
+      if (this.cafe.isEmptyOrder()) {
         return alert(MSG_ALERT);
       }
 
-      const order = this.cafe.getOrders().firstOrder();
+      const order = this.cafe.firstOrderPop();
       const beverage = getBeverageById(order.getBeverageId());
 
       (document.createElement('cafe-modal') as Modal).open(order, beverage);
 
       dispatchCustomEvent(EVENT.ORDER_SUBMIT);
+    });
+  }
+
+  private createMenuItems(): void {
+    this.cafe.menuItemElements().forEach($menuItem => {
+      this.$buttons.appendChild($menuItem);
     });
   }
 
@@ -69,11 +66,11 @@ export class Menu extends Component {
   }
 
   private hideAndUnActiveMenu(order: Order): void {
-    if (this.cafe.getOrders().isEmpty()) {
+    if (this.cafe.isEmptyOrder()) {
       this.hide();
     }
 
-    if (this.cafe.getOrders().getOrderGroup(order.getBeverageId()).isEmpty()) {
+    if (this.cafe.isEmptyOrderGroup(order.getBeverageId())) {
       this.unActiveMenu(order);
     }
   }
@@ -98,7 +95,7 @@ export class Menu extends Component {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 
-  protected template() {
+  protected template(): string {
     return template;
   }
 }
