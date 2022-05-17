@@ -52,10 +52,10 @@ export class Cafe {
   }
 
   public addOrderGroup(order: Order): void {
-    this.orders.addOrderGroup(order);
+    this.orders.addOrder(order);
   }
 
-  public removeOrderGroup(order: Order): void {
+  public removeOrder(order: Order): void {
     this.orders.removeOrder(order);
   }
 

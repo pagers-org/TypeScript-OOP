@@ -4,7 +4,7 @@ import { OrderGroup } from '@/domain/order/OrderGroup';
 export class Orders {
   private orderGroups: OrderGroup[] = [];
 
-  public addOrderGroup(order: Order): void {
+  public addOrder(order: Order): void {
     const orderGroup = this.getOrderGroup(order.getBeverageId());
 
     if (orderGroup.isEmpty()) {
@@ -23,8 +23,8 @@ export class Orders {
     }
   }
 
-  public isEmptyOrderGroup(beverageId: number) {
-    return this.getOrderGroup(beverageId).isEmpty();
+  public isEmptyOrderGroup(groupId: number) {
+    return this.getOrderGroup(groupId).isEmpty();
   }
 
   public firstOrderShift(): Order {
@@ -59,8 +59,8 @@ export class Orders {
     return this.orderGroups[0];
   }
 
-  private getOrderGroup(beverageId: number): OrderGroup {
-    const result = this.orderGroups.find(orderGroup => orderGroup.getId() === beverageId);
-    return result ? result : new OrderGroup(beverageId);
+  private getOrderGroup(groupId: number): OrderGroup {
+    const result = this.orderGroups.find(orderGroup => orderGroup.getId() === groupId);
+    return result ? result : new OrderGroup(groupId);
   }
 }
