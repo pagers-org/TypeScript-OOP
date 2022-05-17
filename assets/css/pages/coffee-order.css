@@ -12,7 +12,7 @@ main#order section {
   justify-content: space-evenly;
 }
 
-.order-list, .maked-list {
+.CafeOrderList,.order-list, .maked-list {
   width: 100%;
   text-align: center;
 }
@@ -65,7 +65,7 @@ main#order section {
 
 .maked-list-view {
   opacity: 0;
-  visibility: 0;
+  visibility: hidden;
   height: 0;
   display: flex;
   justify-content: center;
@@ -135,12 +135,10 @@ main#order section {
 .filling {
   position: absolute;
   left: calc(var(--cup-border-width) / 2);
-  bottom: calc(var(--cup-border-width) / 2);
   width: var(--cup-inside-width);
   height: var(--cup-inside-height);
   overflow: hidden;
   border-radius: 0 0 100px 100px;
-  background-color: var(--main-bg-color);
   bottom: 10px;
 }
 
@@ -152,7 +150,6 @@ main#order section {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  height: 0;
   overflow: hidden;
   font-size: 14px;
   height: 100%;
@@ -271,12 +268,14 @@ div.whipped_cream {
 }
 
 .select-coffee-container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 1em;
   align-items: center;
   box-sizing: border-box;
+  max-width:350px;
+  margin: 20px auto 0;
+  text-align: center;
 }
 
 .coffee-category-button {
@@ -290,6 +289,7 @@ div.whipped_cream {
   box-sizing: border-box;
   border-radius: 10px;
   padding: 4px;
+  margin:5px 0;
 }
 
 .coffee-category-button:hover {
@@ -345,7 +345,7 @@ input[type=number] {
   padding: 20px;
   transition: 0.3s ease-in-out;
   background-color: #ddb477;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
 }
 
 .coffee-add-area button:hover {
@@ -378,7 +378,7 @@ input[type=number] {
   left: 0;
   width: 0;
   height: 100%;
-  background: url('../images/btn-bg1.png');
+  background: url('../../images/btn-bg1.png');
   background-size: cover;
   transform-origin: left;
   transition: 0.5s;
@@ -393,13 +393,26 @@ input[type=number] {
   z-index: 1;
 }
 
-#none-order {
+.MenuSelect {
+  position: relative;
+  width:100%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.MenuSelect.none-order:before {
   width: 100%;
   height: 100%;
   border-radius: 20px;
   background-image: url('../../images/closed.jpg');
   background-position: center;
   background-size: cover;
+  content: "";
+  position: absolute;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 1408px) {
