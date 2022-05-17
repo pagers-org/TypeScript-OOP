@@ -16,8 +16,8 @@ export class Cafe {
     return this.menu.toMenuItemElements();
   }
 
-  public firstOrderPop(): Order {
-    return this.orders.firstOrderPop();
+  public firstOrder(): Order {
+    return this.orders.firstOrder();
   }
 
   public firstOrderShift() {

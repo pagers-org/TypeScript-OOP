@@ -49,7 +49,7 @@ export class Menu extends Component {
         return alert(MSG_ALERT);
       }
 
-      const order = this.cafe.firstOrderPop();
+      const order = this.cafe.firstOrder();
       const beverage = getBeverageById(order.getBeverageId());
 
       (document.createElement('cafe-modal') as Modal).open(order, beverage);

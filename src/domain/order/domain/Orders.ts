@@ -31,7 +31,7 @@ export class Orders {
     return this.orderGroups.shift()?.first();
   }
 
-  public firstOrderPop(): Order {
+  public firstOrder(): Order {
     const order = this.orderGroups[0].first();
 
     if (!order) {
