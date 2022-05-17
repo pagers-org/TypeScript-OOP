@@ -1,3 +1,6 @@
+import '@/View/OrderList/OrderList';
+import '@/View/Kitchen/Kitchen';
+
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
 const coffeeName = document.querySelector('.coffee_name') as HTMLHeadingElement;
