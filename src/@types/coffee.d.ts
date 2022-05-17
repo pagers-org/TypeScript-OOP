@@ -1,6 +1,6 @@
 declare module 'Coffee' {
   interface CoffeeOptions {
-    id?: string;
+    id: string;
     menu: string;
     size: string;
     shot: string;

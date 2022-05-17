@@ -9,7 +9,7 @@ export default class Order {
     this.orderList = [];
   }
 
-  get getRandomOrder() {
+  private genRandomOne() {
     return {
       menu: COFFEE[getRandomInt(COFFEE)],
       size: SIZE[getRandomInt(SIZE)],
@@ -23,7 +23,12 @@ export default class Order {
     };
   }
 
-  get getOrderItem() {
+  addRandomOrder(id: number) {
+    const randomMenu = this.genRandomOne();
+    this.orderList.push(Object.assign(randomMenu, { id: id.toString() }));
+  }
+
+  get OrderItem() {
     return this.orderList;
   }
 

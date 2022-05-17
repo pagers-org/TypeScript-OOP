@@ -8,13 +8,13 @@ export default class Controller {
   private headerView;
   private modalView;
   private order;
-  private index;
+  private orderId;
 
   constructor({ mainView, headerView, modalView }: { mainView: View; headerView: View; modalView: View }) {
     this.mainView = mainView;
     this.headerView = headerView;
     this.modalView = modalView;
-    this.index = 0;
+    this.orderId = 0;
     this.order = new Order();
     this.subscribeViewEvents();
     this.renderMainView();
@@ -63,7 +63,7 @@ export default class Controller {
         }
       }
       if ($target.matches('.fa-trash-can')) {
-        const randomMenu = this.order.getOrderItem;
+        const randomMenu = this.order.OrderItem;
         const filtered = randomMenu.filter(item => item.id !== $target.id);
         this.order.setOrderItem = filtered;
         this.renderOrderTable();
@@ -72,9 +72,9 @@ export default class Controller {
   }
 
   private addOrder() {
-    this.index++;
-    const randomMenu = this.order.getRandomOrder;
-    this.order.addOrderItem = Object.assign(randomMenu, { id: this.index.toString() });
+    this.orderId++;
+    this.order.addRandomOrder(this.orderId);
+    // this.order.addOrderItem = Object.assign(randomMenu, { id: this.orderId.toString() });
     this.Tabrender();
     this.renderOrderTable();
   }
@@ -84,7 +84,7 @@ export default class Controller {
     const coffeeFilling = qs('.filling') as HTMLDivElement;
     const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
     const buttons = qsAll('.coffee-category-button') as HTMLButtonElement[];
-    if (this.order.getOrderItem.length === 0) {
+    if (this.order.OrderItem.length === 0) {
       alert('주문내역이 없습니다 🥲');
       return;
     }
@@ -145,10 +145,9 @@ export default class Controller {
   <div class="cell">수정하기</div>
   <div class="cell">삭제하기</div>
 </div>
-${this.order.getOrderItem
-  .map(
-    (item: CoffeeOptions) =>
-      `
+${this.order.OrderItem.map(
+  (item: CoffeeOptions) =>
+    `
 <div class="table-row">
 <div class="cell" data-title="No">${item.id}</div>
 <div class="cell" data-title="메뉴명">${item.menu}</div>
@@ -172,8 +171,7 @@ ${this.order.getOrderItem
 </div>
 </div>
 `,
-  )
-  .join('')}
+).join('')}
   `;
     const $orderTable = qs('.table') as HTMLDivElement;
     $orderTable.innerHTML = $contents;

@@ -6,7 +6,7 @@ export function qs(selector: string, scope = document) {
 
 export function qsAll(selector: string, scope = document) {
   if (!selector) throw 'no selector';
-
+  if (!scope.querySelectorAll(selector)) throw 'selector is undefined';
   return Array.from(scope.querySelectorAll(selector));
 }
 
