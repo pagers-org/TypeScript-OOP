@@ -1,7 +1,6 @@
 import { EVENT } from '@/constant';
-import { Component, OrderListItem } from '@/components';
+import { Component, MenuButton, OrderListItem } from '@/components';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { createRandomOrder } from '@/cafe';
 import { Order, Serving } from '@/domain';
 import { OrderListView } from './OrderListView';
 
@@ -25,12 +24,17 @@ export class OrderList extends Component {
       const serving = e.detail.serving as Serving;
       this.removeOrderListItem(serving.getOrderId());
     });
+
+    addCustomEventListener(EVENT.MENU_BUTTON_CLICK, e => {
+      const menuButton = e.detail.button as MenuButton;
+      this.addOrder(this.cafe.createRandomOrder(menuButton.getMenuId()));
+    });
   }
 
   protected bindEvents() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
-      this.addOrder(createRandomOrder());
+      this.addOrder(this.cafe.createRandomBeverageOrder());
     });
   }
 

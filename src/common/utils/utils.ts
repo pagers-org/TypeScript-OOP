@@ -25,3 +25,7 @@ export function addCustomEventListener(eventName: string, callback: CustomEventL
     callback(e as CustomEvent);
   });
 }
+
+export function copyObject(object: any) {
+  return JSON.parse(JSON.stringify(object));
+}

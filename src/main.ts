@@ -1,11 +1,10 @@
 import { createCustomElement } from '@/common';
-import { Header, Menu, MenuButton, Modal, OrderList, OrderListItem, Served } from '@/components';
+import { Header, Menu, MenuButton, Modal, OrderList, OrderListItem, Served, ServedItem } from '@/components';
 import { App } from '@/App';
-import { Cafe, createMenu } from '@/cafe';
-import { Orders, Servings } from '@/domain';
-import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
+import { Cafe } from '@/cafe';
+import { InMemoryApi, Orders, Servings } from '@/domain';
 
-new App(new Cafe(new Orders(), createMenu(), new Servings()));
+new App(new Cafe(new InMemoryApi(), new Orders(), new Servings()));
 
 createCustomElement('cafe-header', Header);
 createCustomElement('cafe-menu', Menu);

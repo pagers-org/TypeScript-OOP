@@ -2,7 +2,6 @@ import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
-import { getBeverageById } from '@/cafe';
 import { Order } from '@/domain';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
@@ -50,7 +49,7 @@ export class Menu extends Component {
       }
 
       const order = this.cafe.firstOrder();
-      const beverage = getBeverageById(order.getBeverageId());
+      const beverage = this.cafe.getBeverage(order.getBeverageId());
 
       (this.createComponent('cafe-modal') as Modal).open(order, beverage);
 
@@ -68,7 +67,7 @@ export class Menu extends Component {
   }
 
   private createMenuButton(beverageId: number) {
-    const beverage = getBeverageById(beverageId);
+    const beverage = this.cafe.getBeverage(beverageId);
     const $button = this.createComponent('cafe-menu-button') as MenuButton;
 
     $button.setMenuId(beverage.getId());

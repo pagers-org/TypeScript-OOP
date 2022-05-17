@@ -27,4 +27,8 @@ export class Option {
   public getGroupId(): number {
     return this.optionGroupId;
   }
+
+  public clone() {
+    return new Option(this.id, this.optionGroupId, this.name);
+  }
 }

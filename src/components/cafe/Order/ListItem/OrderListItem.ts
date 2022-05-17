@@ -2,7 +2,6 @@ import { EVENT } from '@/constant';
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { getBeverageName } from '@/cafe';
 import { OrderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
 
@@ -97,7 +96,7 @@ export class OrderListItem extends Component {
 
   protected view() {
     const order = this.order;
-    const beverageName = getBeverageName(order.getBeverageId());
+    const beverageName = this.cafe.getBeverageName(order.getBeverageId());
 
     return OrderListItemView(beverageName, order);
   }

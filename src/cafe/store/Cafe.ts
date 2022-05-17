@@ -1,15 +1,19 @@
-import { Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
+import { AbstractApi, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
 
 export class Cafe {
-  private readonly menu: Menu;
   private readonly orders: Orders;
   private readonly servings: Servings;
+  private readonly api: AbstractApi;
   private openModal = false;
 
-  constructor(orders: Orders, menu: Menu, servings: Servings) {
-    this.menu = menu;
+  private menu: Menu;
+
+  constructor(api: AbstractApi, orders: Orders, servings: Servings) {
+    this.api = api;
     this.orders = orders;
     this.servings = servings;
+
+    this.menu = api.createMenu();
   }
 
   public menuItems(): MenuItem[] {
@@ -50,5 +54,21 @@ export class Cafe {
 
   public isOpenModal(): boolean {
     return this.openModal;
+  }
+
+  public createRandomOrder(menuId: number) {
+    return this.api.createRandomOrder(menuId);
+  }
+
+  public createRandomBeverageOrder() {
+    return this.api.createRandomBeverageOrder();
+  }
+
+  public getBeverage(beverageId: number) {
+    return this.api.findBeverage(beverageId);
+  }
+
+  public getBeverageName(beverageId: number) {
+    return this.api.findBeverageName(beverageId);
   }
 }

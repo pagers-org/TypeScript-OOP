@@ -17,10 +17,6 @@ export class OptionGroup {
     this.type = type;
   }
 
-  public getName(): OptionGroupName {
-    return this.name;
-  }
-
   public isMultiple(): boolean {
     return this.type === TYPE_MULTIPLE;
   }
@@ -71,5 +67,18 @@ export class OptionGroup {
     }
 
     option.setSelected(!option.isSelected());
+  }
+
+  public getName(): OptionGroupName {
+    return this.name;
+  }
+
+  public clone() {
+    return new OptionGroup(
+      this.id,
+      this.name,
+      this.type,
+      this.options.map(option => option.clone()),
+    );
   }
 }

@@ -16,4 +16,8 @@ export class Beverage {
   public getName(): BeverageName {
     return this.name;
   }
+
+  public clone() {
+    return new Beverage(this.id, this.name);
+  }
 }

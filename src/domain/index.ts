@@ -1,21 +1,19 @@
-export * from '@/domain/api/Api';
-export * from '@/domain/api/InMemoryApi';
+export * from '@/api/AbstractApi';
+export * from '@/api/InMemoryApi';
 
-export * from '@/domain/beverage/domain/Beverage';
-export * from '@/domain/beverage/domain/Material';
-export * from '@/domain/beverage/domain/Recipe';
-export * from '@/domain/beverage/domain/Beverage';
-export * from '@/domain/beverage/service/BeverageService';
+export * from '@/domain/beverage/Beverage';
+export * from '@/domain/beverage/Material';
+export * from '@/domain/beverage/Recipe';
+export * from '@/domain/beverage/Beverage';
 
-export * from '@/domain/option/domain/OptionGroup';
-export * from '@/domain/option/domain/Option';
-export * from '@/domain/option/service/OptionService';
+export * from '@/domain/option/OptionGroup';
+export * from '@/domain/option/Option';
 
-export * from '@/domain/menu/domain/Menu';
-export * from '@/domain/menu/domain/MenuItem';
+export * from '@/domain/menu/Menu';
+export * from '@/domain/menu/MenuItem';
 
-export * from '@/domain/order/domain/Order';
-export * from '@/domain/order/domain/Orders';
+export * from '@/domain/order/Order';
+export * from '@/domain/order/Orders';
 
-export * from '@/domain/serving/domain/Serving';
-export * from '@/domain/serving/domain/Servings';
+export * from '@/domain/serving/Serving';
+export * from '@/domain/serving/Servings';

@@ -11,3 +11,4 @@ export * from '@/components/cafe/Order/OrderList';
 export * from '@/components/cafe/Order/ListItem/OrderListItem';
 
 export * from '@/components/cafe/Serving/Served';
+export * from '@/components/cafe/Serving/Item/ServedItem';

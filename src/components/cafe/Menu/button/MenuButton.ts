@@ -1,5 +1,7 @@
 import { Component } from '@/components';
 import { MenuButtonView } from './MenuButtonView';
+import { dispatchCustomEvent } from '@/common';
+import { EVENT } from '@/constant';
 
 const CLASS_NAME_SELECTED = 'selected';
 
@@ -13,6 +15,12 @@ export class MenuButton extends Component {
 
   public setMenuName(menuName: string) {
     this.menuName = menuName;
+  }
+
+  protected bindEvents() {
+    this.$container.addEventListener('click', e => {
+      dispatchCustomEvent(EVENT.MENU_BUTTON_CLICK, { button: this });
+    });
   }
 
   public active() {
