@@ -2,8 +2,8 @@ import { Component } from '@/components';
 import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/constant';
 import { OPTION_GROUP_NAMES } from '@/@types';
+import { EVENT } from '@/constant';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 

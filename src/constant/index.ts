@@ -1,1 +1,1 @@
-export * from '@/constant/constant';
+export * from '@/constant/events';
