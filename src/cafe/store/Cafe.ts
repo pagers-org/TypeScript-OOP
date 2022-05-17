@@ -1,23 +1,38 @@
 import { AbstractApi, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
+import { nanoid } from 'nanoid';
+import { getRandomRange } from '@/common';
 
 export class Cafe {
+  private readonly api: AbstractApi;
   private readonly orders: Orders;
   private readonly servings: Servings;
-  private readonly api: AbstractApi;
-  private openModal = false;
 
   private menu: Menu;
+
+  private openModal = false;
 
   constructor(api: AbstractApi, orders: Orders, servings: Servings) {
     this.api = api;
     this.orders = orders;
     this.servings = servings;
 
-    this.menu = api.createMenu();
+    this.menu = this.createMenu();
+  }
+
+  private createMenu() {
+    return new Menu(this.api.getBeverages().map(item => new MenuItem(item.getId())));
   }
 
   public menuItems(): MenuItem[] {
     return this.menu.getMenuItems();
+  }
+
+  public setOpenModal(opened: boolean): void {
+    this.openModal = opened;
+  }
+
+  public isOpenModal(): boolean {
+    return this.openModal;
   }
 
   public firstOrder(): Order {
@@ -41,34 +56,36 @@ export class Cafe {
   }
 
   public removeOrderGroup(order: Order): void {
-    this.orders.removeOrderGroup(order);
+    this.orders.removeOrder(order);
   }
 
   public addServing(serving: Serving) {
     this.servings.add(serving);
   }
 
-  public setOpenModal(opened: boolean): void {
-    this.openModal = opened;
-  }
-
-  public isOpenModal(): boolean {
-    return this.openModal;
-  }
-
-  public createRandomOrder(menuId: number) {
-    return this.api.createRandomOrder(menuId);
-  }
-
-  public createRandomBeverageOrder() {
-    return this.api.createRandomBeverageOrder();
-  }
-
-  public getBeverage(beverageId: number) {
+  public findBeverage(beverageId: number) {
     return this.api.findBeverage(beverageId);
   }
 
-  public getBeverageName(beverageId: number) {
+  public findBeverageName(beverageId: number) {
     return this.api.findBeverageName(beverageId);
+  }
+
+  public createRandomOrder(menuId: number) {
+    const optionGroups = this.createRandomSelectedOptionGroups();
+    return new Order(nanoid(), menuId, optionGroups);
+  }
+
+  public createRandomBeverageOrder() {
+    return this.createRandomOrder(getRandomRange(1, this.api.getBeverages().length));
+  }
+
+  private createRandomSelectedOptionGroups() {
+    return this.api.getOptionGroups().map(item => {
+      const newGroup = item.clone();
+      newGroup.resetSelected();
+      newGroup.randomSelected();
+      return newGroup;
+    });
   }
 }

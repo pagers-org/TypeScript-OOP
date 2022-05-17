@@ -96,7 +96,7 @@ export class OrderListItem extends Component {
 
   protected view() {
     const order = this.order;
-    const beverageName = this.cafe.getBeverageName(order.getBeverageId());
+    const beverageName = this.cafe.findBeverageName(order.getBeverageId());
 
     return OrderListItemView(beverageName, order);
   }

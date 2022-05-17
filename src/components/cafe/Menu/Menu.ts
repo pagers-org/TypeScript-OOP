@@ -49,7 +49,7 @@ export class Menu extends Component {
       }
 
       const order = this.cafe.firstOrder();
-      const beverage = this.cafe.getBeverage(order.getBeverageId());
+      const beverage = this.cafe.findBeverage(order.getBeverageId());
 
       (this.createComponent('cafe-modal') as Modal).open(order, beverage);
 
@@ -67,7 +67,7 @@ export class Menu extends Component {
   }
 
   private createMenuButton(beverageId: number) {
-    const beverage = this.cafe.getBeverage(beverageId);
+    const beverage = this.cafe.findBeverage(beverageId);
     const $button = this.createComponent('cafe-menu-button') as MenuButton;
 
     $button.setMenuId(beverage.getId());

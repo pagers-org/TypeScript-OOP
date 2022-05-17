@@ -21,6 +21,10 @@ export class OrderGroup {
     this.orderList = this.orderList.filter(item => item.getId() !== order.getId());
   }
 
+  public findOrder(order: Order) {
+    return this.orderList.find(item => item.getId() === order.getId());
+  }
+
   public first(): Order {
     if (this.isEmpty()) {
       throw new Error();

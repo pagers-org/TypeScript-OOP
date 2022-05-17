@@ -54,15 +54,15 @@ export class Modal extends Component {
       try {
         this.order.validate();
 
-        const servingOrder = this.cafe.firstOrderShift();
+        const servedOrder = this.cafe.firstOrderShift();
 
-        if (servingOrder) {
-          dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: servingOrder });
+        if (servedOrder) {
+          dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: servedOrder });
 
           const serving = new Serving(
-            servingOrder.getId(),
-            this.cafe.getBeverageName(servingOrder.getBeverageId()),
-            servingOrder.getOrderTime(),
+            servedOrder.getId(),
+            this.cafe.findBeverageName(servedOrder.getBeverageId()),
+            servedOrder.getOrderTime(),
           );
 
           dispatchCustomEvent(EVENT.SERVING, { serving });

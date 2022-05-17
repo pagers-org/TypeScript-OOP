@@ -14,7 +14,7 @@ export class Orders {
     orderGroup.add(order);
   }
 
-  public removeOrderGroup(order: Order): void {
+  public removeOrder(order: Order): void {
     const orderGroup = this.getOrderGroup(order.getBeverageId());
     orderGroup.remove(order);
 
@@ -27,8 +27,14 @@ export class Orders {
     return this.getOrderGroup(beverageId).isEmpty();
   }
 
-  public firstOrderShift() {
-    return this.firstOrderGroup().shift();
+  public firstOrderShift(): Order {
+    const order = this.firstOrderGroup().shift();
+
+    if (order) {
+      this.removeOrder(order);
+    }
+
+    return order as Order;
   }
 
   public firstOrder(): Order {
