@@ -4,6 +4,7 @@ import { Beverage, Order, Serving } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
 import { EVENT } from '@/constant';
 import { OPTION_GROUP_NAMES } from '@/@types';
+import { getBeverageName } from '@/cafe';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -53,7 +54,11 @@ export class Modal extends Component {
         if (servingOrder) {
           dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: servingOrder });
 
-          const serving = new Serving(servingOrder);
+          const serving = new Serving(
+            servingOrder.getId(),
+            getBeverageName(servingOrder.getBeverageId()),
+            servingOrder.getOrderTime(),
+          );
 
           dispatchCustomEvent(EVENT.SERVING, { serving });
 

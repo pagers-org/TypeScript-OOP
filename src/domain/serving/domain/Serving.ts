@@ -1,30 +1,34 @@
-import { Order } from '@/domain';
 import moment from 'moment';
+import { BeverageName } from '@/@types';
 
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
 export class Serving {
-  private readonly order: Order;
+  private readonly orderId: string;
+  private readonly beverageName: BeverageName;
+  private readonly orderTime: Date;
   private readonly servingTime: Date;
 
-  constructor(order: Order, servingTime: Date = new Date()) {
-    this.order = order;
+  constructor(orderId: string, beverageName: BeverageName, orderTime: Date, servingTime: Date = new Date()) {
+    this.orderId = orderId;
+    this.beverageName = beverageName;
+    this.orderTime = orderTime;
     this.servingTime = servingTime;
   }
 
   public getOrderTime() {
-    return moment(this.order.getOrderTime()).format(DATE_FORMAT);
+    return moment(this.orderTime).format(DATE_FORMAT);
   }
 
   public getServingTime() {
     return moment(this.servingTime).format(DATE_FORMAT);
   }
 
-  public getOrderId() {
-    return this.order.getId();
+  public getBeverageName() {
+    return this.beverageName;
   }
 
-  public getBeverageId() {
-    return this.order.getBeverageId();
+  public getOrderId() {
+    return this.orderId;
   }
 }
