@@ -19,9 +19,9 @@ describe('카페 테스트', () => {
     const order2 = new Order('2', 2);
     const order3 = new Order('3', 1);
 
-    orders.addOrderGroup(order1);
-    orders.addOrderGroup(order2);
-    orders.addOrderGroup(order3);
+    orders.addOrder(order1);
+    orders.addOrder(order2);
+    orders.addOrder(order3);
 
     const firstOrder = orders.firstOrder();
     expect(firstOrder.getId()).toEqual('1');
@@ -37,7 +37,7 @@ describe('카페 테스트', () => {
 
   it('서빙 테스트', () => {
     const order = new Order('1', 1);
-    orders.addOrderGroup(order);
+    orders.addOrder(order);
 
     const servingOrder = orders.firstOrderShift();
 

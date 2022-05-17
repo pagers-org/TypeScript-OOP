@@ -21,7 +21,7 @@ export class App {
     });
 
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      this.cafe.addOrderGroup(e.detail.order);
+      this.cafe.addOrder(e.detail.order);
     });
 
     addCustomEventListener(EVENT.ORDER_REMOVED, e => {

@@ -51,7 +51,7 @@ export class Cafe {
     return this.orders.isEmptyOrderGroup(beverageId);
   }
 
-  public addOrderGroup(order: Order): void {
+  public addOrder(order: Order): void {
     this.orders.addOrder(order);
   }
 
