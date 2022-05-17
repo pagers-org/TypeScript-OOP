@@ -65,6 +65,6 @@ export type OrderChangeType = {
   value: string;
 };
 
-export interface CustomEventCallback {
+export interface CustomEventListener {
   (evt: CustomEvent): void;
 }

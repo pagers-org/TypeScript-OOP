@@ -1,12 +1,11 @@
 import { EVENT } from '@/constant';
-import { BaseComponent, OrderListItem } from '@/components';
-import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
+import { Component, OrderListItem } from '@/components';
+import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { createRandomOrder } from '@/cafe';
 import { Order, Serving } from '@/domain';
 import { OrderListView } from './OrderListView';
 
-@Component('cafe-order-list')
-export class OrderList extends BaseComponent {
+export class OrderList extends Component {
   private $orderTable!: HTMLElement;
   private $orderButton!: HTMLElement;
   private $listItemElements: OrderListItem[] = [];

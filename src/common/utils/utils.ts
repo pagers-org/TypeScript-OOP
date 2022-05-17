@@ -1,4 +1,4 @@
-import { CustomEventCallback } from '@/@types';
+import { CustomEventListener } from '@/@types';
 
 export function getRandomRange(start: number, end: number): number {
   return Math.floor(Math.random() * (end - start + 1) + start);
@@ -20,7 +20,7 @@ export function dispatchCustomEvent(eventName: string, detail: any = {}): void {
   dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function addCustomEventListener(eventName: string, callback: CustomEventCallback): void {
+export function addCustomEventListener(eventName: string, callback: CustomEventListener): void {
   addEventListener(eventName, e => {
     callback(e as CustomEvent);
   });

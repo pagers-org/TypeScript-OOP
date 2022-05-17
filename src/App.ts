@@ -1,6 +1,6 @@
 import { EVENT } from '@/constant';
 import { addCustomEventListener } from '@/common';
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { Cafe } from '@/cafe';
 import { OrderChangeType } from '@/@types';
 import { Serving } from '@/domain';
@@ -17,7 +17,7 @@ export class App {
   private bindListeners() {
     addCustomEventListener(EVENT.COMPONENT_INITIALIZE, e => {
       const { component } = (e as CustomEvent).detail;
-      (component as BaseComponent).setCafe(this.cafe);
+      (component as Component).setCafe(this.cafe);
     });
 
     addCustomEventListener(EVENT.ORDER_ADDED, e => {

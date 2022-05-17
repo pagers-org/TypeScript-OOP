@@ -1,13 +1,12 @@
 import { EVENT } from '@/constant';
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { Order } from '@/domain';
-import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
+import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { getBeverageName } from '@/cafe';
 import { OrderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
 
-@Component('cafe-order-list-item')
-export class OrderListItem extends BaseComponent {
+export class OrderListItem extends Component {
   private order!: Order;
 
   private $removeOrderButton!: HTMLElement;

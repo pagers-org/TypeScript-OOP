@@ -1,11 +1,9 @@
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { MenuButtonView } from './MenuButtonView';
-import { Component } from '@/common';
 
 const CLASS_NAME_SELECTED = 'selected';
 
-@Component('cafe-menu-button')
-export class MenuButton extends BaseComponent {
+export class MenuButton extends Component {
   private menuId!: number;
   private menuName!: string;
 
