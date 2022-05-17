@@ -53,13 +53,13 @@ export const getOrder = () => {
   return generateOrder;
 };
 
-export const getItemList = () => {
+export const getOrderListDOM = () => {
   const $itemList = document.querySelectorAll('.ordered-item');
   return $itemList;
 };
 
 export const getItemNum = () => {
-  const $itemList = getItemList();
+  const $itemList = getOrderListDOM();
   return $itemList.length + 1;
 };
 
@@ -77,28 +77,34 @@ export const addEvent = () => {
 
   btnsRemove.forEach(btn => {
     btn.addEventListener('click', e => {
-      const cur = (e.target as HTMLDivElement).closest('.ordered-item');
-      const targetId = (cur as HTMLTableRowElement).id;
+      const cur = (e.target as HTMLElement).closest('.ordered-item');
+      const targetId = (cur as HTMLElement).id;
       removeItem(targetId);
     });
   });
 };
 
+export const toggleContenteditable = (item: Element) => {
+  if (item.getAttribute('contenteditable')) {
+    item.removeAttribute('contenteditable');
+  } else {
+    item.setAttribute('contenteditable', 'true');
+  }
+};
+
 export const editItem = (itemId: string) => {
-  const $itemList = getItemList();
+  const $itemList = getOrderListDOM();
   $itemList.forEach(item => {
     if (itemId === item.id) {
-      if (item.getAttribute('contenteditable')) {
-        item.removeAttribute('contenteditable');
-      } else {
-        item.setAttribute('contenteditable', 'true');
-      }
+      toggleContenteditable(item);
     }
   });
+
+  addEvent();
 };
 
 export const removeItem = (itemId: string) => {
-  const $itemList = getItemList();
+  const $itemList = getOrderListDOM();
   let $newList = '';
   $itemList.forEach(item => {
     if (itemId !== item.id) {
@@ -129,7 +135,7 @@ export const removeItem = (itemId: string) => {
 export const setKitchen = () => {
   const $kitchen = document.querySelector('#right-section');
   const $coffeeList = document.querySelectorAll('.coffee-category-button');
-  const $itemList = getItemList();
+  const $itemList = getOrderListDOM();
   if ($itemList.length === 0) {
     if ($kitchen)
       $kitchen.innerHTML = `
