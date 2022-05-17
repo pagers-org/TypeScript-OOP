@@ -8,7 +8,7 @@ import { template } from './OrderList.template';
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
   private $orderButton!: HTMLElement;
-  private $orderListItems: OrderListItem[] = [];
+  private $listItemElements: OrderListItem[] = [];
 
   protected bindElements() {
     this.$orderTable = this.$container.querySelector('#order-table') as HTMLElement;
@@ -18,29 +18,25 @@ export class OrderList extends Component {
   protected bindListeners() {
     addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
       const order = e.detail.order as Order;
-
-      this.removeListItem(this.getOrderListItem(order.getId()));
-      this.updateListItemNo();
+      this.removeOrderListItem(order.getId());
     });
 
     addCustomEventListener(EVENT.SERVING, e => {
       const serving = e.detail.serving as Serving;
-
-      this.removeListItem(this.getOrderListItem(serving.getOrderId()));
-      this.updateListItemNo();
+      this.removeOrderListItem(serving.getOrderId());
     });
   }
 
   protected bindEvents() {
     this.$orderButton.addEventListener('click', e => {
       e.preventDefault();
-
       this.addOrder(createRandomOrder());
     });
   }
 
-  private getOrderListItem(orderId: string) {
-    return this.$orderListItems.find($listItem => $listItem.getDataId() === orderId);
+  private removeOrderListItem(orderId: string) {
+    this.removeListItemElement(this.findOrderListItemElement(orderId));
+    this.updateListItemNo();
   }
 
   private addOrder(order: Order): void {
@@ -50,13 +46,21 @@ export class OrderList extends Component {
     dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
   }
 
-  private removeListItem(orderListItem: OrderListItem | undefined) {
+  private removeListItemElement(orderListItem: OrderListItem | undefined) {
     if (!orderListItem) {
       throw new Error();
     }
 
-    this.findListItem(orderListItem.getDataId())?.removeOrder();
-    this.$orderListItems = this.$orderListItems.filter(o => o !== orderListItem);
+    this.findOrderListItemElement(orderListItem.getDataId())?.removeOrder();
+    this.removeOrderListItemElement(orderListItem);
+  }
+
+  private findOrderListItemElement(orderId: string) {
+    return this.$listItemElements.find($listItem => $listItem.getDataId() === orderId);
+  }
+
+  private removeOrderListItemElement(orderListItem: OrderListItem) {
+    this.$listItemElements = this.$listItemElements.filter(o => o !== orderListItem);
   }
 
   private createListItem(order: Order): OrderListItem {
@@ -67,15 +71,11 @@ export class OrderList extends Component {
 
   private addListItem(orderListItem: OrderListItem) {
     this.$orderTable.appendChild(orderListItem);
-    this.$orderListItems.push(orderListItem);
-  }
-
-  private findListItem(id: string): OrderListItem | undefined {
-    return this.$orderListItems.find(item => item.getDataId() === id);
+    this.$listItemElements.push(orderListItem);
   }
 
   private updateListItemNo() {
-    this.$orderListItems.forEach((orderListItem, index) => {
+    this.$listItemElements.forEach((orderListItem, index) => {
       orderListItem.setNo(index + 1);
     });
   }

@@ -11,10 +11,10 @@ export class App {
   constructor(cafe: Cafe) {
     this.cafe = cafe;
 
-    this.init();
+    this.bindListeners();
   }
 
-  private init() {
+  private bindListeners() {
     addCustomEventListener(EVENT.COMPONENT_INITIALIZE, e => {
       const { component } = (e as CustomEvent).detail;
       (component as Component).setCafe(this.cafe);

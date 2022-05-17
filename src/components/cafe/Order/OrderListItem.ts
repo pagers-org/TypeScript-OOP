@@ -4,7 +4,7 @@ import { Order } from '@/domain';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { Cafe, getBeverageName } from '@/cafe';
 import { template } from './OrderListItem.template';
-import { OPTION_GROUP_NAMES, OrderChangeType } from '@/@types';
+import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
 
 export class OrderListItem extends Component {
   private order!: Order;
@@ -44,8 +44,6 @@ export class OrderListItem extends Component {
     this.$editOrderButton.addEventListener('click', e => {
       e.preventDefault();
 
-      console.log(1);
-
       this.toggleEditMode();
     });
   }
@@ -68,9 +66,18 @@ export class OrderListItem extends Component {
 
   private updateOptions() {
     OPTION_GROUP_NAMES.forEach(optionGroupName => {
-      const $el = this.$container.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
-      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
+      this.setOptionGroupText(optionGroupName);
     });
+  }
+
+  private setOptionGroupText(selected: OptionGroupName) {
+    const $el = this.getOptionGroupElement(selected);
+    $el.textContent = this.order.getSelectedOptionValue(selected);
+  }
+
+  private getOptionGroupElement(optionGroupName: OptionGroupName) {
+    const selector = `[data-title="${optionGroupName}"]`;
+    return this.$container.querySelector(selector) as HTMLElement;
   }
 
   private toggleEditMode() {
