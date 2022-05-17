@@ -52,8 +52,6 @@ export class Menu extends Component {
       const beverage = this.cafe.findBeverage(order.getBeverageId());
 
       (this.createComponent('cafe-modal') as Modal).open(order, beverage);
-
-      dispatchCustomEvent(EVENT.ORDER_SUBMIT);
     });
   }
 
