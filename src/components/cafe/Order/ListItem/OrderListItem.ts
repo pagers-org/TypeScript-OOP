@@ -61,7 +61,7 @@ export class OrderListItem extends Component {
   public removeOrder() {
     dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { order: this.order });
 
-    this.$container.remove();
+    this.remove();
 
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }

@@ -41,6 +41,10 @@ export class Menu extends Component {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
+      if (this.cafe.isOpenModal()) {
+        return;
+      }
+
       if (this.cafe.isEmptyOrder()) {
         return alert(MSG_ALERT);
       }

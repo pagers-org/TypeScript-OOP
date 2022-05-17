@@ -51,7 +51,7 @@ export class OrderList extends Component {
       throw new Error();
     }
 
-    this.findOrderListItemElement(orderListItem.getDataId())?.removeOrder();
+    this.findOrderListItemElement(orderListItem.getDataId())?.remove();
     this.removeOrderListItemElement(orderListItem);
   }
 

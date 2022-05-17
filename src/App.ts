@@ -37,5 +37,9 @@ export class App {
       const serving = e.detail.serving as Serving;
       this.cafe.addServing(serving);
     });
+
+    addCustomEventListener(EVENT.MODAL_OPEN, e => {
+      this.cafe.setOpenModal(e.detail.opened);
+    });
   }
 }

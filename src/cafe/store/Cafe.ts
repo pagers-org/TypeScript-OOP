@@ -4,6 +4,7 @@ export class Cafe {
   private readonly menu: Menu;
   private readonly orders: Orders;
   private readonly servings: Servings;
+  private openModal = false;
 
   constructor(orders: Orders, menu: Menu, servings: Servings) {
     this.menu = menu;
@@ -41,5 +42,13 @@ export class Cafe {
 
   public addServing(serving: Serving) {
     this.servings.add(serving);
+  }
+
+  public setOpenModal(opened: boolean): void {
+    this.openModal = opened;
+  }
+
+  public isOpenModal(): boolean {
+    return this.openModal;
   }
 }

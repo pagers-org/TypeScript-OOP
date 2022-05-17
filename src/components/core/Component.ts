@@ -53,4 +53,10 @@ export class Component extends HTMLElement {
   protected view(): string {
     return '';
   }
+
+  public remove() {
+    super.remove();
+
+    this.$container.remove();
+  }
 }

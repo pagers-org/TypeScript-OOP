@@ -25,7 +25,9 @@ export class Modal extends Component {
   }
 
   protected bindEvents() {
-    this.$closeButton.addEventListener('click', () => {
+    this.$closeButton.addEventListener('click', e => {
+      e.preventDefault();
+
       this.close();
     });
 
@@ -34,7 +36,9 @@ export class Modal extends Component {
       const $inputs = Array.from($optionGroup.querySelectorAll('input'));
 
       $inputs.forEach($input => {
-        $input.addEventListener('change', () => {
+        $input.addEventListener('change', e => {
+          e.preventDefault();
+
           const value = $input.value;
           const order = this.order;
 
@@ -45,7 +49,9 @@ export class Modal extends Component {
       });
     });
 
-    this.$servingButton.addEventListener('click', () => {
+    this.$servingButton.addEventListener('click', e => {
+      e.preventDefault();
+
       try {
         this.order.validate();
 
@@ -84,10 +90,14 @@ export class Modal extends Component {
     document.body.appendChild(this);
     this.updateOrderInfo();
     this.show();
+
+    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: true });
   }
 
   public close() {
-    this.$container.remove();
+    this.remove();
+
+    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: false });
   }
 
   private updateOrderInfo() {
