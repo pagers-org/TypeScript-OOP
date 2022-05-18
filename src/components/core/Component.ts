@@ -1,5 +1,5 @@
 import { createElement, dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 import { Cafe } from '@/cafe';
 
 export class Component extends HTMLElement {

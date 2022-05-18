@@ -1,5 +1,5 @@
-import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/constant';
+import { addCustomEventListener } from '@/common';
+import { EVENT } from '@/events';
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
 import { Order } from '@/domain';
@@ -12,6 +12,7 @@ export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
   private $menuButtons: MenuButton[] = [];
+  private modalOpened = false;
 
   protected bindElements(): void {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
@@ -23,6 +24,10 @@ export class Menu extends Component {
   }
 
   protected bindListeners(): void {
+    addCustomEventListener(EVENT.MODAL_OPEN, e => {
+      this.modalOpened = e.detail.opened;
+    });
+
     addCustomEventListener(EVENT.ORDER_ADDED, e => {
       e.preventDefault();
 
@@ -40,18 +45,7 @@ export class Menu extends Component {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.cafe.isOpenModal()) {
-        return;
-      }
-
-      if (this.cafe.isEmptyOrder()) {
-        return alert(MSG_ALERT);
-      }
-
-      const order = this.cafe.firstOrder();
-      const beverage = this.cafe.findBeverage(order.getBeverageId());
-
-      (this.createComponent('cafe-modal') as Modal).open(order, beverage);
+      this.openModal();
     });
   }
 
@@ -99,6 +93,22 @@ export class Menu extends Component {
 
   private show(): void {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
+  }
+
+  private openModal() {
+    if (this.modalOpened) {
+      return;
+    }
+
+    if (this.cafe.isEmptyOrder()) {
+      return alert(MSG_ALERT);
+    }
+
+    const order = this.cafe.firstOrder();
+    const beverage = this.cafe.findBeverage(order.getBeverageId());
+
+    const $modal = this.createComponent('cafe-modal') as Modal;
+    $modal.open(order, beverage);
   }
 
   protected view(): string {

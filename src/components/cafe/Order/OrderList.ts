@@ -1,4 +1,4 @@
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 import { Component, MenuButton, OrderListItem } from '@/components';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { Order, Serving } from '@/domain';
@@ -15,12 +15,12 @@ export class OrderList extends Component {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
+    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
       const order = e.detail.order as Order;
       this.removeOrderListItem(order.getId());
     });
 
-    addCustomEventListener(EVENT.SERVING, e => {
+    addCustomEventListener(EVENT.BEFORE_SERVING, e => {
       const serving = e.detail.serving as Serving;
       this.removeOrderListItem(serving.getOrderId());
     });
@@ -52,7 +52,7 @@ export class OrderList extends Component {
 
   private removeListItemElement(orderListItem: OrderListItem | undefined) {
     if (!orderListItem) {
-      throw new Error();
+      return;
     }
 
     this.findOrderListItemElement(orderListItem.getDataId())?.remove();

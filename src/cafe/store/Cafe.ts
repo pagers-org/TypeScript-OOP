@@ -9,8 +9,6 @@ export class Cafe {
 
   private menu: Menu;
 
-  private openModal = false;
-
   constructor(api: AbstractApi, orders: Orders, servings: Servings) {
     this.api = api;
     this.orders = orders;
@@ -27,20 +25,8 @@ export class Cafe {
     return this.menu.getMenuItems();
   }
 
-  public setOpenModal(opened: boolean): void {
-    this.openModal = opened;
-  }
-
-  public isOpenModal(): boolean {
-    return this.openModal;
-  }
-
   public firstOrder(): Order {
     return this.orders.firstOrder();
-  }
-
-  public firstOrderShift() {
-    return this.orders.firstOrderShift();
   }
 
   public isEmptyOrder(): boolean {

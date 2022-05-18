@@ -3,9 +3,14 @@ import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
 import { dispatchCustomEvent } from '@/common';
 import { OPTION_GROUP_NAMES } from '@/@types';
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 
 const CLASS_NAME_HIDDEN = 'hidden';
+
+export type OptionInput = {
+  groupName: string;
+  elements: HTMLInputElement[];
+};
 
 export class Modal extends Component {
   private $closeButton!: HTMLElement;
@@ -23,6 +28,14 @@ export class Modal extends Component {
     this.$servingButton = this.$container.querySelector('.serving-button') as HTMLElement;
   }
 
+  public setOrder(order: Order) {
+    this.order = order;
+  }
+
+  public setBeverage(beverage: Beverage) {
+    this.beverage = beverage;
+  }
+
   protected bindEvents() {
     this.$closeButton.addEventListener('click', e => {
       e.preventDefault();
@@ -30,20 +43,14 @@ export class Modal extends Component {
       this.close();
     });
 
-    this.$optionGroups.forEach($optionGroup => {
-      const groupName = $optionGroup.dataset['groupName'];
-      const $inputs = Array.from($optionGroup.querySelectorAll('input'));
+    this.getOptionInputs().forEach(item => {
+      const { groupName, elements } = item;
 
-      $inputs.forEach($input => {
+      elements.forEach($input => {
         $input.addEventListener('change', e => {
           e.preventDefault();
 
-          const value = $input.value;
-          const order = this.order;
-
-          dispatchCustomEvent(EVENT.CHANGE_OPTION, { order, groupName, value });
-
-          this.updateOrderInfo();
+          this.optionChanged(groupName, $input.value);
         });
       });
     });
@@ -54,39 +61,33 @@ export class Modal extends Component {
       try {
         this.order.validate();
 
-        const servedOrder = this.cafe.firstOrderShift();
-
-        if (servedOrder) {
-          dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: servedOrder });
-
-          const serving = new Serving(
-            servedOrder.getId(),
-            this.cafe.findBeverageName(servedOrder.getBeverageId()),
-            servedOrder.getOrderTime(),
-          );
-
-          dispatchCustomEvent(EVENT.SERVING, { serving });
-
-          this.cafe.addServing(serving);
-          this.close();
-          alert('서빙이 완료되었습니다');
-
-          dispatchCustomEvent(EVENT.SERVED, { serving });
-        }
+        this.serving(this.order);
       } catch (e) {
         return alert((e as Error).message);
       }
     });
   }
 
-  public setOrderWithBeverage(order: Order, beverage: Beverage) {
-    this.order = order;
-    this.beverage = beverage;
+  private serving(order: Order) {
+    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: order });
+
+    const serving = new Serving(order.getId(), this.cafe.findBeverageName(order.getBeverageId()), order.getOrderTime());
+
+    dispatchCustomEvent(EVENT.BEFORE_SERVING, { order, serving });
+
+    this.close();
+
+    alert('서빙이 완료되었습니다');
+
+    dispatchCustomEvent(EVENT.AFTER_SERVING, { serving });
   }
 
   public open(order: Order, beverage: Beverage) {
-    this.setOrderWithBeverage(order, beverage);
+    this.setOrder(order);
+    this.setBeverage(beverage);
+
     document.body.appendChild(this);
+
     this.updateOrderInfo();
     this.show();
 
@@ -99,6 +100,19 @@ export class Modal extends Component {
     dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: false });
   }
 
+  private getOptionInputs(): OptionInput[] {
+    const result: OptionInput[] = [];
+
+    this.$optionGroups.forEach($optionGroup => {
+      const groupName = `${$optionGroup.dataset['groupName']}`;
+      const elements = Array.from($optionGroup.querySelectorAll('input'));
+
+      result.push({ groupName, elements });
+    });
+
+    return result;
+  }
+
   private updateOrderInfo() {
     OPTION_GROUP_NAMES.forEach(optionGroupName => {
       const $el = this.$orderInfo.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
@@ -108,6 +122,14 @@ export class Modal extends Component {
 
   private show(): void {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
+  }
+
+  private optionChanged(groupName: string, value: string) {
+    const order = this.order;
+
+    this.updateOrderInfo();
+
+    dispatchCustomEvent(EVENT.CHANGE_OPTION, { order, groupName, value });
   }
 
   protected view() {

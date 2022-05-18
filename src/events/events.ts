@@ -39,17 +39,6 @@ export const EVENT = {
   ORDER_REMOVED: 'ORDER_REMOVED',
 
   /**
-   * 주문목록에서 주문이 삭제되었을 때
-   *
-   * Dispatch
-   * @link OrderListItem.removeOrder
-   *
-   * Listener
-   * @link OrderList.bindListeners
-   */
-  ORDER_LIST_ITEM_REMOVED: 'ORDER_LIST_ITEM_REMOVED',
-
-  /**
    * 모달에서 옵션이 변경되었을 때
    *
    * Dispatch
@@ -70,7 +59,7 @@ export const EVENT = {
    * Listener
    * @link OrderList.bindListeners
    */
-  SERVING: 'SERVING',
+  BEFORE_SERVING: 'BEFORE_SERVING',
 
   /**
    * 모달에서 서빙이 끝나고 모달이 닫힌 후
@@ -82,7 +71,7 @@ export const EVENT = {
    * @link App.bindListeners
    * @link Served.bindListeners
    */
-  SERVED: 'SERVED',
+  AFTER_SERVING: 'AFTER_SERVING',
 
   /**
    * 모달이 열렸거나 닫힐때

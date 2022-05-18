@@ -1,5 +1,5 @@
 import { CustomEventListener } from '@/@types';
-import { EventName } from '@/constant';
+import { EventName } from '@/events';
 
 export function getRandomRange(start: number, end: number): number {
   return Math.floor(Math.random() * (end - start + 1) + start);

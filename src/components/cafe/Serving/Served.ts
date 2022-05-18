@@ -2,7 +2,7 @@ import { Component } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
 import { addCustomEventListener } from '@/common';
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
 
 export class Served extends Component {
@@ -14,7 +14,7 @@ export class Served extends Component {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.SERVED, e => {
+    addCustomEventListener(EVENT.AFTER_SERVING, e => {
       const serving = e.detail.serving as Serving;
       this.add(serving);
       this.updateListNo();

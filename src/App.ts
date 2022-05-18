@@ -1,9 +1,8 @@
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 import { addCustomEventListener } from '@/common';
 import { Component } from '@/components';
 import { Cafe } from '@/cafe';
 import { OrderChangeType } from '@/@types';
-import { Serving } from '@/domain';
 
 export class App {
   private readonly cafe: Cafe;
@@ -33,13 +32,10 @@ export class App {
       order.setSelectedOptionValue(groupName, value);
     });
 
-    addCustomEventListener(EVENT.SERVED, e => {
-      const serving = e.detail.serving as Serving;
-      this.cafe.addServing(serving);
-    });
+    addCustomEventListener(EVENT.AFTER_SERVING, e => {
+      const { serving } = e.detail;
 
-    addCustomEventListener(EVENT.MODAL_OPEN, e => {
-      this.cafe.setOpenModal(e.detail.opened);
+      this.cafe.addServing(serving);
     });
   }
 }

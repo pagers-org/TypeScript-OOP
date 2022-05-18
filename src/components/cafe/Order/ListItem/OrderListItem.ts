@@ -1,4 +1,4 @@
-import { EVENT } from '@/constant';
+import { EVENT } from '@/events';
 import { Component } from '@/components';
 import { Order } from '@/domain';
 import { addCustomEventListener, dispatchCustomEvent } from '@/common';
@@ -57,11 +57,9 @@ export class OrderListItem extends Component {
   }
 
   public removeOrder() {
-    dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { order: this.order });
+    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
 
     this.remove();
-
-    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
   private updateOptions() {
