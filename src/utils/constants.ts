@@ -18,3 +18,5 @@ export const CUP = ['1회용 컵', '텀블러', '머그컵', '재활용 컵'];
 export const SYRUP = ['바닐라', '헤이즐넛', '카라멜', '-'];
 export const ICEORHOT = ['ICE', 'HOT'];
 export const SHOT = ['1', '2', '3'];
+
+export const TAB_NAME = { INGREDIENT_MANAGEMENT: '재료 관리', ORDER_MANAGEMENT: '주문 관리' };

@@ -11,7 +11,7 @@ export default class ModalView extends View {
 
   show() {
     super.show();
-    this.element.innerHTML = this.template.getModal();
+    this.element.insertAdjacentHTML('afterbegin', this.template.getModal());
 
     return this;
   }

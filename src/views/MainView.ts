@@ -1,10 +1,12 @@
-import { qs, emit } from '../utils/helpers';
+import { qs, emit, qsAll } from '../utils/helpers';
 import View from './View';
 
 export default class MainView extends View {
   private template;
   private orderButton!: HTMLButtonElement;
   private coffeeOptionForm!: HTMLFormElement;
+  private buttons!: HTMLButtonElement[];
+  private wrapper!: HTMLDivElement;
   constructor(element = qs('#order') as HTMLElement, template = new Template()) {
     super(element);
     this.template = template;
@@ -15,12 +17,22 @@ export default class MainView extends View {
     this.element.innerHTML = this.template.getMain();
     this.orderButton = qs('.order-button') as HTMLButtonElement;
     this.coffeeOptionForm = qs('.coffee-add-area form') as HTMLFormElement;
+    this.buttons = qsAll('.coffee-category-button') as HTMLButtonElement[];
+    this.wrapper = qs('.wrapper') as HTMLDivElement;
+    this.buttons.forEach(button =>
+      button.addEventListener('click', event => {
+        emit('@buttonClick', event.target);
+      }),
+    );
     this.orderButton.addEventListener('click', () => {
       emit('@add');
     });
     this.coffeeOptionForm.addEventListener('submit', event => {
       event.preventDefault();
       emit('@submit');
+    });
+    this.wrapper.addEventListener('click', event => {
+      emit('@edit', event.target);
     });
 
     return this;
