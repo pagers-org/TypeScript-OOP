@@ -125,11 +125,9 @@ export class Modal extends Component {
   }
 
   private optionChanged(groupName: string, value: string) {
-    const order = this.order;
+    dispatchCustomEvent(EVENT.CHANGE_OPTION, { order: this.order, groupName, value });
 
     this.updateOrderInfo();
-
-    dispatchCustomEvent(EVENT.CHANGE_OPTION, { order, groupName, value });
   }
 
   protected view() {
