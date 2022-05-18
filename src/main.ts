@@ -2,10 +2,9 @@ import Kitchen from './components/Kitchen';
 import OrderList from './components/OrderList';
 
 (() => {
-  const orderList = new OrderList(document.querySelector('.order-list') as HTMLElement);
-  const kitchen = new Kitchen();
-  orderList.subscribe(kitchen.observer);
-  // orderList.subscribe();
+  const orderList = new OrderList(document.querySelector('.order-list'));
+  const kitchen = new Kitchen(document.querySelector('#right-section'));
+  kitchen.subscription = orderList.subscribe(kitchen.subscriber.bind(kitchen));
 })();
 
 // let currentElement: HTMLButtonElement | null = null;

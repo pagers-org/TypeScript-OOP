@@ -21,7 +21,8 @@ class OrderList implements Component, Observable {
 
   private static uniqueIdCnt = 0;
 
-  constructor($root: HTMLElement) {
+  constructor($root: HTMLElement | null) {
+    if (!$root) throw new Error('root element is required to render');
     this.$root = $root;
     this.init();
   }
