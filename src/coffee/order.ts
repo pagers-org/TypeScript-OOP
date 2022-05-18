@@ -30,7 +30,7 @@ export const order = {
   },
 
   getOrderByName: function (name: string) {
-    const filtered = this._orders.filter(order => order.menu !== name);
+    const filtered = this._orders.filter(order => order.menu === name);
     return filtered;
   },
 };
