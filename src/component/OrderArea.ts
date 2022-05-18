@@ -1,6 +1,7 @@
-import { $ } from '@/helper/dom';
+import { $, $all } from '@/helper/dom';
 import { order } from '@/coffee/order';
 import { Template } from '@/view/Template';
+import { editState } from '../helper/util';
 
 export default class OrderArea extends Template {
   constructor() {
@@ -13,11 +14,14 @@ export default class OrderArea extends Template {
 
   bindEvent() {
     const orderButton = $<HTMLButtonElement>('.order-button');
-    // const modifyButton = $<HTMLSpanElement>('.edit-order');
-    // const removeButton = $<HTMLSpanElement>('.remove-order');
-    orderButton.addEventListener('click', this.createOrderRow);
-    //modifyButton.addEventListener('click', this.modifyOrderRow);
-    //removeButton.addEventListener('click', this.removeOrderRow);
+    orderButton.addEventListener('click', this.createOrderRow.bind(this));
+  }
+
+  bindFeatureEvent() {
+    const modifyButtons = $all<HTMLSpanElement>('.edit-order');
+    const removeButtons = $all<HTMLSpanElement>('.remove-order');
+    modifyButtons.forEach(btn => btn.addEventListener('click', this.modifyOrderRow));
+    removeButtons.forEach(btn => btn.addEventListener('click', this.removeOrderRow));
   }
 
   removeOrderRow(e) {
@@ -27,7 +31,9 @@ export default class OrderArea extends Template {
     row.remove();
   }
   modifyOrderRow(e) {
-    // modify
+    const row = e.target.closest('.table-row');
+    editState.toggleEditState();
+    row.contentEditable = editState.value;
   }
 
   createOrderRow() {
@@ -35,24 +41,25 @@ export default class OrderArea extends Template {
     const table = $<HTMLDivElement>('#order-table');
     const row = ` 
             <div class="table-row" data-key=${_id}>
-            <div class="cell" data-title="No">1</div>
-            <div class="cell" data-title="메뉴명">${menu}</div>
-            <div class="cell" data-title="사이즈">${size}</div>
-            <div class="cell" data-title="샷">${shot}</div>
-            <div class="cell" data-title="시럽">${syrup}</div>
-            <div class="cell" data-title="ICE/HOT">${iceOrHot}</div>
-            <div class="cell" data-title="얼음 종류">${iceOrHot === 'HOT' ? '-' : ice}</div>
-            <div class="cell" data-title="휘핑 크림">${cream}</div>
-            <div class="cell" data-title="엑스트라">${extra}</div>
-            <div class="cell" data-title="컵">${cup}</div>
-            <div class="cell" data-title="수정하기">
-              <span class="edit-order"><i class="fa-solid fa-pen"></i></span>
-            </div>
-            <div class="cell" data-title="삭제하기">
-              <span class="remove-order"><i class="fa-solid fa-trash-can"></i></span>
-            </div>
+              <div class="cell" data-title="No">1</div>
+              <div class="cell" data-title="메뉴명">${menu}</div>
+              <div class="cell" data-title="사이즈">${size}</div>
+              <div class="cell" data-title="샷">${shot}</div>
+              <div class="cell" data-title="시럽">${syrup}</div>
+              <div class="cell" data-title="ICE/HOT">${iceOrHot}</div>
+              <div class="cell" data-title="얼음 종류">${iceOrHot === 'HOT' ? '-' : ice}</div>
+              <div class="cell" data-title="휘핑 크림">${cream}</div>
+              <div class="cell" data-title="엑스트라">${extra}</div>
+              <div class="cell" data-title="컵">${cup}</div>
+              <div class="cell" data-title="수정하기">
+                <span class="edit-order"><i class="fa-solid fa-pen"></i></span>
+              </div>
+              <div class="cell" data-title="삭제하기">
+                <span class="remove-order"><i class="fa-solid fa-trash-can"></i></span>
+              </div>
           </div>`;
     table.insertAdjacentHTML('beforeend', row);
+    this.bindFeatureEvent();
   }
 
   template() {
@@ -81,7 +88,6 @@ export default class OrderArea extends Template {
             </div>
           </div>
         </div>
-
 `;
   }
 }
