@@ -1,4 +1,4 @@
-import { CoffeeDTO } from "@/@types";
+import { CoffeeDTO } from '@/@types';
 
 export class Coffee {
   coffees: CoffeeDTO[];

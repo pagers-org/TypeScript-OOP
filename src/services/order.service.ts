@@ -1,14 +1,11 @@
-import { CoffeeDTO } from "@/@types";
+import { CoffeeDTO } from '@/@types';
 
 export class OrderService {
   public coffees: CoffeeDTO[] = [];
-  private onOrderListChanged!: Function;
+  private onOrderListChanged!: (coffees: CoffeeDTO) => void;
 
-  bindOrderListChanged(callback: Function) {
+  bindOrderListChanged(callback: (coffees: CoffeeDTO) => void) {
     this.onOrderListChanged = callback;
-  }
-  private _commit(coffees: CoffeeDTO[]) {
-    this.onOrderListChanged(coffees);
   }
   addCoffee(coffee: CoffeeDTO) {
     this.coffees = [...this.coffees, { ...coffee }];
