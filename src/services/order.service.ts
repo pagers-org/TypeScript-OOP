@@ -5,16 +5,17 @@ export class OrderService {
   private onOrderListChanged!: Function;
 
   bindOrderListChanged(callback: Function) {
-    console.log("bindOrderListChanged");
     this.onOrderListChanged = callback;
   }
-  _commit(coffees: CoffeeDTO[]) {
+  private _commit(coffees: CoffeeDTO[]) {
     this.onOrderListChanged(coffees);
   }
   addCoffee(coffee: CoffeeDTO) {
-    console.log(`addCoffee: ${JSON.stringify(coffee)}`);
     this.coffees = [...this.coffees, { ...coffee }];
-    console.log(`수정된 커피 값 ${JSON.stringify(this.coffees)}`);
     this.onOrderListChanged(coffee);
+  }
+  deleteCoffee(id: number) {
+    this.coffees = [...this.coffees].filter(coffee => coffee.id !== id);
+    console.log(this.coffees);
   }
 }

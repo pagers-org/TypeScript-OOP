@@ -48,3 +48,33 @@ innerHTML: 새로운 node로 교체한다. 추가적으로 파싱 작업이 진�
 https://skout90.github.io/2017/08/12/Javascript/string-%EC%9C%BC%EB%A1%9C-element%EB%A7%8C%EB%93%A4%EA%B8%B0/    
 https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template
 > Template Element를 사용한다.
+
+# 이벤트 위임
+https://joshua1988.github.io/web-development/javascript/event-propagation-delegation/
+
+### 예시 코드
+```html
+<div id="wrapper">
+  <h1>안녕하세요</h1>
+  <div id="detail">
+    <p>테스트 데이터</p> // 클릭 이벤트 설정
+  </div>
+</div>
+```
+
+## 이벤트 버블링
+특정화면 요소에서 이벤트가 발생할 때 이벤트 요소가 상위의 요소로 전달되어가는 특성이다. (하위 요소 > 상위 요소)   
+예시 코드에서 p에 클릭 이벤트를 설정했다면 `p` > `#detail`> `#wrapper`순서로 이벤트가 전달된다.
+
+## 이벤트 캡쳐링
+이벤트 버블링과 반대로 진행되는 이벤트 전파 방식이다. (상위 요소 > 하위 요소)   
+이벤트 리스너에 `capture: true`로 설정하여 사용할 수 있다.   
+예시 코드에서 p에 클릭 이벤트를 설정했다면 `#wrapper`> `#detail`> `p`순서로 이벤트가 전달된다.
+
+## 이벤트 위임
+하위 요소에 각각 이벤트를 붙이지 않고 상위 요소에서 하위 요소의 이벤트들을 제어하는 방식이다.  
+이벤트 버블링을 사용하여 구현할 수 있다.
+
+# Element.closest()
+https://developer.mozilla.org/ko/docs/Web/API/Element/closest
+> 주어진 CSS 선택자와 일치하는 요소를 찾을 때까지 자기 자신을 포함해 위쪽(부모 방향, 문서 루트까지)으로 문서 트리를 순회한다.

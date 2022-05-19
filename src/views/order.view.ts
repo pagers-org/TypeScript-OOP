@@ -53,9 +53,17 @@ export class OrderView {
     orderButton.addEventListener("click", (event) => {
       event.preventDefault();
       const newCoffee: CoffeeDTO = createRandomOrder(this.coffeeIndex+1);
-      console.log(`bindOrderEvent: ${JSON.stringify(newCoffee)}`);
       this.coffeeIndex++;
       handler(newCoffee);
+    });
+  }
+  bindOrderMenuEvent(deleteHandler: Function) {
+    const orderTable = $("#order-table") as HTMLDivElement;
+    orderTable.addEventListener("click", (event) => {
+      event.preventDefault();
+      const $target = event.target as HTMLElement;
+      const id = $target.closest('.remove-order')?.getAttribute("id");
+      deleteHandler(parseInt(id!));
     });
   }
   createOrderTable(coffee: CoffeeDTO) {
@@ -77,7 +85,7 @@ export class OrderView {
             <span class="edit-order"><i class="fa-solid fa-pen"></i></span>
           </div>
           <div class="cell" data-title="삭제하기">
-            <span class="remove-order"><i class="fa-solid fa-trash-can"></i></span>
+            <span class="remove-order" id="${coffee.id}"><i class="fa-solid fa-trash-can"></i></span>
         </div>
       </div>
     `;

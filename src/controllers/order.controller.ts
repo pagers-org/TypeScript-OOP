@@ -12,11 +12,15 @@ export class OrderController {
     this.orderView.bindMakeCoffeeEvent();
     this.orderView.bindModalEvent();
     this.orderView.bindOrderEvent(this.handleAddCoffee);
+    this.orderView.bindOrderMenuEvent(this.handleDeleteCoffee);
   }
   onOrderListChanged = (coffee: CoffeeDTO) => {
     this.orderView.createOrderTable(coffee);
   }
   handleAddCoffee = (coffee: CoffeeDTO) => {
     this.orderService.addCoffee(coffee);
+  }
+  handleDeleteCoffee = (id : number) => {
+    this.orderService.deleteCoffee(id);
   }
 }
