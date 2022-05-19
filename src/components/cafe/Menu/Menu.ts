@@ -100,10 +100,8 @@ export class Menu extends Component {
       return alert(MSG_ALERT);
     }
 
-    const order = this.cafe.firstOrder();
-    const beverage = await this.cafe.findBeverage(order.getBeverageId());
     const $modal = this.createComponent<Modal>('cafe-modal');
-    $modal.open(order, beverage);
+    $modal.open(await this.cafe.firstOrder());
   }
 
   protected view(): string {

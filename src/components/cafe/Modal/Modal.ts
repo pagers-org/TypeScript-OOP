@@ -1,7 +1,8 @@
 import { Component } from '@/components';
 import { ModalView } from './ModalView';
-import { Beverage, Order, Serving } from '@/domain';
+import { Serving } from '@/domain';
 import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
+import { CafeOrder } from '@/cafe';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -16,8 +17,7 @@ export class Modal extends Component {
   private $optionGroups!: HTMLElement[];
   private $orderInfo!: HTMLElement;
 
-  private order!: Order;
-  private beverage!: Beverage;
+  private cafeOrder!: CafeOrder;
 
   protected bindElements() {
     this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
@@ -26,12 +26,8 @@ export class Modal extends Component {
     this.$servingButton = this.$container.querySelector('.serving-button') as HTMLElement;
   }
 
-  public setOrder(order: Order) {
-    this.order = order;
-  }
-
-  public setBeverage(beverage: Beverage) {
-    this.beverage = beverage;
+  public setOrder(cafeOrder: CafeOrder) {
+    this.cafeOrder = cafeOrder;
   }
 
   protected mounted() {
@@ -62,25 +58,25 @@ export class Modal extends Component {
       e.preventDefault();
 
       try {
-        this.order.validate();
+        this.cafeOrder.order.validate();
 
-        this.serving(this.order);
+        this.serving(this.cafeOrder);
       } catch (e) {
         return alert((e as Error).message);
       }
     });
   }
 
-  private async serving(order: Order) {
-    this.cafe.getEventDispatcher().orderRemoved({ order });
+  private async serving(cafeOrder: CafeOrder) {
+    this.cafe.getEventDispatcher().orderRemoved({ order: cafeOrder.order });
 
-    const orderId = order.getId();
-    const beverageName = await this.cafe.findBeverageName(order.getBeverageId());
-    const orderTime = order.getOrderTime();
+    const orderId = cafeOrder.order.getId();
+    const beverageName = cafeOrder.beverage.getName();
+    const orderTime = cafeOrder.order.getOrderTime();
 
     const serving = new Serving({ orderId, beverageName, orderTime });
 
-    this.cafe.getEventDispatcher().beforeServing({ order, serving });
+    this.cafe.getEventDispatcher().beforeServing({ order: cafeOrder.order, serving });
 
     this.close();
 
@@ -89,9 +85,8 @@ export class Modal extends Component {
     this.cafe.getEventDispatcher().afterServing({ serving });
   }
 
-  public open(order: Order, beverage: Beverage) {
-    this.setOrder(order);
-    this.setBeverage(beverage);
+  public open(cafeOrder: CafeOrder) {
+    this.setOrder(cafeOrder);
 
     document.body.appendChild(this);
 
@@ -120,7 +115,7 @@ export class Modal extends Component {
   private updateOrderInfo() {
     OPTION_GROUP_NAMES.forEach(optionGroupName => {
       const $el = this.$orderInfo.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
-      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
+      $el.textContent = this.cafeOrder.order.getSelectedOptionValue(optionGroupName);
     });
   }
 
@@ -129,12 +124,12 @@ export class Modal extends Component {
   }
 
   private optionChanged(groupName: OptionGroupName, value: string) {
-    this.cafe.getEventDispatcher().optionChanged({ order: this.order, groupName, value });
+    this.cafe.getEventDispatcher().optionChanged({ order: this.cafeOrder.order, groupName, value });
 
     this.updateOrderInfo();
   }
 
   protected view() {
-    return ModalView(this.order, this.beverage);
+    return ModalView(this.cafeOrder.order, this.cafeOrder.beverage);
   }
 }

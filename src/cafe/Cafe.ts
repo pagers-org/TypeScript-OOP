@@ -1,8 +1,13 @@
-import { AbstractApi, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
+import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
 import { nanoid } from 'nanoid';
 import { getRandomRange } from '@/common';
 import { EventDispatcher } from '@/cafe/event/EventDispatcher';
 import { EventListener } from '@/cafe/event/EventListener';
+
+export type CafeOrder = {
+  order: Order;
+  beverage: Beverage;
+};
 
 export class Cafe {
   private readonly api: AbstractApi;
@@ -27,8 +32,11 @@ export class Cafe {
     return (await this.getMenu()).getMenuItems();
   }
 
-  public firstOrder(): Order {
-    return this.orders.firstOrder();
+  public async firstOrder(): Promise<CafeOrder> {
+    const order = this.orders.firstOrder();
+    const beverage = await this.findBeverage(order.getBeverageId());
+
+    return { order, beverage };
   }
 
   public isEmptyOrder(): boolean {
@@ -53,10 +61,6 @@ export class Cafe {
 
   public findBeverage(beverageId: number) {
     return this.api.findBeverage(beverageId);
-  }
-
-  public findBeverageName(beverageId: number) {
-    return this.api.findBeverageName(beverageId);
   }
 
   public async createRandomOrder(menuId: number) {

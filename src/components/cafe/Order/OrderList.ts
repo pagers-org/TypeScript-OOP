@@ -1,6 +1,7 @@
 import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
+import { CafeOrder } from '@/cafe';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -39,8 +40,9 @@ export class OrderList extends Component {
     this.updateListItemNo();
   }
 
-  private addOrder(order: Order): void {
-    const listItem = this.createListItem(order);
+  private async addOrder(order: Order) {
+    const beverage = await this.cafe.findBeverage(order.getBeverageId());
+    const listItem = this.createListItem({ order, beverage });
 
     this.addListItem(listItem);
     this.updateListItemNo();
@@ -65,7 +67,7 @@ export class OrderList extends Component {
     this.$listItemElements = this.$listItemElements.filter(o => o !== orderListItem);
   }
 
-  private createListItem(order: Order): OrderListItem {
+  private createListItem(order: CafeOrder): OrderListItem {
     const $orderListItem = this.createComponent<OrderListItem>('cafe-order-list-item');
     $orderListItem.setOrder(order);
 
