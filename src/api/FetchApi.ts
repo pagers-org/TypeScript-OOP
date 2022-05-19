@@ -11,7 +11,7 @@ import {
   Recipe,
   RecipeConstructor,
 } from '@/domain';
-import { BeverageName, MaterialName, OptionGroupName } from '@/@types';
+import { OptionGroupName } from '@/@types';
 
 export type FetchApiConstructor = {
   host?: string;
@@ -43,14 +43,14 @@ export class FetchApi extends AbstractApi {
 
   protected async beverages(): Promise<Beverage[]> {
     const res = await this.fetch<BeverageConstructor>(API_URL.BEVERAGES);
-    const result = res.map(item => new Beverage({ id: item.id, name: item.name as BeverageName }));
+    const result = res.map(item => new Beverage({ id: item.id, name: item.name }));
 
     return new Promise<Beverage[]>(resolve => resolve(result));
   }
 
   protected async materials(): Promise<Material[]> {
     const res = await this.fetch<MaterialConstructor>(API_URL.MATERIALS);
-    const result = res.map(item => new Material({ id: item.id, name: item.name as MaterialName }));
+    const result = res.map(item => new Material({ id: item.id, name: item.name }));
 
     return new Promise<Material[]>(resolve => resolve(result));
   }
