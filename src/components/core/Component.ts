@@ -1,6 +1,5 @@
 import { createElement, dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/events';
-import { Cafe } from '@/cafe';
+import { Cafe, Events } from '@/cafe';
 
 export class Component extends HTMLElement {
   protected $container!: HTMLElement;
@@ -9,7 +8,7 @@ export class Component extends HTMLElement {
   constructor() {
     super();
 
-    dispatchCustomEvent(EVENT.COMPONENT_INITIALIZE, { component: this });
+    dispatchCustomEvent(Events.COMPONENT_INITIALIZE, { component: this });
   }
 
   connectedCallback() {

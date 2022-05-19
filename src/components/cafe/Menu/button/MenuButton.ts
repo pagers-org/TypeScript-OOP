@@ -1,7 +1,5 @@
 import { Component } from '@/components';
 import { MenuButtonView } from './MenuButtonView';
-import { dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/events';
 
 const CLASS_NAME_SELECTED = 'selected';
 
@@ -19,7 +17,7 @@ export class MenuButton extends Component {
 
   protected bindEvents() {
     this.$container.addEventListener('click', () => {
-      dispatchCustomEvent(EVENT.MENU_BUTTON_CLICK, { button: this });
+      this.cafe.getEventDispatcher().menuButtonClick({ button: this });
     });
   }
 

@@ -1,5 +1,3 @@
-import { addCustomEventListener } from '@/common';
-import { EVENT } from '@/events';
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
 import { Order } from '@/domain';
@@ -24,21 +22,17 @@ export class Menu extends Component {
   }
 
   protected bindListeners(): void {
-    addCustomEventListener(EVENT.MODAL_OPEN, e => {
-      this.modalOpened = e.detail.opened;
-    });
-
-    addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      e.preventDefault();
-
-      this.showAndActiveMenu(e.detail.order);
-    });
-
-    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      e.preventDefault();
-
-      this.hideAndUnActiveMenu(e.detail.order);
-    });
+    this.cafe
+      .getEventListener()
+      .modalOpen(({ opened }) => {
+        this.modalOpened = opened;
+      })
+      .orderAdded(({ order }) => {
+        this.showAndActiveMenu(order);
+      })
+      .orderRemoved(({ order }) => {
+        this.hideAndUnActiveMenu(order);
+      });
   }
 
   protected bindEvents(): void {
@@ -62,7 +56,7 @@ export class Menu extends Component {
 
   private async createMenuButton(beverageId: number) {
     const beverage = await this.cafe.findBeverage(beverageId);
-    const $button = this.createComponent('cafe-menu-button') as MenuButton;
+    const $button = this.createComponent<MenuButton>('cafe-menu-button');
 
     $button.setMenuId(beverage.getId());
     $button.setMenuName(beverage.getName());
@@ -108,7 +102,7 @@ export class Menu extends Component {
 
     const order = this.cafe.firstOrder();
     const beverage = await this.cafe.findBeverage(order.getBeverageId());
-    const $modal = this.createComponent('cafe-modal') as Modal;
+    const $modal = this.createComponent<Modal>('cafe-modal');
     $modal.open(order, beverage);
   }
 

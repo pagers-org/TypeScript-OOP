@@ -1,9 +1,7 @@
-import { EVENT } from '@/events';
 import { Component } from '@/components';
 import { Order } from '@/domain';
-import { addCustomEventListener, dispatchCustomEvent } from '@/common';
 import { OrderListItemView } from './OrderListItemView';
-import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
+import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
 
 export class OrderListItem extends Component {
   private order!: Order;
@@ -23,9 +21,7 @@ export class OrderListItem extends Component {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.CHANGE_OPTION, e => {
-      const { order }: OrderChangeType = e.detail;
-
+    this.cafe.getEventListener().changedOption(({ order }) => {
       if (order !== this.order) {
         return;
       }
@@ -57,7 +53,7 @@ export class OrderListItem extends Component {
   }
 
   public removeOrder() {
-    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
+    this.cafe.getEventDispatcher().orderRemoved({ order: this.order });
 
     this.remove();
   }

@@ -1,8 +1,6 @@
 import { Component } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
-import { addCustomEventListener } from '@/common';
-import { EVENT } from '@/events';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
 
 export class Served extends Component {
@@ -14,8 +12,7 @@ export class Served extends Component {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.AFTER_SERVING, e => {
-      const serving = e.detail.serving as Serving;
+    this.cafe.getEventListener().afterServing(({ serving }) => {
       this.add(serving);
 
       //TODO 리팩토링 필요
@@ -26,7 +23,7 @@ export class Served extends Component {
   }
 
   private add(serving: Serving) {
-    const servingElement = this.createComponent('cafe-served-item') as ServedItem;
+    const servingElement = this.createComponent<ServedItem>('cafe-served-item');
     servingElement.setServing(serving);
 
     this.$servedList.push(servingElement);

@@ -1,9 +1,7 @@
 import { Component } from '@/components';
 import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
-import { dispatchCustomEvent } from '@/common';
 import { OPTION_GROUP_NAMES } from '@/@types';
-import { EVENT } from '@/events';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -74,7 +72,7 @@ export class Modal extends Component {
   }
 
   private async serving(order: Order) {
-    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: order });
+    this.cafe.getEventDispatcher().orderRemoved({ order });
 
     const orderId = order.getId();
     const beverageName = await this.cafe.findBeverageName(order.getBeverageId());
@@ -82,13 +80,13 @@ export class Modal extends Component {
 
     const serving = new Serving({ orderId, beverageName, orderTime });
 
-    dispatchCustomEvent(EVENT.BEFORE_SERVING, { order, serving });
+    this.cafe.getEventDispatcher().beforeServing({ order, serving });
 
     this.close();
 
     alert('서빙이 완료되었습니다');
 
-    dispatchCustomEvent(EVENT.AFTER_SERVING, { serving });
+    this.cafe.getEventDispatcher().afterServing({ serving });
   }
 
   public open(order: Order, beverage: Beverage) {
@@ -97,13 +95,13 @@ export class Modal extends Component {
 
     document.body.appendChild(this);
 
-    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: true });
+    this.cafe.getEventDispatcher().modalOpen(true);
   }
 
   public close() {
     this.remove();
 
-    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: false });
+    this.cafe.getEventDispatcher().modalOpen(false);
   }
 
   private getOptionInputs(): OptionInput[] {
@@ -131,7 +129,7 @@ export class Modal extends Component {
   }
 
   private optionChanged(groupName: string, value: string) {
-    dispatchCustomEvent(EVENT.CHANGE_OPTION, { order: this.order, groupName, value });
+    this.cafe.getEventDispatcher().optionChanged({ order: this.order, groupName, value });
 
     this.updateOrderInfo();
   }

@@ -1,7 +1,5 @@
-import { EVENT } from '@/events';
-import { Component, MenuButton, OrderListItem } from '@/components';
-import { addCustomEventListener, dispatchCustomEvent } from '@/common';
-import { Order, Serving } from '@/domain';
+import { Component, OrderListItem } from '@/components';
+import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
 
 export class OrderList extends Component {
@@ -15,20 +13,17 @@ export class OrderList extends Component {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      const order = e.detail.order as Order;
-      this.removeOrderListItem(order.getId());
-    });
-
-    addCustomEventListener(EVENT.BEFORE_SERVING, e => {
-      const serving = e.detail.serving as Serving;
-      this.removeOrderListItem(serving.getOrderId());
-    });
-
-    addCustomEventListener(EVENT.MENU_BUTTON_CLICK, async e => {
-      const menuButton = e.detail.button as MenuButton;
-      this.addOrder(await this.cafe.createRandomOrder(menuButton.getMenuId()));
-    });
+    this.cafe
+      .getEventListener()
+      .orderRemoved(({ order }) => {
+        this.removeOrderListItem(order.getId());
+      })
+      .beforeServing(({ serving }) => {
+        this.removeOrderListItem(serving.getOrderId());
+      })
+      .menuButtonClick(async ({ button }) => {
+        this.addOrder(await this.cafe.createRandomOrder(button.getMenuId()));
+      });
   }
 
   protected bindEvents() {
@@ -50,7 +45,7 @@ export class OrderList extends Component {
     this.addListItem(listItem);
     this.updateListItemNo();
 
-    dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
+    this.cafe.getEventDispatcher().orderAdded({ order });
   }
 
   private removeListItemElement(orderListItem: OrderListItem | undefined) {
@@ -71,7 +66,7 @@ export class OrderList extends Component {
   }
 
   private createListItem(order: Order): OrderListItem {
-    const $orderListItem = this.createComponent('cafe-order-list-item') as OrderListItem;
+    const $orderListItem = this.createComponent<OrderListItem>('cafe-order-list-item');
     $orderListItem.setOrder(order);
 
     return $orderListItem;

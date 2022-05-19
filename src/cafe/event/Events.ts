@@ -1,7 +1,7 @@
-export type EventKeys = keyof typeof EVENT;
-export type EventName = typeof EVENT[EventKeys];
+export type EventKeys = keyof typeof Events;
+export type EventName = typeof Events[EventKeys];
 
-export const EVENT = {
+export const Events = {
   /**
    * 컴포넌트의 생성자에서 호출됨
    *
