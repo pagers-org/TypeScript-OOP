@@ -8,7 +8,7 @@ export type OptionGroupConstructor = {
   id: number;
   name: OptionGroupName;
   type?: string;
-  options: Option[];
+  options?: Option[];
 };
 
 export class OptionGroup {

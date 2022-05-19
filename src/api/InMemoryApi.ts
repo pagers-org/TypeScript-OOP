@@ -1,7 +1,18 @@
-import { AbstractApi, Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
-import { BeverageName, MaterialName, OptionGroupName } from '@/@types';
+import {
+  AbstractApi,
+  Beverage,
+  BeverageConstructor,
+  Material,
+  MaterialConstructor,
+  Option,
+  OptionConstructor,
+  OptionGroup,
+  OptionGroupConstructor,
+  Recipe,
+  RecipeConstructor,
+} from '@/domain';
 
-const beverages = [
+const beverages: BeverageConstructor[] = [
   {
     id: 1,
     name: '아메리카노',
@@ -43,7 +54,8 @@ const beverages = [
     name: '리스트레또',
   },
 ];
-const materials = [
+
+const materials: MaterialConstructor[] = [
   {
     id: 1,
     name: '물',
@@ -78,7 +90,7 @@ const materials = [
   },
 ];
 
-const optionGroups = [
+const optionGroups: OptionGroupConstructor[] = [
   {
     id: 1,
     name: '사이즈',
@@ -114,7 +126,7 @@ const optionGroups = [
   },
 ];
 
-const options = [
+const options: OptionConstructor[] = [
   {
     id: 1,
     optionGroupId: 1,
@@ -242,7 +254,7 @@ const options = [
   },
 ];
 
-const recipes = [
+const recipes: RecipeConstructor[] = [
   { id: 1, beverageId: 1, materialId: 1, count: 6 },
   { id: 2, beverageId: 1, materialId: 2, count: 4 },
 
@@ -278,12 +290,12 @@ const recipes = [
 
 export class InMemoryApi extends AbstractApi {
   protected beverages(): Promise<Beverage[]> {
-    const result = beverages.map(item => new Beverage({ id: item.id, name: item.name as BeverageName }));
+    const result = beverages.map(item => new Beverage({ id: item.id, name: item.name }));
     return new Promise<Beverage[]>(resolve => resolve(result));
   }
 
   protected materials(): Promise<Material[]> {
-    const result = materials.map(item => new Material({ id: item.id, name: item.name as MaterialName }));
+    const result = materials.map(item => new Material({ id: item.id, name: item.name }));
 
     return new Promise<Material[]>(resolve => resolve(result));
   }
@@ -296,7 +308,7 @@ export class InMemoryApi extends AbstractApi {
 
       return new OptionGroup({
         id: item.id,
-        name: item.name as OptionGroupName,
+        name: item.name,
         type: item.type,
         options,
       });

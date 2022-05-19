@@ -11,7 +11,6 @@ import {
   Recipe,
   RecipeConstructor,
 } from '@/domain';
-import { OptionGroupName } from '@/@types';
 
 export type FetchApiConstructor = {
   host?: string;
@@ -64,7 +63,7 @@ export class FetchApi extends AbstractApi {
 
       return new OptionGroup({
         id: item.id,
-        name: item.name as OptionGroupName,
+        name: item.name,
         type: item.type,
         options,
       });
