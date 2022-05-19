@@ -18,7 +18,10 @@ export class Cafe {
   }
 
   private createMenu() {
-    return new Menu(this.api.getBeverages().map(item => new MenuItem(item.getId())));
+    const beverages = this.api.getBeverages();
+    const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
+
+    return new Menu({ menuItems });
   }
 
   public menuItems(): MenuItem[] {
@@ -59,15 +62,24 @@ export class Cafe {
 
   public createRandomOrder(menuId: number) {
     const optionGroups = this.createRandomSelectedOptionGroups();
-    return new Order(nanoid(), menuId, optionGroups);
+
+    return new Order({
+      id: nanoid(),
+      beverageId: menuId,
+      optionGroups,
+    });
   }
 
   public createRandomBeverageOrder() {
-    return this.createRandomOrder(getRandomRange(1, this.api.getBeverages().length));
+    const beveragesCount = this.api.getBeveragesCount();
+
+    return this.createRandomOrder(getRandomRange(1, beveragesCount));
   }
 
   private createRandomSelectedOptionGroups() {
-    return this.api.getOptionGroups().map(item => {
+    const optionGroups = this.api.getOptionGroups();
+
+    return optionGroups.map(item => {
       const newGroup = item.clone();
       newGroup.resetSelected();
       newGroup.randomSelected();

@@ -1,12 +1,17 @@
 import { BeverageName } from '@/@types';
 
+export type BeverageConstructor = {
+  id: number;
+  name: BeverageName;
+};
+
 export class Beverage {
   private readonly id: number;
   private readonly name: BeverageName;
 
-  constructor(id: number, name: BeverageName) {
-    this.id = id;
-    this.name = name;
+  constructor(constructor: BeverageConstructor) {
+    this.id = constructor.id;
+    this.name = constructor.name;
   }
 
   public getId(): number {
@@ -18,6 +23,6 @@ export class Beverage {
   }
 
   public clone() {
-    return new Beverage(this.id, this.name);
+    return new Beverage({ id: this.id, name: this.name });
   }
 }

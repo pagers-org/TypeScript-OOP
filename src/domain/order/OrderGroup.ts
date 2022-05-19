@@ -1,12 +1,17 @@
 import { Order } from '@/domain';
 
+export type OrderGroupConstructor = {
+  id: number;
+  orderList?: Order[];
+};
+
 export class OrderGroup {
   private readonly id: number;
   private orderList: Order[];
 
-  constructor(id: number, orderList: Order[] = []) {
-    this.orderList = orderList;
-    this.id = id;
+  constructor(constructor: OrderGroupConstructor) {
+    this.id = constructor.id;
+    this.orderList = constructor.orderList || [];
   }
 
   public getId() {

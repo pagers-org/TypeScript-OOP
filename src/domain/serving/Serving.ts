@@ -1,16 +1,23 @@
 import { BeverageName } from '@/@types';
 
+export type ServingConstructor = {
+  orderId: string;
+  beverageName: BeverageName;
+  orderTime: Date;
+  servingTime?: Date;
+};
+
 export class Serving {
   private readonly orderId: string;
   private readonly beverageName: BeverageName;
   private readonly orderTime: Date;
-  private readonly servingTime: Date;
+  private readonly servingTime?: Date;
 
-  constructor(orderId: string, beverageName: BeverageName, orderTime: Date, servingTime: Date = new Date()) {
-    this.orderId = orderId;
-    this.beverageName = beverageName;
-    this.orderTime = orderTime;
-    this.servingTime = servingTime;
+  constructor(constructor: ServingConstructor) {
+    this.orderId = constructor.orderId;
+    this.beverageName = constructor.beverageName;
+    this.orderTime = constructor.orderTime;
+    this.servingTime = constructor.servingTime || new Date();
   }
 
   public getOrderTime() {

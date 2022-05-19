@@ -15,9 +15,9 @@ describe('카페 테스트', () => {
   });
 
   it('주문 테스트', () => {
-    const order1 = new Order('1', 1);
-    const order2 = new Order('2', 2);
-    const order3 = new Order('3', 1);
+    const order1 = new Order({ id: '1', beverageId: 1 });
+    const order2 = new Order({ id: '2', beverageId: 2 });
+    const order3 = new Order({ id: '3', beverageId: 1 });
 
     orders.addOrder(order1);
     orders.addOrder(order2);
@@ -36,16 +36,19 @@ describe('카페 테스트', () => {
   });
 
   it('서빙 테스트', () => {
-    const order = new Order('1', 1);
+    const order = new Order({ id: '1', beverageId: 1 });
     orders.addOrder(order);
 
     const servingOrder = orders.firstOrderShift();
+    const beverageName = api.findBeverageName(servingOrder.getBeverageId());
+    const orderId = servingOrder.getId();
+    const orderTime = servingOrder.getOrderTime();
 
-    const serving = new Serving(
-      servingOrder.getId(),
-      api.findBeverageName(servingOrder.getBeverageId()),
-      servingOrder.getOrderTime(),
-    );
+    const serving = new Serving({
+      orderId,
+      beverageName,
+      orderTime,
+    });
 
     expect(orders.isEmpty()).toBeTruthy();
     expect(serving.getBeverageName()).toEqual('아메리카노');

@@ -1,10 +1,14 @@
 import { MenuItem } from '@/domain';
 
+export type MenuConstructor = {
+  menuItems: MenuItem[];
+};
+
 export class Menu {
   private readonly menuItems: MenuItem[];
 
-  constructor(menuItems: MenuItem[]) {
-    this.menuItems = menuItems;
+  constructor(constructor: MenuConstructor) {
+    this.menuItems = constructor.menuItems;
   }
 
   public getMenuItems() {

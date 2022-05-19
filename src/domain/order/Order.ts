@@ -1,17 +1,24 @@
 import { OptionGroup } from '@/domain';
 import { OptionGroupName, OptionName } from '@/@types';
 
+export type OrderConstructor = {
+  id: string;
+  beverageId: number;
+  optionGroups?: OptionGroup[];
+  orderTime?: Date;
+};
+
 export class Order {
   private readonly id: string;
   private readonly beverageId: number;
   private readonly optionGroups: OptionGroup[] = [];
   private readonly orderTime: Date;
 
-  constructor(id: string, beverage: number, optionGroups: OptionGroup[] = [], orderTime: Date = new Date()) {
-    this.id = id;
-    this.beverageId = beverage;
-    this.optionGroups = optionGroups;
-    this.orderTime = orderTime;
+  constructor(constructor: OrderConstructor) {
+    this.id = constructor.id;
+    this.beverageId = constructor.beverageId;
+    this.optionGroups = constructor.optionGroups || [];
+    this.orderTime = constructor.orderTime || new Date();
   }
 
   public validate() {

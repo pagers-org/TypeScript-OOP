@@ -1,8 +1,12 @@
+export type MenuItemConstructor = {
+  beverageId: number;
+};
+
 export class MenuItem {
   private readonly beverageId: number;
 
-  constructor(beverageId: number) {
-    this.beverageId = beverageId;
+  constructor(constructor: MenuItemConstructor) {
+    this.beverageId = constructor.beverageId;
   }
 
   public getBeverageId() {

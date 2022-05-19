@@ -61,6 +61,6 @@ export class Orders {
 
   private getOrderGroup(groupId: number): OrderGroup {
     const result = this.orderGroups.find(orderGroup => orderGroup.getId() === groupId);
-    return result ? result : new OrderGroup(groupId);
+    return result ? result : new OrderGroup({ id: groupId });
   }
 }

@@ -278,25 +278,33 @@ const recipes = [
 
 export class InMemoryApi extends AbstractApi {
   public getBeverages(): Beverage[] {
-    return beverages.map(item => new Beverage(item.id, item.name as BeverageName));
+    return beverages.map(item => new Beverage({ id: item.id, name: item.name as BeverageName }));
   }
 
   public getMaterials(): Material[] {
-    return materials.map(item => new Material(item.id, item.name as MaterialName));
+    return materials.map(item => new Material({ id: item.id, name: item.name as MaterialName }));
   }
 
   public getOptionGroups(): OptionGroup[] {
+    const options = this.getOptions();
+
     return optionGroups.map(item => {
-      const options = this.getOptions().filter(option => option.getGroupId() == item.id);
-      return new OptionGroup(item.id, item.name as OptionGroupName, item.type, options);
+      return new OptionGroup(
+        item.id,
+        item.name as OptionGroupName,
+        item.type,
+        options.filter(option => option.getGroupId() == item.id),
+      );
     });
   }
 
   public getOptions(): Option[] {
-    return options.map(item => new Option(item.id, item.optionGroupId, item.name));
+    return options.map(item => new Option({ id: item.id, optionGroupId: item.optionGroupId, name: item.name }));
   }
 
   public getRecipes(): Recipe[] {
-    return recipes.map(item => new Recipe(item.id, item.beverageId, item.materialId, item.count));
+    return recipes.map(
+      item => new Recipe({ id: item.id, beverageId: item.beverageId, materialId: item.materialId, count: item.count }),
+    );
   }
 }

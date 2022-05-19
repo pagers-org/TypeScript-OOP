@@ -13,7 +13,8 @@ export abstract class AbstractApi {
   public abstract getMaterials(): Material[];
 
   public findBeverage(id: number): Beverage {
-    const beverage = this.getBeverages().find(beverage => beverage.getId() === id);
+    const beverages = this.getBeverages();
+    const beverage = beverages.find(beverage => beverage.getId() === id);
 
     if (!beverage) {
       throw new Error();
@@ -23,6 +24,13 @@ export abstract class AbstractApi {
   }
 
   public findBeverageName(id: number): BeverageName {
-    return this.findBeverage(id).getName();
+    const beverage = this.findBeverage(id);
+
+    return beverage.getName();
+  }
+
+  public getBeveragesCount() {
+    const beverages = this.getBeverages();
+    return beverages.length;
   }
 }

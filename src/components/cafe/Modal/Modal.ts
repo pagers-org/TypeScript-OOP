@@ -71,7 +71,11 @@ export class Modal extends Component {
   private serving(order: Order) {
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: order });
 
-    const serving = new Serving(order.getId(), this.cafe.findBeverageName(order.getBeverageId()), order.getOrderTime());
+    const orderId = order.getId();
+    const beverageName = this.cafe.findBeverageName(order.getBeverageId());
+    const orderTime = order.getOrderTime();
+
+    const serving = new Serving({ orderId, beverageName, orderTime });
 
     dispatchCustomEvent(EVENT.BEFORE_SERVING, { order, serving });
 
