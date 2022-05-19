@@ -1,6 +1,7 @@
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
 import { Order } from '@/domain';
+import { CUSTOM_ELEMENTS } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 
@@ -56,7 +57,7 @@ export class Menu extends Component {
 
   private async createMenuButton(beverageId: number) {
     const beverage = await this.cafe.findBeverage(beverageId);
-    const $button = this.createComponent<MenuButton>('cafe-menu-button');
+    const $button = this.createComponent<MenuButton>(CUSTOM_ELEMENTS.MENU_BUTTON);
 
     $button.setMenuId(beverage.getId());
     $button.setMenuName(beverage.getName());
@@ -100,7 +101,7 @@ export class Menu extends Component {
       return alert(MSG_ALERT);
     }
 
-    const $modal = this.createComponent<Modal>('cafe-modal');
+    const $modal = this.createComponent<Modal>(CUSTOM_ELEMENTS.MODAL);
     $modal.open(await this.cafe.firstOrder());
   }
 

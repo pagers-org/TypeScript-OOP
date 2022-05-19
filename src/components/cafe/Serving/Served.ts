@@ -2,6 +2,7 @@ import { Component } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
+import { CUSTOM_ELEMENTS } from '@/main';
 
 export class Served extends Component {
   private $makedTable!: HTMLElement;
@@ -23,7 +24,7 @@ export class Served extends Component {
   }
 
   private add(serving: Serving) {
-    const servingElement = this.createComponent<ServedItem>('cafe-served-item');
+    const servingElement = this.createComponent<ServedItem>(CUSTOM_ELEMENTS.SERVED_ITEM);
     servingElement.setServing(serving);
 
     this.$servedList.push(servingElement);

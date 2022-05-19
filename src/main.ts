@@ -10,11 +10,22 @@ const api = new FetchApi();
 
 new App(new Cafe(api, new Orders(), new Servings()));
 
-createCustomElement('cafe-header', Header);
-createCustomElement('cafe-menu', Menu);
-createCustomElement('cafe-menu-button', MenuButton);
-createCustomElement('cafe-order-list', OrderList);
-createCustomElement('cafe-order-list-item', OrderListItem);
-createCustomElement('cafe-modal', Modal);
-createCustomElement('cafe-served', Served);
-createCustomElement('cafe-served-item', ServedItem);
+export const CUSTOM_ELEMENTS = {
+  HEADER: 'cafe-header',
+  MENU: 'cafe-menu',
+  MENU_BUTTON: 'cafe-menu-button',
+  ORDER_LIST: 'cafe-order-list',
+  ORDER_LIST_ITEM: 'cafe-order-list-item',
+  MODAL: 'cafe-modal',
+  SERVED: 'cafe-served',
+  SERVED_ITEM: 'cafe-served-item',
+};
+
+createCustomElement(CUSTOM_ELEMENTS.HEADER, Header);
+createCustomElement(CUSTOM_ELEMENTS.MENU, Menu);
+createCustomElement(CUSTOM_ELEMENTS.MENU_BUTTON, MenuButton);
+createCustomElement(CUSTOM_ELEMENTS.ORDER_LIST, OrderList);
+createCustomElement(CUSTOM_ELEMENTS.ORDER_LIST_ITEM, OrderListItem);
+createCustomElement(CUSTOM_ELEMENTS.MODAL, Modal);
+createCustomElement(CUSTOM_ELEMENTS.SERVED, Served);
+createCustomElement(CUSTOM_ELEMENTS.SERVED_ITEM, ServedItem);

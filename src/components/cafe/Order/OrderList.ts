@@ -2,6 +2,7 @@ import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
 import { CafeOrder } from '@/cafe';
+import { CUSTOM_ELEMENTS } from '@/main';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -23,14 +24,14 @@ export class OrderList extends Component {
         this.removeOrderListItem(serving.getOrderId());
       })
       .menuButtonClick(async ({ button }) => {
-        this.addOrder(await this.cafe.createRandomOrder(button.getMenuId()));
+        await this.addOrder(await this.cafe.createRandomOrder(button.getMenuId()));
       });
   }
 
   protected bindEvents() {
     this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
-      this.addOrder(await this.cafe.createRandomBeverageOrder());
+      await this.addOrder(await this.cafe.createRandomBeverageOrder());
     });
   }
 
@@ -55,7 +56,12 @@ export class OrderList extends Component {
       return;
     }
 
-    this.findOrderListItemElement(orderListItem.getDataId())?.remove();
+    const $el = this.findOrderListItemElement(orderListItem.getDataId());
+
+    if ($el) {
+      $el.remove();
+    }
+
     this.removeOrderListItemElement(orderListItem);
   }
 
@@ -68,7 +74,7 @@ export class OrderList extends Component {
   }
 
   private createListItem(order: CafeOrder): OrderListItem {
-    const $orderListItem = this.createComponent<OrderListItem>('cafe-order-list-item');
+    const $orderListItem = this.createComponent<OrderListItem>(CUSTOM_ELEMENTS.ORDER_LIST_ITEM);
     $orderListItem.setOrder(order);
 
     return $orderListItem;

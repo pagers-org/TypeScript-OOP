@@ -11,8 +11,10 @@ export type CafeOrder = {
 
 export class Cafe {
   private readonly api: AbstractApi;
+
   private readonly orders: Orders;
   private readonly servings: Servings;
+
   private readonly eventDispatcher = new EventDispatcher();
   private readonly eventListener = new EventListener();
 
@@ -20,23 +22,6 @@ export class Cafe {
     this.api = api;
     this.orders = orders;
     this.servings = servings;
-  }
-
-  public async getMenu() {
-    const beverages = await this.api.getBeveragesAll();
-    const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
-    return new Menu({ menuItems });
-  }
-
-  public async getMenuItems() {
-    return (await this.getMenu()).getMenuItems();
-  }
-
-  public async firstOrder(): Promise<CafeOrder> {
-    const order = this.orders.firstOrder();
-    const beverage = await this.findBeverage(order.getBeverageId());
-
-    return { order, beverage };
   }
 
   public isEmptyOrder(): boolean {
@@ -59,8 +44,25 @@ export class Cafe {
     this.servings.add(serving);
   }
 
-  public findBeverage(beverageId: number) {
-    return this.api.findBeverage(beverageId);
+  public async findBeverage(beverageId: number) {
+    return await this.api.findBeverage(beverageId);
+  }
+
+  public async getMenu() {
+    const beverages = await this.api.getBeveragesAll();
+    const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
+    return new Menu({ menuItems });
+  }
+
+  public async getMenuItems() {
+    return (await this.getMenu()).getMenuItems();
+  }
+
+  public async firstOrder(): Promise<CafeOrder> {
+    const order = this.orders.firstOrder();
+    const beverage = await this.findBeverage(order.getBeverageId());
+
+    return { order, beverage };
   }
 
   public async createRandomOrder(menuId: number) {
