@@ -1,4 +1,5 @@
 import { Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
+import { BeverageName } from '@/@types';
 
 export abstract class AbstractApi {
   protected abstract beverages(): Promise<Beverage[]>;
@@ -11,20 +12,20 @@ export abstract class AbstractApi {
 
   protected abstract materials(): Promise<Material[]>;
 
-  public async getOptionGroupsAll() {
+  public async getOptionGroupsAll(): Promise<OptionGroup[]> {
     return await this.optionGroups();
   }
 
-  public getBeveragesAll() {
+  public async getBeveragesAll(): Promise<Beverage[]> {
     return this.beverages();
   }
 
-  public async getBeveragesCount() {
+  public async getBeveragesCount(): Promise<number> {
     const beverages = await this.beverages();
     return beverages.length;
   }
 
-  public async findBeverage(id: number) {
+  public async findBeverage(id: number): Promise<Beverage> {
     const beverages = await this.beverages();
     const beverage = beverages.find(beverage => beverage.getId() === id);
 
@@ -35,7 +36,7 @@ export abstract class AbstractApi {
     return beverage.clone();
   }
 
-  public async findBeverageName(id: number) {
+  public async findBeverageName(id: number): Promise<BeverageName> {
     const beverage = await this.findBeverage(id);
 
     return beverage.getName();
