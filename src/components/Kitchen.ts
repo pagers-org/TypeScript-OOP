@@ -133,10 +133,6 @@ class Kitchen implements Component {
     }
     this.setState({ isOpened: true, orders: state.orders });
   }
-
-  callback() {
-    //
-  }
 }
 
 export default Kitchen;
