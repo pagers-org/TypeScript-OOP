@@ -11,31 +11,31 @@ import {
 import { Events } from '@/cafe';
 
 export class EventDispatcher {
-  public menuButtonClick({ button }: MenuButtonClickDetail) {
-    dispatchCustomEvent(Events.MENU_BUTTON_CLICK, { button });
+  public menuButtonClick(detail: MenuButtonClickDetail) {
+    dispatchCustomEvent(Events.MENU_BUTTON_CLICK, detail);
   }
 
-  public orderAdded({ order }: OrderAddDetail) {
-    dispatchCustomEvent(Events.ORDER_ADDED, { order });
+  public orderAdded(detail: OrderAddDetail) {
+    dispatchCustomEvent(Events.ORDER_ADDED, detail);
   }
 
-  public orderRemoved({ order }: OrderRemovedDetail) {
-    dispatchCustomEvent(Events.ORDER_REMOVED, { order });
+  public orderRemoved(detail: OrderRemovedDetail) {
+    dispatchCustomEvent(Events.ORDER_REMOVED, detail);
   }
 
-  public optionChanged({ order, groupName, value }: OptionChangedDetail) {
-    dispatchCustomEvent(Events.CHANGE_OPTION, { order, groupName, value });
+  public optionChanged(detail: OptionChangedDetail) {
+    dispatchCustomEvent(Events.CHANGE_OPTION, detail);
   }
 
-  public modalOpen(opened: ModalOpenDetail) {
-    dispatchCustomEvent(Events.MODAL_OPEN, { opened });
+  public modalOpen(detail: ModalOpenDetail) {
+    dispatchCustomEvent(Events.MODAL_OPEN, detail);
   }
 
-  public beforeServing({ order, serving }: BeforeServingDetail) {
-    dispatchCustomEvent(Events.BEFORE_SERVING, { order, serving });
+  public beforeServing(detail: BeforeServingDetail) {
+    dispatchCustomEvent(Events.BEFORE_SERVING, detail);
   }
 
-  public afterServing({ serving }: AfterServingDetail) {
-    dispatchCustomEvent(Events.AFTER_SERVING, { serving });
+  public afterServing(detail: AfterServingDetail) {
+    dispatchCustomEvent(Events.AFTER_SERVING, detail);
   }
 }

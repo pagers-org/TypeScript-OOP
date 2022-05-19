@@ -4,6 +4,7 @@ export type RecipeConstructor = {
   materialId: number;
   count: number;
 };
+
 export class Recipe {
   private readonly id: number;
   private readonly beverageId: number;
