@@ -1,12 +1,12 @@
 import { Component } from '@/components';
 import { ModalView } from './ModalView';
 import { Beverage, Order, Serving } from '@/domain';
-import { OPTION_GROUP_NAMES } from '@/@types';
+import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
 export type OptionInput = {
-  groupName: string;
+  groupName: OptionGroupName;
   elements: HTMLInputElement[];
 };
 
@@ -95,20 +95,20 @@ export class Modal extends Component {
 
     document.body.appendChild(this);
 
-    this.cafe.getEventDispatcher().modalOpen(true);
+    this.cafe.getEventDispatcher().modalOpen({ opened: true });
   }
 
   public close() {
     this.remove();
 
-    this.cafe.getEventDispatcher().modalOpen(false);
+    this.cafe.getEventDispatcher().modalOpen({ opened: false });
   }
 
   private getOptionInputs(): OptionInput[] {
     const result: OptionInput[] = [];
 
     this.$optionGroups.forEach($optionGroup => {
-      const groupName = `${$optionGroup.dataset['groupName']}`;
+      const groupName = `${$optionGroup.dataset['groupName']}` as OptionGroupName;
       const elements = Array.from($optionGroup.querySelectorAll('input'));
 
       result.push({ groupName, elements });
@@ -128,7 +128,7 @@ export class Modal extends Component {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
   }
 
-  private optionChanged(groupName: string, value: string) {
+  private optionChanged(groupName: OptionGroupName, value: string) {
     this.cafe.getEventDispatcher().optionChanged({ order: this.order, groupName, value });
 
     this.updateOrderInfo();
