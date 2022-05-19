@@ -1,3 +1,5 @@
+import Coffee from '../model/Coffee';
+import { addClassList, removeClassList, setInnerText } from '../utils';
 import { OrdersState } from './OrderList';
 
 type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
@@ -5,8 +7,22 @@ type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
 class Kitchen implements Component {
   private $root: HTMLElement;
   private state: KitchenState;
+  private _selectedCoffee: Coffee | undefined;
 
   subscription: ReturnType<Observable['subscribe']> | undefined;
+
+  set selectedCoffee(coffee: Coffee) {
+    if (this._selectedCoffee) {
+      removeClassList({ selector: `#${this._selectedCoffee.id}`, className: 'selected' });
+      removeClassList({ selector: '.filling', className: this._selectedCoffee.id });
+    }
+
+    addClassList({ selector: `#${coffee.id}`, className: 'selected' });
+    addClassList({ selector: '.filling', className: coffee.id });
+    setInnerText({ selector: '.coffee_name', innerText: coffee.name });
+
+    this._selectedCoffee = coffee;
+  }
 
   constructor($root: HTMLElement | null) {
     if (!$root) throw new Error('root element is required to render');
@@ -80,20 +96,35 @@ class Kitchen implements Component {
   setEvent(): void {
     const $coffeContainer = this.$root.querySelector('.select-coffee-container');
     if (!($coffeContainer instanceof HTMLElement)) return;
-    $coffeContainer.addEventListener('click', ({ target }) => {
+    $coffeContainer.addEventListener('click', e => {
+      e.preventDefault();
+
+      const { target } = e;
+
       if (!(target instanceof HTMLElement)) return;
       if (target.classList.contains('coffee-category-button')) {
-        this.handleClickCoffeeCategory(target.id);
+        return this.handleClickCoffeeCategory(target.id);
       }
-      // console.log(target);
+      if (target.classList.contains('coffee-add-options-button')) {
+        return this.handleClickAddOption(target.id);
+      }
     });
   }
 
   handleClickCoffeeCategory(coffeeId: string) {
-    if (this.state.orders.find(v => v.coffee.id === coffeeId)) {
+    const order = this.state.orders.find(v => v.coffee.id === coffeeId);
+    if (order) {
+      this.selectedCoffee = order.coffee;
       return;
     }
-    alert('아직 주문이 없는 커피 입니다.😋');
+    alert(`아직 주문이 없는 커피 입니다.😋`);
+  }
+
+  handleClickAddOption(coffeeId: string) {
+    // TODO
+    if (!this.selectedCoffee) {
+      alert('만들고자 하는 커피를 선택 해주세요. ☕️');
+    }
   }
 
   subscriber(state: OrdersState) {
