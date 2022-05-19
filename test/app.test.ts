@@ -8,8 +8,8 @@ describe('카페 테스트', () => {
     orders = new Orders();
   });
 
-  it('음료 테스트', () => {
-    const beverage = api.findBeverage(1);
+  it('음료 테스트', async () => {
+    const beverage = await api.findBeverage(1);
 
     expect(beverage.getName()).toEqual('아메리카노');
   });
@@ -35,12 +35,12 @@ describe('카페 테스트', () => {
     expect(orders.isEmpty()).toBeTruthy();
   });
 
-  it('서빙 테스트', () => {
+  it('서빙 테스트', async () => {
     const order = new Order({ id: '1', beverageId: 1 });
     orders.addOrder(order);
 
     const servingOrder = orders.firstOrderShift();
-    const beverageName = api.findBeverageName(servingOrder.getBeverageId());
+    const beverageName = await api.findBeverageName(servingOrder.getBeverageId());
     const orderId = servingOrder.getId();
     const orderTime = servingOrder.getOrderTime();
 

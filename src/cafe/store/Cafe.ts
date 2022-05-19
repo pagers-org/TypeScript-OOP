@@ -7,24 +7,20 @@ export class Cafe {
   private readonly orders: Orders;
   private readonly servings: Servings;
 
-  private menu!: Menu;
-
   constructor(api: AbstractApi, orders: Orders, servings: Servings) {
     this.api = api;
     this.orders = orders;
     this.servings = servings;
-
-    this.createMenu();
   }
 
-  private async createMenu() {
+  public async getMenu() {
     const beverages = await this.api.getBeveragesAll();
     const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
-    this.menu = new Menu({ menuItems });
+    return new Menu({ menuItems });
   }
 
-  public menuItems(): MenuItem[] {
-    return this.menu.getMenuItems();
+  public async getMenuItems() {
+    return (await this.getMenu()).getMenuItems();
   }
 
   public firstOrder(): Order {

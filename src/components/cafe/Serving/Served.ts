@@ -17,7 +17,11 @@ export class Served extends Component {
     addCustomEventListener(EVENT.AFTER_SERVING, e => {
       const serving = e.detail.serving as Serving;
       this.add(serving);
-      this.updateListNo();
+
+      //TODO 리팩토링 필요
+      setTimeout(() => {
+        this.updateListNo();
+      }, 10);
     });
   }
 

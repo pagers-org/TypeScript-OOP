@@ -50,7 +50,9 @@ export class Menu extends Component {
   }
 
   private async createMenuButtons() {
-    for (const menuItem of this.cafe.menuItems()) {
+    const menuItems = await this.cafe.getMenuItems();
+
+    for (const menuItem of menuItems) {
       const $button = await this.createMenuButton(menuItem.getBeverageId());
 
       this.$menuButtons.push($button);
@@ -106,7 +108,6 @@ export class Menu extends Component {
 
     const order = this.cafe.firstOrder();
     const beverage = await this.cafe.findBeverage(order.getBeverageId());
-
     const $modal = this.createComponent('cafe-modal') as Modal;
     $modal.open(order, beverage);
   }

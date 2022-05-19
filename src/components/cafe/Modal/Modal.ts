@@ -36,6 +36,11 @@ export class Modal extends Component {
     this.beverage = beverage;
   }
 
+  protected mounted() {
+    this.updateOrderInfo();
+    this.show();
+  }
+
   protected bindEvents() {
     this.$closeButton.addEventListener('click', e => {
       e.preventDefault();
@@ -68,11 +73,11 @@ export class Modal extends Component {
     });
   }
 
-  private serving(order: Order) {
+  private async serving(order: Order) {
     dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: order });
 
     const orderId = order.getId();
-    const beverageName = this.cafe.findBeverageName(order.getBeverageId());
+    const beverageName = await this.cafe.findBeverageName(order.getBeverageId());
     const orderTime = order.getOrderTime();
 
     const serving = new Serving({ orderId, beverageName, orderTime });
@@ -91,9 +96,6 @@ export class Modal extends Component {
     this.setBeverage(beverage);
 
     document.body.appendChild(this);
-
-    this.updateOrderInfo();
-    this.show();
 
     dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: true });
   }

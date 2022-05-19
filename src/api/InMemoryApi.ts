@@ -294,7 +294,6 @@ export class InMemoryApi extends AbstractApi {
     const result = optionGroups.map(item => {
       const options = optionsAll.filter(option => option.getGroupId() == item.id);
 
-      //item.id, item.name as OptionGroupName, item.type, a
       return new OptionGroup({
         id: item.id,
         name: item.name as OptionGroupName,
