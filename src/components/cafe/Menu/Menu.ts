@@ -49,17 +49,17 @@ export class Menu extends Component {
     });
   }
 
-  private createMenuButtons(): void {
-    this.cafe.menuItems().forEach(menuItem => {
-      const $button = this.createMenuButton(menuItem.getBeverageId());
+  private async createMenuButtons() {
+    for (const menuItem of this.cafe.menuItems()) {
+      const $button = await this.createMenuButton(menuItem.getBeverageId());
 
       this.$menuButtons.push($button);
       this.$buttons.appendChild($button);
-    });
+    }
   }
 
-  private createMenuButton(beverageId: number) {
-    const beverage = this.cafe.findBeverage(beverageId);
+  private async createMenuButton(beverageId: number) {
+    const beverage = await this.cafe.findBeverage(beverageId);
     const $button = this.createComponent('cafe-menu-button') as MenuButton;
 
     $button.setMenuId(beverage.getId());
@@ -95,7 +95,7 @@ export class Menu extends Component {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
   }
 
-  private openModal() {
+  private async openModal() {
     if (this.modalOpened) {
       return;
     }
@@ -105,7 +105,7 @@ export class Menu extends Component {
     }
 
     const order = this.cafe.firstOrder();
-    const beverage = this.cafe.findBeverage(order.getBeverageId());
+    const beverage = await this.cafe.findBeverage(order.getBeverageId());
 
     const $modal = this.createComponent('cafe-modal') as Modal;
     $modal.open(order, beverage);

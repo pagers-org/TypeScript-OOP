@@ -277,34 +277,45 @@ const recipes = [
 ];
 
 export class InMemoryApi extends AbstractApi {
-  public getBeverages(): Beverage[] {
-    return beverages.map(item => new Beverage({ id: item.id, name: item.name as BeverageName }));
+  protected beverages(): Promise<Beverage[]> {
+    const result = beverages.map(item => new Beverage({ id: item.id, name: item.name as BeverageName }));
+    return new Promise<Beverage[]>(resolve => resolve(result));
   }
 
-  public getMaterials(): Material[] {
-    return materials.map(item => new Material({ id: item.id, name: item.name as MaterialName }));
+  protected materials(): Promise<Material[]> {
+    const result = materials.map(item => new Material({ id: item.id, name: item.name as MaterialName }));
+
+    return new Promise<Material[]>(resolve => resolve(result));
   }
 
-  public getOptionGroups(): OptionGroup[] {
-    const options = this.getOptions();
+  protected async optionGroups() {
+    const optionsAll = await this.options();
 
-    return optionGroups.map(item => {
-      return new OptionGroup(
-        item.id,
-        item.name as OptionGroupName,
-        item.type,
-        options.filter(option => option.getGroupId() == item.id),
-      );
+    const result = optionGroups.map(item => {
+      const options = optionsAll.filter(option => option.getGroupId() == item.id);
+
+      //item.id, item.name as OptionGroupName, item.type, a
+      return new OptionGroup({
+        id: item.id,
+        name: item.name as OptionGroupName,
+        type: item.type,
+        options,
+      });
     });
+
+    return new Promise<OptionGroup[]>(resolve => resolve(result));
   }
 
-  public getOptions(): Option[] {
-    return options.map(item => new Option({ id: item.id, optionGroupId: item.optionGroupId, name: item.name }));
+  public options(): Promise<Option[]> {
+    const result = options.map(item => new Option({ id: item.id, optionGroupId: item.optionGroupId, name: item.name }));
+
+    return new Promise<Option[]>(resolve => resolve(result));
   }
 
-  public getRecipes(): Recipe[] {
-    return recipes.map(
+  public recipes(): Promise<Recipe[]> {
+    const result = recipes.map(
       item => new Recipe({ id: item.id, beverageId: item.beverageId, materialId: item.materialId, count: item.count }),
     );
+    return new Promise<Recipe[]>(resolve => resolve(result));
   }
 }

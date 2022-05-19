@@ -25,26 +25,29 @@ export class OrderList extends Component {
       this.removeOrderListItem(serving.getOrderId());
     });
 
-    addCustomEventListener(EVENT.MENU_BUTTON_CLICK, e => {
+    addCustomEventListener(EVENT.MENU_BUTTON_CLICK, async e => {
       const menuButton = e.detail.button as MenuButton;
-      this.addOrder(this.cafe.createRandomOrder(menuButton.getMenuId()));
+      this.addOrder(await this.cafe.createRandomOrder(menuButton.getMenuId()));
     });
   }
 
   protected bindEvents() {
-    this.$orderButton.addEventListener('click', e => {
+    this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
-      this.addOrder(this.cafe.createRandomBeverageOrder());
+      this.addOrder(await this.cafe.createRandomBeverageOrder());
     });
   }
 
   private removeOrderListItem(orderId: string) {
-    this.removeListItemElement(this.findOrderListItemElement(orderId));
+    const $el = this.findOrderListItemElement(orderId);
+    this.removeListItemElement($el);
     this.updateListItemNo();
   }
 
   private addOrder(order: Order): void {
-    this.addListItem(this.createListItem(order));
+    const listItem = this.createListItem(order);
+
+    this.addListItem(listItem);
     this.updateListItemNo();
 
     dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
@@ -70,6 +73,7 @@ export class OrderList extends Component {
   private createListItem(order: Order): OrderListItem {
     const $orderListItem = this.createComponent('cafe-order-list-item') as OrderListItem;
     $orderListItem.setOrder(order);
+
     return $orderListItem;
   }
 
@@ -80,7 +84,10 @@ export class OrderList extends Component {
 
   private updateListItemNo() {
     this.$listItemElements.forEach((orderListItem, index) => {
-      orderListItem.setNo(index + 1);
+      //TODO 수정이 필요함
+      setTimeout(() => {
+        orderListItem.setNo(index + 1);
+      }, 10);
     });
   }
 

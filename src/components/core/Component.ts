@@ -13,16 +13,16 @@ export class Component extends HTMLElement {
   }
 
   connectedCallback() {
-    this.render();
+    this.render().then(() => {
+      this.bindElements();
 
-    this.bindElements();
+      this.bindListeners();
 
-    this.bindListeners();
+      this.bindEvents();
 
-    this.bindEvents();
-
-    setTimeout(() => {
-      this.mounted();
+      setTimeout(() => {
+        this.mounted();
+      });
     });
   }
 
@@ -34,8 +34,14 @@ export class Component extends HTMLElement {
     this.cafe = cafe;
   }
 
-  protected render() {
-    this.$container = createElement(this.view());
+  protected async render() {
+    const view = await this.view();
+
+    this.createContainer(view);
+  }
+
+  private createContainer(view: string) {
+    this.$container = createElement(view);
     this.replaceWith(this.$container);
   }
 
@@ -51,7 +57,7 @@ export class Component extends HTMLElement {
     //override
   }
 
-  protected view(): string {
+  protected view(): string | Promise<string> {
     return '';
   }
 

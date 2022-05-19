@@ -26,3 +26,7 @@ export function addCustomEventListener(eventName: EventName, callback: CustomEve
     callback(e as CustomEvent);
   });
 }
+
+export function isPromise(p: any) {
+  return p !== null && typeof p === 'object' && typeof p.then === 'function' && typeof p.catch === 'function';
+}

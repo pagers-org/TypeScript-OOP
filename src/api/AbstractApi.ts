@@ -1,19 +1,31 @@
 import { Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
-import { BeverageName } from '@/@types';
 
 export abstract class AbstractApi {
-  public abstract getBeverages(): Beverage[];
+  protected abstract beverages(): Promise<Beverage[]>;
 
-  public abstract getOptionGroups(): OptionGroup[];
+  protected abstract optionGroups(): Promise<OptionGroup[]>;
 
-  public abstract getOptions(): Option[];
+  protected abstract options(): Promise<Option[]>;
 
-  public abstract getRecipes(): Recipe[];
+  protected abstract recipes(): Promise<Recipe[]>;
 
-  public abstract getMaterials(): Material[];
+  protected abstract materials(): Promise<Material[]>;
 
-  public findBeverage(id: number): Beverage {
-    const beverages = this.getBeverages();
+  public async getOptionGroupsAll() {
+    return await this.optionGroups();
+  }
+
+  public getBeveragesAll() {
+    return this.beverages();
+  }
+
+  public async getBeveragesCount() {
+    const beverages = await this.beverages();
+    return beverages.length;
+  }
+
+  public async findBeverage(id: number) {
+    const beverages = await this.beverages();
     const beverage = beverages.find(beverage => beverage.getId() === id);
 
     if (!beverage) {
@@ -23,14 +35,9 @@ export abstract class AbstractApi {
     return beverage.clone();
   }
 
-  public findBeverageName(id: number): BeverageName {
-    const beverage = this.findBeverage(id);
+  public async findBeverageName(id: number) {
+    const beverage = await this.findBeverage(id);
 
     return beverage.getName();
-  }
-
-  public getBeveragesCount() {
-    const beverages = this.getBeverages();
-    return beverages.length;
   }
 }

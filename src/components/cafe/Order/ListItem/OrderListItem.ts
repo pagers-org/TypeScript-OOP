@@ -92,9 +92,9 @@ export class OrderListItem extends Component {
     }
   }
 
-  protected view() {
+  protected async view() {
     const order = this.order;
-    const beverageName = this.cafe.findBeverageName(order.getBeverageId());
+    const beverageName = await this.cafe.findBeverageName(order.getBeverageId());
 
     return OrderListItemView(beverageName, order);
   }

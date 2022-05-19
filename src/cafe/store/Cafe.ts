@@ -7,21 +7,20 @@ export class Cafe {
   private readonly orders: Orders;
   private readonly servings: Servings;
 
-  private menu: Menu;
+  private menu!: Menu;
 
   constructor(api: AbstractApi, orders: Orders, servings: Servings) {
     this.api = api;
     this.orders = orders;
     this.servings = servings;
 
-    this.menu = this.createMenu();
+    this.createMenu();
   }
 
-  private createMenu() {
-    const beverages = this.api.getBeverages();
+  private async createMenu() {
+    const beverages = await this.api.getBeveragesAll();
     const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
-
-    return new Menu({ menuItems });
+    this.menu = new Menu({ menuItems });
   }
 
   public menuItems(): MenuItem[] {
@@ -60,8 +59,8 @@ export class Cafe {
     return this.api.findBeverageName(beverageId);
   }
 
-  public createRandomOrder(menuId: number) {
-    const optionGroups = this.createRandomSelectedOptionGroups();
+  public async createRandomOrder(menuId: number) {
+    const optionGroups = await this.createRandomSelectedOptionGroups();
 
     return new Order({
       id: nanoid(),
@@ -70,14 +69,14 @@ export class Cafe {
     });
   }
 
-  public createRandomBeverageOrder() {
-    const beveragesCount = this.api.getBeveragesCount();
+  public async createRandomBeverageOrder() {
+    const beveragesCount = await this.api.getBeveragesCount();
 
     return this.createRandomOrder(getRandomRange(1, beveragesCount));
   }
 
-  private createRandomSelectedOptionGroups() {
-    const optionGroups = this.api.getOptionGroups();
+  private async createRandomSelectedOptionGroups() {
+    const optionGroups = await this.api.getOptionGroupsAll();
 
     return optionGroups.map(item => {
       const newGroup = item.clone();
