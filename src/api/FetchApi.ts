@@ -14,6 +14,7 @@ import {
 
 export type FetchApiConstructor = {
   host?: string;
+  config?: RequestInit;
 };
 
 const API_URL = {
@@ -27,16 +28,25 @@ const API_URL = {
 type ApiUrlValueType = typeof API_URL[keyof typeof API_URL];
 
 export class FetchApi extends AbstractApi {
-  private readonly host: string;
+  private readonly host?: string = '';
+  private readonly config?: RequestInit = {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      'Content-type': 'application/json',
+    },
+  };
 
-  constructor(constructor: FetchApiConstructor = {}) {
+  constructor(constructor: FetchApiConstructor = { host: '' }) {
     super();
 
-    this.host = constructor.host || '';
+    this.host = constructor.host;
+    this.config = Object.assign(this.config, constructor.config);
   }
 
   private async fetch<T>(url: ApiUrlValueType) {
-    const req = await fetch(`${this.host}${url}`);
+    const req = await fetch(`${this.host}${url}`, this.config);
+
     return (await req.json()) as T[];
   }
 
