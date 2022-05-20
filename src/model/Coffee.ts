@@ -8,7 +8,7 @@ class Coffee {
   }
 }
 
-const COFEE_IDS = {
+const COFFE_IDS = {
   americano: 'americano',
   au_lait: 'au_lait',
   capuccino: 'capuccino',
@@ -21,7 +21,7 @@ const COFEE_IDS = {
   ristretto: 'ristretto',
 } as const;
 
-export const COFFE_NAMES: Record<keyof typeof COFEE_IDS, string> = {
+export const COFFE_NAMES: Record<keyof typeof COFFE_IDS, string> = {
   americano: '아메리카노',
   au_lait: '카페 오레',
   capuccino: '카푸치노',

@@ -2,7 +2,6 @@ class Option {
   private id: number;
   private key: OptionKey;
   private value: OptionValue;
-  private static uniqueIdCnt = 0;
 
   constructor(key: OptionKey, value: OptionValue) {
     this.id = this.getUniqueId();
@@ -11,7 +10,7 @@ class Option {
   }
 
   private getUniqueId() {
-    return (Option.uniqueIdCnt += 1);
+    return new Date().getTime();
   }
 
   private titles: Record<OptionKey, string> = {

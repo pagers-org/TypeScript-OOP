@@ -14,6 +14,12 @@ export const selectTarget = (selector: string): HTMLElement => {
   return $target;
 };
 
+export const selectClosestFromTarget = (target: HTMLElement, selector: string): HTMLElement => {
+  const closestEl = target.closest(selector);
+  if (!(closestEl instanceof HTMLElement)) throw new Error(`can not find ${selector}`);
+  return closestEl;
+};
+
 export const addClassList = (params: { selector: string; className: string }) => {
   const { selector, className } = params;
   selectTarget(selector).classList.add(className);
@@ -28,3 +34,15 @@ export const setInnerText = (params: { selector: string; innerText: string }) =>
   const { selector, innerText } = params;
   selectTarget(selector).innerText = innerText;
 };
+
+export const generator = (() => {
+  let id = 0;
+
+  const getUniqueId = () => {
+    return (id += 1);
+  };
+
+  return {
+    getUniqueId,
+  };
+})();

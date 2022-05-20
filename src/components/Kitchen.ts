@@ -1,5 +1,5 @@
 import Coffee from '../model/Coffee';
-import { addClassList, removeClassList, setInnerText } from '../utils';
+import { addClassList, removeClassList, selectTarget, setInnerText } from '../utils';
 import { OrdersState } from './OrderList';
 
 type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
@@ -12,15 +12,7 @@ class Kitchen implements Component {
   subscription: ReturnType<Observable['subscribe']> | undefined;
 
   set selectedCoffee(coffee: Coffee) {
-    if (this._selectedCoffee) {
-      removeClassList({ selector: `#${this._selectedCoffee.id}`, className: 'selected' });
-      removeClassList({ selector: '.filling', className: this._selectedCoffee.id });
-    }
-
-    addClassList({ selector: `#${coffee.id}`, className: 'selected' });
-    addClassList({ selector: '.filling', className: coffee.id });
-    setInnerText({ selector: '.coffee_name', innerText: coffee.name });
-
+    this.toggleSelectedCoffee(coffee);
     this._selectedCoffee = coffee;
   }
 
@@ -94,8 +86,8 @@ class Kitchen implements Component {
   }
 
   setEvent(): void {
-    const $coffeContainer = this.$root.querySelector('.select-coffee-container');
-    if (!($coffeContainer instanceof HTMLElement)) return;
+    const $coffeContainer = selectTarget('.select-coffee-container');
+
     $coffeContainer.addEventListener('click', e => {
       e.preventDefault();
 
@@ -132,6 +124,17 @@ class Kitchen implements Component {
       return this.setState({ isOpened: false, orders: state.orders });
     }
     this.setState({ isOpened: true, orders: state.orders });
+  }
+
+  toggleSelectedCoffee(coffee: Coffee) {
+    if (this._selectedCoffee) {
+      removeClassList({ selector: `#${this._selectedCoffee.id}`, className: 'selected' });
+      removeClassList({ selector: '.filling', className: this._selectedCoffee.id });
+    }
+
+    addClassList({ selector: `#${coffee.id}`, className: 'selected' });
+    addClassList({ selector: '.filling', className: coffee.id });
+    setInnerText({ selector: '.coffee_name', innerText: coffee.name });
   }
 }
 

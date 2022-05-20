@@ -1,7 +1,7 @@
 import Coffee from '../model/Coffee';
 import Option from '../model/Option';
 import CoffeeService from '../services/CoffeeService';
-import { findById } from '../utils';
+import { findById, generator, selectClosestFromTarget, selectTarget } from '../utils';
 
 type Order = {
   id: number;
@@ -19,8 +19,6 @@ class OrderList implements Component, Observable {
   private state: OrdersState = { orders: [] };
   private observers$ = new Set();
 
-  private static uniqueIdCnt = 0;
-
   constructor($root: HTMLElement | null) {
     if (!$root) throw new Error('root element is required to render');
     this.$root = $root;
@@ -31,8 +29,7 @@ class OrderList implements Component, Observable {
     this.setEvent();
   }
 
-  subscribe<OrdersState>(_cb: (s: OrdersState) => void) {
-    const callback = _cb;
+  subscribe<OrdersState>(callback: (s: OrdersState) => void) {
     this.observers$.add(callback);
     return {
       unsubscribe: () => this.observers$.delete(callback),
@@ -40,7 +37,7 @@ class OrderList implements Component, Observable {
   }
 
   next() {
-    this.observers$.forEach(cb => typeof cb === 'function' && cb(this.state));
+    this.observers$.forEach(callback => typeof callback === 'function' && callback(this.state));
   }
 
   render() {
@@ -57,24 +54,33 @@ class OrderList implements Component, Observable {
 
   setEvent(): void {
     this.$root.addEventListener('click', ({ target }) => {
-      if (!(target instanceof Element)) return false;
-      if (target.classList.contains('order-button')) return this.addOrder();
+      if (!(target instanceof HTMLElement)) return false;
 
-      const $table = target.closest('.table-row');
-      if (!($table instanceof HTMLElement) || !target.parentElement) return false;
+      if (target.classList.contains('order-button')) {
+        return this.addOrder();
+      }
 
-      if (target.parentElement.classList.contains('edit-order')) return this.editOrderById($table.dataset.id);
-      if (target.parentElement.classList.contains('update-order')) return this.updateOrderById($table.dataset.id);
-      if (target.parentElement.classList.contains('remove-order')) return this.deleteOrderById($table.dataset.id);
+      const title = selectClosestFromTarget(target, '[data-title]').dataset.title;
+      const orderId = selectClosestFromTarget(target, '[data-order-id]').dataset.orderId;
+
+      if (title === '수정하기') {
+        return this.editOrderById(Number(orderId));
+      }
+
+      if (title === '저장하기') {
+        return this.updateOrderById(Number(orderId));
+      }
+
+      if (title === '삭제하기') {
+        return this.deleteOrderById(Number(orderId));
+      }
     });
   }
 
-  private updateOrderById(id: string | undefined) {
-    if (!id) return;
-    const order = findById(this.state.orders, Number(id));
+  private updateOrderById(id: number) {
+    const order = findById(this.state.orders, id);
     if (!order) return;
-    const $order = this.$root.querySelector(`.order-list-${order.id}`);
-    if (!($order instanceof HTMLElement)) return;
+    const $order = selectTarget(`[data-order-id="${order.id}"]`);
 
     const optionValues = Array.from($order.childNodes).reduce<string[]>((acc, currNode) => {
       if (!(currNode instanceof HTMLDivElement) || !currNode.isContentEditable) return acc;
@@ -84,28 +90,26 @@ class OrderList implements Component, Observable {
     order.options.forEach((option, index) => option.setValue(optionValues[index]));
 
     this.setState({
-      orders: this.state.orders.map(order => (order.id === order.id ? { ...order, editable: false } : order)),
+      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: false } : _order)),
     });
   }
 
-  private editOrderById(id: string | undefined) {
-    if (!id) return;
-    const order = findById(this.state.orders, Number(id));
+  private editOrderById(id: number) {
+    const order = findById(this.state.orders, id);
     if (!order) return;
     this.setState({
-      orders: this.state.orders.map(order => (order.id === order.id ? { ...order, editable: true } : order)),
+      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: true } : _order)),
     });
   }
 
-  private async deleteOrderById(id: string | undefined) {
-    if (!id) return;
-    const order = findById(this.state.orders, Number(id));
+  private deleteOrderById(id: number) {
+    const order = findById(this.state.orders, id);
     if (!order) return;
     this.setState({ orders: this.state.orders.filter(v => v.id !== order.id) });
   }
 
   private getUniqueId() {
-    return (OrderList.uniqueIdCnt += 1);
+    return generator.getUniqueId();
   }
 
   private getNewOrder(): Order {
@@ -142,7 +146,7 @@ class OrderList implements Component, Observable {
         ${this.state.orders
           .map(
             order => `
-        <div class="table-row order-list-${order.id}" data-id="${order.id}">
+        <div class="table-row" data-order-id="${order.id}">
           <div class="cell" data-title="No">${order.id}</div>
           <div class="cell" data-title="메뉴명">${order.coffee.name}</div>
           ${order.options
@@ -153,7 +157,7 @@ class OrderList implements Component, Observable {
                 } data-title="${option.getTitle()}">${option.getValue()}</div>`,
             )
             .join('')}
-          <div class="cell" data-title="수정하기">
+          <div class="cell" data-title="${order.editable ? '저장하기' : '수정하기'}">
             <span class="${order.editable ? 'update-order' : 'edit-order'}"><i class="fa-solid ${
               order.editable ? 'fa-save' : 'fa-pen'
             }"></i></span>
