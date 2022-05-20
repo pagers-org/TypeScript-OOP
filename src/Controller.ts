@@ -32,7 +32,7 @@ export default class Controller {
     addEventListener('@add', this.addOrder.bind(this));
     addEventListener('@submit', this.handleSubmit.bind(this));
     addEventListener('@buttonClick', e => {
-      this.handleTest((e as CustomEvent).detail);
+      this.selectCoffee((e as CustomEvent).detail);
     });
     addEventListener('@edit', e => {
       this.editOrder((e as CustomEvent).detail);
@@ -44,7 +44,7 @@ export default class Controller {
     this.modalView.on('click', this.handleClose.bind(this));
   }
 
-  private handleTest(currentElement: HTMLButtonElement) {
+  private selectCoffee(currentElement: HTMLButtonElement) {
     const coffeeFilling = qs('.filling') as HTMLDivElement;
     const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
     if (this.order.OrderItem.length === 0) {
