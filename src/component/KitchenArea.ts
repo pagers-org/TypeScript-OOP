@@ -1,17 +1,23 @@
-import { $ } from '@/helper/dom';
-import { Template } from '../view/Template';
+import { $, $all } from '@/helper/dom';
+import { order } from '@/coffee/order';
+import { NO_COFFEE_ORDER, NO_ORDER } from '@/constant';
+import { Template } from '@/view/Template';
+import { CoffeeOrderType } from '@/@types';
 
-export default class kitchenArea extends Template {
+export default class KitchenArea extends Template {
   constructor() {
     super();
-    const rootNode = $<HTMLDivElement>('#right-section');
-    rootNode.insertAdjacentHTML('afterbegin', this.template());
+    this.manageKitchen();
     this.bindEvent();
   }
+
   bindEvent() {
     const makeButton = $<HTMLButtonElement>('.coffee-add-options-button');
     const serveButton = $<HTMLDivElement>('.coffee-serve-area');
     const closeButton = $<HTMLSpanElement>('#close-icon');
+    const coffeeOptionsButton = $all<HTMLButtonElement>('.coffee-category-button');
+
+    coffeeOptionsButton.forEach(btn => btn.addEventListener('click', this.makeCoffee.bind(this)));
 
     closeButton.addEventListener('click', e => {
       e.preventDefault();
@@ -20,20 +26,71 @@ export default class kitchenArea extends Template {
 
     makeButton.addEventListener('click', e => {
       e.preventDefault();
+      if (order._orders.length <= 0) return alert(NO_ORDER);
       this.toggleModal();
     });
 
     serveButton.addEventListener('click', e => {
       e.preventDefault();
       //serve
+      this.toggleModal();
     });
   }
 
+  makeCoffee(e) {
+    const $target = e.target;
+    const selectedMenusOnly = order.getOrderByName($target.textContent);
+    if (selectedMenusOnly.length <= 0) return alert(NO_COFFEE_ORDER);
+
+    const coffeeName = $<HTMLHeadElement>('.coffee_name');
+    const coffeeFilling = $<HTMLDivElement>('.filling');
+    const coffeeOptionsButton = $all<HTMLButtonElement>('.coffee-category-button');
+    const modalCoffeeName = $<HTMLDivElement>('.selected-coffee-option');
+
+    coffeeOptionsButton.forEach(btn => {
+      btn.classList.remove('selected');
+      coffeeFilling.classList.remove(btn.id);
+    });
+
+    coffeeName.textContent = $target.textContent;
+    coffeeFilling.classList.add($target.id);
+    $target.classList.add('selected');
+    order.selectCoffee($target.id, $target.textContent);
+
+    modalCoffeeName.textContent = order._selectedCoffee.name + ' 옵션';
+    this.getModalCoffeeTable($target.textContent);
+  }
+
+  getModalCoffeeTable(selectedCoffee: string) {
+    const filterd = order.getOrderByName(selectedCoffee);
+
+    filterd.map((coffee: CoffeeOrderType) => {
+      return `<div class="table-row">
+          <div class="cell" data-title="${coffee._id}">1</div>
+          <div class="cell" data-title="메뉴명">${coffee.menu}</div>
+          <div class="cell" data-title="사이즈">${coffee.size}</div>
+          <div class="cell" data-title="샷">${coffee.shot}</div>
+          <div class="cell" data-title="시럽">${coffee.syrup}</div>
+          <div class="cell" data-title="ICE/HOT">${coffee.iceOrHot}</div>
+          <div class="cell" data-title="얼음 종류">${coffee.ice}</div>
+          <div class="cell" data-title="휘핑 크림">${coffee.cream}</div>
+          <div class="cell" data-title="엑스트라">${coffee.extra}</div>
+          <div class="cell" data-title="컵">${coffee.cup}</div>
+        </div>`;
+    });
+  }
   toggleModal() {
     const modal = $<HTMLDivElement>('.modal-layout');
     modal.classList.toggle('hidden');
   }
 
+  manageKitchen() {
+    const rootNode = $<HTMLDivElement>('#right-section');
+    if (order._orders.length <= 0) {
+      return (rootNode.innerHTML = `<div id="none-order"></div>`);
+    }
+    return rootNode.insertAdjacentHTML('afterbegin', this.template());
+  }
   template() {
     return `
         <h1>주방</h1>
@@ -81,7 +138,7 @@ export default class kitchenArea extends Template {
     <div class="modal-layout hidden">
     <div class="modal-header">
       <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>
-      <h1>아메리카노 옵션</h1>
+      <h1 class="selected-coffee-option"></h1>
     </div>
     <div class="modal-table-wrapper">
       <div class="modal-table">
@@ -97,18 +154,7 @@ export default class kitchenArea extends Template {
           <div class="cell">엑스트라</div>
           <div class="cell">컵</div>
         </div>
-        <div class="table-row">
-          <div class="cell" data-title="No">1</div>
-          <div class="cell" data-title="메뉴명">아메리카노</div>
-          <div class="cell" data-title="사이즈">Tall</div>
-          <div class="cell" data-title="샷">2</div>
-          <div class="cell" data-title="시럽">-</div>
-          <div class="cell" data-title="ICE/HOT">ICE</div>
-          <div class="cell" data-title="얼음 종류">각얼음</div>
-          <div class="cell" data-title="휘핑 크림">-</div>
-          <div class="cell" data-title="엑스트라">-</div>
-          <div class="cell" data-title="컵">1회용 컵</div>
-        </div>
+{}
       </div>
     </div>
     <div class="modal-content">

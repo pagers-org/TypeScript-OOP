@@ -1,7 +1,7 @@
 import { $, $all } from '@/helper/dom';
 import { order } from '@/coffee/order';
 import { Template } from '@/view/Template';
-import { editState } from '../helper/util';
+import { editState, getColNumber } from '@/store';
 
 export default class OrderArea extends Template {
   constructor() {
@@ -31,6 +31,7 @@ export default class OrderArea extends Template {
     row.remove();
   }
   modifyOrderRow(e) {
+    // 수정 필요
     const row = e.target.closest('.table-row');
     editState.toggleEditState();
     row.contentEditable = editState.value;
@@ -41,7 +42,7 @@ export default class OrderArea extends Template {
     const table = $<HTMLDivElement>('#order-table');
     const row = ` 
             <div class="table-row" data-key=${_id}>
-              <div class="cell" data-title="No">1</div>
+              <div class="cell" data-title="No">${getColNumber()}</div>
               <div class="cell" data-title="메뉴명">${menu}</div>
               <div class="cell" data-title="사이즈">${size}</div>
               <div class="cell" data-title="샷">${shot}</div>
@@ -62,7 +63,7 @@ export default class OrderArea extends Template {
     this.bindFeatureEvent();
   }
 
-  template() {
+  public template(): string {
     return `
         <div class="order-list">
           <h1>주문 목록</h1>

@@ -1,5 +1,5 @@
 import { $ } from '@/helper/dom';
-import { Template } from '../view/Template';
+import { Template } from '@/view/Template';
 
 export default class ServedArea extends Template {
   constructor() {
