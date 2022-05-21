@@ -2,10 +2,9 @@ import { nanoid } from 'nanoid';
 import { getRandomMenu } from '@/helper/util';
 import { COFFEE, SHOT, COLD_HOT, CUP, ICE, SIZE, CREAM, EXTRA, SYRUP } from '@/constant';
 
-//클래스가 아닌 다른 방법으로도 써보고싶어서 객체로 만들었어요!
 export const order = {
-  _orders: [], //비어 있어서 'never' 타입이라고 하는데 어떻게 타입을 주는건지 잘 모르겠어요ㅠ
-
+  _orders: [],
+  _selectedCoffee: { id: '', name: '' },
   createOrder: function () {
     const singleOrder = {
       _id: nanoid(),
@@ -32,5 +31,9 @@ export const order = {
   getOrderByName: function (name: string) {
     const filtered = this._orders.filter(order => order.menu === name);
     return filtered;
+  },
+
+  selectCoffee: function (id: string, name: string) {
+    this._selectedCoffee = { id, name };
   },
 };
