@@ -1,23 +1,23 @@
 declare module 'dto' {
   export interface BaseId {
-    id: string;
+    readonly id: string;
   }
   type MenuType = 'americano' | 'espresso' | 'cappuccino';
 
   export interface ExtraIngredientRecord extends BaseId {
-    type: string;
-    selectableList: string[];
-    default: string;
+    readonly type: string;
+    readonly selectableList: string[];
+    readonly default: string;
     currentSelected: string; // 컴포넌트간 통신할 때 생성되는 시점에 현재 선택된 옵션을 기준으로 인스턴스를 생성해야 함
   }
 
   export interface RequiredIngredient {
-    type: string;
-    amount: number; // 정수
+    readonly type: string;
+    readonly amount: number; // 정수
   }
   export interface Menu extends BaseId {
-    type: MenuType;
-    requiredIngredients: RequiredIngredient[];
+    readonly type: MenuType;
+    readonly requiredIngredients: RequiredIngredient[];
     // selectableIngredients: string[]; // Ingredient name
   }
   //                 준비중        제작중      제공된
@@ -27,25 +27,25 @@ declare module 'dto' {
    * @todo 추후 타입 강화 필요
    * */
   type SelectedOption = {
-    type: string; // ExtraIngredientRecord 의 type 과 매칭되어야 함
-    selected: string; // ExtraIngredientRecord 의 selectableList 중 하나와 매칭되어야 함
+    readonly type: string; // ExtraIngredientRecord 의 type 과 매칭되어야 함
+    readonly selected: string; // ExtraIngredientRecord 의 selectableList 중 하나와 매칭되어야 함
   };
   export interface Order extends BaseId {
-    menu: Menu;
+    readonly menu: Menu;
     extraOptions: SelectedOption[];
     state: OrderState;
   }
   export interface Beverage extends BaseId {
-    menu: Menu;
+    readonly menu: Menu;
     contains: SelectedOption[];
   }
 
   // 서빙된 커피 정보 콜랙션
   export interface CompletedMenuRecord extends BaseId {
-    completedAt: Date;
-    orderedAt: Date;
-    Order: Order;
-    beverage: Beverage;
+    readonly completedAt: Date;
+    readonly orderedAt: Date;
+    readonly Order: Order;
+    readonly beverage: Beverage;
   }
 }
 
