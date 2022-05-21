@@ -1,7 +1,8 @@
 import { CoffeeOptions } from 'Coffee';
+import Id from './id';
 import Order from './order';
-import { TAB_NAME } from './utils/constants';
-import { qs } from './utils/helpers';
+import { ATTR_CONTENT_EDITABLE, TAB_NAME } from './utils/constants';
+import { genRandomOne, qs } from './utils/helpers';
 import View from './views/View';
 
 export default class Controller {
@@ -15,7 +16,7 @@ export default class Controller {
     this.mainView = mainView;
     this.headerView = headerView;
     this.modalView = modalView;
-    this.orderId = 0;
+    this.orderId = new Id();
     this.order = new Order();
     this.subscribeViewEvents();
     this.bindedEvents();
@@ -47,7 +48,7 @@ export default class Controller {
   private selectCoffee(currentElement: HTMLButtonElement) {
     const coffeeFilling = qs('.filling') as HTMLDivElement;
     const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
-    if (this.order.OrderItem.length === 0) {
+    if (this.order.isEmpty()) {
       alert('주문내역이 없습니다 🥲');
       return;
     }
@@ -74,25 +75,24 @@ export default class Controller {
   private editOrder(currentElement: HTMLDivElement) {
     const tableRow = currentElement.closest('.table-row');
     if (currentElement.closest('.edit-order')) {
-      if (tableRow?.hasAttribute('contenteditable')) {
+      if (tableRow?.hasAttribute(ATTR_CONTENT_EDITABLE)) {
         alert('수정이 완료 되었습니다 😇');
-        tableRow.removeAttribute('contenteditable');
+        tableRow.removeAttribute(ATTR_CONTENT_EDITABLE);
         return;
       } else {
-        tableRow?.setAttribute('contenteditable', 'true');
+        tableRow?.setAttribute(ATTR_CONTENT_EDITABLE, 'true');
       }
     }
     if (currentElement.closest('.remove-order')) {
-      const randomMenu = this.order.OrderItem;
-      const filtered = randomMenu.filter(item => item.id !== currentElement.id);
-      this.order.setOrderItem = filtered;
+      this.order.remove(currentElement);
       this.renderOrderTable();
     }
   }
 
   private addOrder() {
-    this.orderId++;
-    this.order.addRandomOrder(this.orderId);
+    this.orderId.addOrderId();
+    const randomMenu = genRandomOne();
+    this.order.addMenu(randomMenu, this.orderId.OrderId);
     this.Tabrender();
     this.renderOrderTable();
   }
