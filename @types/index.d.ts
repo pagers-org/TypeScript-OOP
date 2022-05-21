@@ -36,15 +36,16 @@ declare module 'dto' {
     state: OrderState;
   }
   export interface Beverage extends BaseId {
-    completedAt: Date; // 의문 -> 음료자체에 완성된 시간을 가지고 있는게 의미가 맞는가...?
     menu: Menu;
     contains: SelectedOption[];
   }
 
+  // 서빙된 커피 정보 콜랙션
   export interface CompletedMenuRecord extends BaseId {
     completedAt: Date;
     orderedAt: Date;
     Order: Order;
+    beverage: Beverage;
   }
 }
 
