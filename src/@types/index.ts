@@ -1,6 +1,6 @@
 import { COFFEE, ICE, COLD_HOT, SHOT, SIZE, SYRUP, CREAM, EXTRA, CUP } from '@/constant';
 
-type CoffeeMenuType = typeof COFFEE[number];
+type CofeeType = typeof COFFEE[number];
 type SizeType = typeof SIZE[number];
 type ShotType = typeof SHOT[number];
 type SyrupType = typeof SYRUP[number];
@@ -10,9 +10,11 @@ type CreamType = typeof CREAM[number];
 type ExtraType = typeof EXTRA[number];
 type CupType = typeof CUP[number];
 
-export type OrderItemType = {
+export type OrdersType = Record<keyof CoffeeOrderType, CoffeeOrderType>;
+
+export type CoffeeOrderType = {
   _id: string;
-  menu: CoffeeMenuType;
+  menu: CofeeType;
   size: SizeType;
   cup: CupType;
   iceOrHot: IceOrHotType;
@@ -21,4 +23,15 @@ export type OrderItemType = {
   cream?: CreamType;
   extra?: ExtraType;
   syrup?: SyrupType;
+};
+
+export type Material = {
+  coffee: number;
+  water?: number;
+  hot_milk?: number;
+  milk_foam?: number;
+  liqur?: number;
+  milk?: number;
+  chocolate?: number;
+  cream?: number;
 };
