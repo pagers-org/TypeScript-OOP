@@ -4,10 +4,11 @@ declare module 'dto' {
   }
   type MenuType = 'americano' | 'espresso' | 'cappuccino';
 
-  export interface ExtraIngredientRecord {
+  export interface ExtraIngredientRecord extends BaseId {
     type: string;
     selectableList: string[];
     default: string;
+    currentSelected: string; // 컴포넌트간 통신할 때 생성되는 시점에 현재 선택된 옵션을 기준으로 인스턴스를 생성해야 함
   }
 
   export interface RequiredIngredient {
@@ -16,7 +17,7 @@ declare module 'dto' {
   }
   export interface Menu extends BaseId {
     type: MenuType;
-    required: RequiredIngredient[];
+    requiredIngredients: RequiredIngredient[];
     // selectableIngredients: string[]; // Ingredient name
   }
   //                 준비중        제작중      제공된
