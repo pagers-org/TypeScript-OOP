@@ -1,3 +1,4 @@
+import Component from '../core/Component';
 import Coffee from '../model/Coffee';
 import Option from '../model/Option';
 import CoffeeService from '../services/CoffeeService';
@@ -14,16 +15,9 @@ type Order = {
 
 export type OrdersState = { orders: Order[] };
 
-class OrderList implements Component, Observable {
-  private $root: HTMLElement;
+class OrderList extends Component implements Observable {
   private state: OrdersState = { orders: [] };
   private observers$ = new Set();
-
-  constructor($root: HTMLElement | null) {
-    if (!$root) throw new Error('root element is required to render');
-    this.$root = $root;
-    this.init();
-  }
 
   init() {
     this.setEvent();

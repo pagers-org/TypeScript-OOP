@@ -1,12 +1,12 @@
+import Component from '../core/Component';
 import Coffee from '../model/Coffee';
 import { addClassList, removeClassList, selectTarget, setInnerText } from '../utils';
 import { OrdersState } from './OrderList';
 
 type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
 
-class Kitchen implements Component {
-  private $root: HTMLElement;
-  private state: KitchenState;
+class Kitchen extends Component {
+  private state: KitchenState = { isOpened: false, orders: [] };
   private _selectedCoffee: Coffee | undefined;
 
   subscription: ReturnType<Observable['subscribe']> | undefined;
@@ -14,13 +14,6 @@ class Kitchen implements Component {
   set selectedCoffee(coffee: Coffee) {
     this.toggleSelectedCoffee(coffee);
     this._selectedCoffee = coffee;
-  }
-
-  constructor($root: HTMLElement | null) {
-    if (!$root) throw new Error('root element is required to render');
-    this.$root = $root;
-    this.state = { isOpened: false, orders: [] };
-    this.init();
   }
 
   init(): void {
