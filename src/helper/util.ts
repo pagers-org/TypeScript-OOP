@@ -16,13 +16,3 @@ export const getCoffeeNameOnly = (orders: Array<CoffeeOrderType>) => {
   });
   return [...new Set(nameArrays)];
 };
-
-export const editState = {
-  value: false,
-  getEditState: function () {
-    this.value;
-  },
-  toggleEditState: function () {
-    this.value = !this.value;
-  },
-};
