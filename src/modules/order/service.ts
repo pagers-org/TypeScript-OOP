@@ -15,12 +15,7 @@ export class OrderService {
   }
 
   public update(order: Order) {
-    this.orderList = this.orderList.map(item => {
-      if (item.id === order.id) {
-        return order;
-      }
-      return item;
-    });
+    this.orderList = this.orderList.map((item) => ( item.id === order.id ? order : item ))
   }
 
   public listOrders() {
