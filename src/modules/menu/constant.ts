@@ -1,4 +1,4 @@
-export const MENU = Object.freeze({
+export const MENU = {
   AMERICANO: '아메리카노',
   CAFEORE: '카페오레',
   CAPPUCCINO: '카푸치노',
@@ -9,5 +9,5 @@ export const MENU = Object.freeze({
   MACCHIATO: '마끼야또',
   MOCHA: '카페모카',
   RISTRETTO: '리스트레토',
-} as const);
+} as const;
 export const MENU_LIST = Object.values(MENU);
