@@ -74,18 +74,17 @@ export type EventListenArg<T> = {
   (param: T): void;
 };
 
-export type OrderAddDetail = {
+export type OrderDetail = {
   order: Order;
 };
 
-export type OrderRemovedDetail = {
-  order: Order;
-};
+export type OrderAddDetail = OrderDetail;
+
+export type OrderRemovedDetail = OrderDetail;
 
 export type BeforeServingDetail = {
-  order: Order;
   serving: Serving;
-};
+} & OrderDetail;
 
 export type AfterServingDetail = {
   serving: Serving;
@@ -96,10 +95,9 @@ export type MenuButtonClickDetail = {
 };
 
 export type OptionChangedDetail = {
-  order: Order;
   groupName: OptionGroupName;
   value: string;
-};
+} & OrderDetail;
 
 export type ModalOpenDetail = {
   opened: boolean;
