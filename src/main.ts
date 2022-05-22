@@ -40,7 +40,7 @@ modalLayout.addEventListener('click', (event: MouseEvent) => {
   modalLayout.classList.toggle('hidden');
 });
 
-window.onload = function () {
+window.addEventListener('DOMConentLoaded', event => {
   const orderListTable = new OrderListTable();
   orderListTable.init();
-};
+});

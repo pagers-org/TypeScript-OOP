@@ -8,7 +8,7 @@ export class OrderListTable {
   orderService: OrderService = new OrderService();
 
   init() {
-    this.#orderTable.innerHTML = this.headerTemplate();
+    this.#orderTable.insertAdjacentHTML('beforebegin', this.headerTemplate());
     this.setEvents();
   }
 
@@ -28,8 +28,10 @@ export class OrderListTable {
     this.#orderButton.addEventListener('click', e => {
       e.preventDefault();
       this.addOrder();
-      this.#orderTable.innerHTML =
-        this.headerTemplate() + this.#orderList.map((order: Order) => this.rowTemplate(order)).join('');
+      this.#orderTable.insertAdjacentHTML(
+        'beforeend',
+        String.raw`${this.headerTemplate()}${this.#orderList.map((order: Order) => this.rowTemplate(order)).join('')}`,
+      );
     });
 
     this.#orderTable?.addEventListener('click', e => {
