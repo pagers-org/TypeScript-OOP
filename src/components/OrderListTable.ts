@@ -2,46 +2,46 @@ import Order from '@/modules/order';
 import { OrderService } from '@/modules/order/service';
 
 export class OrderListTable {
-  #orderTable = document.querySelector('#order-table') as HTMLButtonElement;
-  #orderButton = document.querySelector('.order-button') as HTMLButtonElement;
-  #orderList: Order[] = [];
+  private orderTable = document.querySelector('#order-table') as HTMLButtonElement;
+  private orderButton = document.querySelector('.order-button') as HTMLButtonElement;
+  private orderList: Order[] = [];
   orderService: OrderService = new OrderService();
 
   init() {
-    this.#orderTable.insertAdjacentHTML('beforebegin', this.headerTemplate());
+    this.orderTable.insertAdjacentHTML('beforebegin', this.headerTemplate());
     this.setEvents();
   }
 
   addOrder() {
     const order = new Order();
     this.orderService.add(order);
-    this.#orderList = this.orderService.listOrders();
+    this.orderList = this.orderService.listOrders();
   }
 
   removeOrder(deleteTarget: HTMLElement) {
     const orderId = deleteTarget.dataset.id as string;
     this.orderService.delete(orderId);
-    this.#orderList = this.orderService.listOrders();
+    this.orderList = this.orderService.listOrders();
   }
 
   setEvents() {
-    this.#orderButton.addEventListener('click', e => {
+    this.orderButton.addEventListener('click', e => {
       e.preventDefault();
       this.addOrder();
-      this.#orderTable.insertAdjacentHTML(
+      this.orderTable.insertAdjacentHTML(
         'beforeend',
-        String.raw`${this.headerTemplate()}${this.#orderList.map((order: Order) => this.rowTemplate(order)).join('')}`,
+        String.raw`${this.headerTemplate()}${this.orderList.map((order: Order) => this.rowTemplate(order)).join('')}`,
       );
     });
 
-    this.#orderTable?.addEventListener('click', e => {
+    this.orderTable?.addEventListener('click', e => {
       const target = e.target as HTMLButtonElement;
       const rootTarget = target.parentElement?.parentElement ?? target.parentElement;
       rootTarget?.querySelector('.remove-order')?.addEventListener('click', event => {
         const deleteTarget = (event.target as HTMLElement)?.closest('.table-row') as HTMLElement;
         this.removeOrder(deleteTarget);
-        this.#orderTable.innerHTML =
-          this.headerTemplate() + this.#orderList.map((order: Order) => this.rowTemplate(order)).join('');
+        this.orderTable.innerHTML =
+          this.headerTemplate() + this.orderList.map((order: Order) => this.rowTemplate(order)).join('');
       });
     });
   }

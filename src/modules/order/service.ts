@@ -2,11 +2,10 @@ import Order from '@/modules/order/index';
 import { OrderType } from '@/modules/order/type';
 
 export class OrderService {
-  public orderList: Order[] = [];
+  private orderList: Order[] = [];
 
   public add(order: Order) {
-    if (this.orderList.length === 0) this.orderList.push(order);
-    else this.orderList = [...this.orderList, order];
+    this.orderList = [...this.orderList, order];
   }
 
   public delete(orderId: string) {
