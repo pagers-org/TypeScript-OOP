@@ -9,11 +9,11 @@ export function createRandomOrder(id: number) {
     name: COFFEE[random(COFFEE)],
     size: SIZE[random(SIZE)],
     shot: SHOT[random(SHOT)],
-    icehot: ICE_HOT[random(ICE_HOT)],
+    iceHot: ICE_HOT[random(ICE_HOT)],
     cup: CUP[random(CUP)],
     ice: ICE[random(ICE)],
     syrup: SYRUP[random(SYRUP)],
-    whippedcream: WHIPPED_CREAM[random(WHIPPED_CREAM)],
+    whippedCream: WHIPPED_CREAM[random(WHIPPED_CREAM)],
     extra: EXTRA[random(EXTRA)],
   };
 }

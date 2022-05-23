@@ -3,10 +3,10 @@ export interface CoffeeDTO {
   name: string;
   size: string;
   shot: string;
-  icehot: string;
+  iceHot: string;
   cup: string;
   ice?: string;
   syrup?: string;
-  whippedcream?: string;
+  whippedCream?: string;
   extra?: string;
 }
