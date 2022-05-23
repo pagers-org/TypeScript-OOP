@@ -32,6 +32,7 @@ declare module 'dto' {
   };
   export interface Order extends BaseId {
     readonly menu: Menu;
+    readonly orderNo: number;
     extraOptions: SelectedOption[];
     state: OrderState;
   }
