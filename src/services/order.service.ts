@@ -1,11 +1,17 @@
-import { CoffeeDTO } from '@/@types';
+import { CoffeeDTO } from "@/@types";
+import { OrderModel } from "../models/order.model";
 
 export class OrderService {
-  public coffees: CoffeeDTO[] = [];
+  private orderModel = new OrderModel();
+  
   addCoffee(coffee: CoffeeDTO) {
-    this.coffees = [...this.coffees, { ...coffee }];
+    const orderedList = this.orderModel.getOrderCoffees();
+    orderedList.push(coffee);
+    this.orderModel.setOrderCoffees(orderedList);
   }
   deleteCoffee(id: number) {
-    this.coffees = [...this.coffees].filter(coffee => coffee.id !== id);
+    let orderedList = this.orderModel.getOrderCoffees();
+    orderedList = orderedList.filter((coffee) => coffee.id !== id);
+    this.orderModel.setOrderCoffees(orderedList);
   }
 }
