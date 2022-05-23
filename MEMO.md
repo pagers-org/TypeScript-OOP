@@ -237,3 +237,41 @@ function doSomething(animal: Animal){
 
 ## 제어 흐름 분석 vs 사용자 정의 타입 가드 
 초기 타입스크립트는 타입 시스템의 힘이 강력하지 않았고 제어 흐름 분석에 기반한 타입 좁히기가 거의 이루어지지 않았다. 때문에 사용자 정의 타입 가드를 사용해야 하는 경우가 많았다. 하지만 꾸준한 발전을 이룬 오늘날의 타입스크립트는 타입 좁히기가 똑똑하게 이루어지고 대부분의 사용례는 위에서 다룬 내장 타입 가드로도 충분히 커버할 수 있다.
+
+---
+
+# 데이터 속성
+> https://dololak.tistory.com/364
+
+HTML5부터 새롭게 생긴 개념   
+HTML 요소에서 `data-`로 시작하는 속성이며 특정한 데이터를 DOM 요소에 저장해두기 위함이 목적이다.   
+브라우저는 이러한 데이터 속성에는 어떠한 행동도 관여하지 않기 때문에 개발자는 요소에 특정한 데이터를 저장하고 싶은 경우 자유롭게 사용할 수 있다.   
+
+## 데이터 속성의 장점
+데이터 속성의 장점은 이전과 같이 hidden으로 태그를 숨겨두고 데이터를 저장할 필요가 없어졌다는 점이다. 따라서 훨씬 HTML 스크립트가 간결해진다. 또한 하나의 HTML 요소에는 여러 데이터 속성을 동시에 사용할 수도 있다.
+
+```html
+<div data-menu-name="americano">아메리카노</div>
+```
+
+## javascript로 데이터 속성 요소 가져오기
+위 html 예시의 값을 불러오려면 아래와 같이 작성하면 된다.
+
+```javascript
+const $coffeeMenu = document.querySelector('[data-menu-name="americano"]');
+
+//다이나믹하게 가져오기🥳
+const AMERICANO = 'americano';
+const $coffeeMenu = document.querySelector(`[data-menu-name="${AMERICANO}"]);
+```
+
+---
+
+# remove()와 removeChild()의 차이
+> https://blogpack.tistory.com/683
+
+기본적으로 같은 기능을 하지만 다른 점이 존재한다.   
+
+`remove()`: 노드를 메모리에서 삭제하고 종료한다.   
+`removeChild()`: 노드가 메모리 그대로 존재하며 부모 노드와의 부모-자식관계를 끊어 DOM 트리에서 해제하는 것이다. 최종적으로 관계를 끊은 해당 노드의 참조 값을 반환한다.   
+노드의 반환값을 다시 다른 곳에 붙혀야 할 때 유용하게 사용할 수 있다.
