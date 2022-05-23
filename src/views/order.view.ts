@@ -47,7 +47,7 @@ export class OrderView {
       modalLayout.classList.toggle('hidden');
     });
   }
-  bindOrderEvent(handler: Function) {
+  bindOrderEvent(handler: (coffee: CoffeeDTO) => void) {
     const orderButton = $('.order-button') as HTMLButtonElement;
     orderButton.addEventListener('click', event => {
       event.preventDefault();
@@ -56,7 +56,7 @@ export class OrderView {
       handler(newCoffee);
     });
   }
-  bindOrderMenuEvent(deleteHandler: Function) {
+  bindOrderMenuEvent(deleteHandler: (id: number) => void) {
     const orderTable = $('#order-table') as HTMLDivElement;
     orderTable.addEventListener('click', event => {
       event.preventDefault();
