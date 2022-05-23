@@ -8,6 +8,7 @@ export const getDomElements = (element: string) => {
 
 export const getDomElementId = (target: HTMLElement | null) => {
   if (target) return target.id;
+  else throw new Error();
 };
 
 export const getElementLength = (element: string) => {
@@ -15,13 +16,13 @@ export const getElementLength = (element: string) => {
   return $itemList.length;
 };
 
-export const setInnerHTML = (target: Element | null, content: string) => {
+export const setInnerHTML = (target: HTMLElement | null, content: string) => {
   if (target) {
     target.innerHTML = content;
-  }
+  } else throw new Error();
 };
 
-export const toggleAttribute = (item: Element, attribute: string) => {
+export const toggleBooleanAttribute = (item: Element, attribute: string) => {
   if (item.getAttribute(attribute)) {
     item.removeAttribute(attribute);
   } else {
