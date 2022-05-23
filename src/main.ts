@@ -1,3 +1,5 @@
+import OrderUI from '@/components/OrderUI';
+
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
 const coffeeName = document.querySelector('.coffee_name') as HTMLHeadingElement;
@@ -5,6 +7,9 @@ const coffeeFilling = document.querySelector('.filling') as HTMLDivElement;
 const buttons = document.querySelectorAll<HTMLButtonElement>('.coffee-category-button');
 const addCoffeeOptionsForm = document.querySelector('.coffee-add-area form') as HTMLFormElement;
 const modalLayout = document.querySelector('.modal-layout') as HTMLDivElement;
+const $orderList = document.querySelector('.order-list');
+
+OrderUI({ $target: $orderList });
 
 pageNav.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLInputElement;
