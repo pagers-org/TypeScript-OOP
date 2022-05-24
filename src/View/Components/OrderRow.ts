@@ -1,6 +1,18 @@
 import Component, { Template } from '@/core/Component';
 
 class OrderRow extends Component {
+  order: Order;
+
+  protected componentDidMonted: () => void = () => {
+    // TODO: 변경 리스너 붙이기
+  }
+
+  // TODO: Order 객체 완성하기
+  public setOrder(order: Order) {
+    this.order = order;
+    this.render();
+  }
+
   private createCell(title: string, textContent?: string | number) {
     const cell = document.createElement('div');
     cell.classList.add('cell');
@@ -44,6 +56,8 @@ class OrderRow extends Component {
   }
 
   protected template: () => Template = () => {
+    // TODO: order가 없으면 빈 Template을 반환하기
+
     const tableRowWrapper = document.createElement('div');
     tableRowWrapper.classList.add('table-row');
 
