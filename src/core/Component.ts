@@ -57,7 +57,7 @@ abstract class Component extends HTMLElement {
     const newTemplate = this.template();
     const rootElement = this.composeComponents(newTemplate);
 
-    this.appendChild(rootElement);
+    this.replaceWith(rootElement);
   };
 }
 
