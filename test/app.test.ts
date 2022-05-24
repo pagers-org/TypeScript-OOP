@@ -53,4 +53,11 @@ describe('카페 테스트', () => {
     expect(orders.isEmpty()).toBeTruthy();
     expect(serving.getBeverageName()).toEqual('아메리카노');
   });
+
+  it('d', () => {
+    const a: Map<string, string> = new Map<string, string>();
+    a.set('1', '2');
+
+    a.has('1');
+  });
 });
