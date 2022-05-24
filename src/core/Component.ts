@@ -53,7 +53,7 @@ abstract class Component extends HTMLElement {
 
   // Component의 최종 결과물은 항상 이 함수를 통해야 한다.
   // 이 안을 스스로 채워서 렌더링을 끝낸다.
-  private render = () => {
+  protected render = () => {
     const newTemplate = this.template();
     const rootElement = this.composeComponents(newTemplate);
 
