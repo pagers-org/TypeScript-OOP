@@ -1,5 +1,9 @@
-import '@/View/OrderList/OrderList';
+//import '@/View/OrderList/OrderList';
 import '@/View/Kitchen/Kitchen';
+
+import OrderRow from '@/View/Components/OrderRow';
+
+customElements.define('cafe-order-row', OrderRow);
 
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
@@ -39,4 +43,12 @@ modalLayout.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLElement;
   if (!$target.matches('#close-icon')) return;
   modalLayout.classList.toggle('hidden');
+});
+
+const orderTable = document.getElementById('order-table')!;
+const newOrderButton = document.getElementById('new-order')!;
+
+newOrderButton.addEventListener('click', () => {
+  const order = document.createElement('cafe-order-row');
+  orderTable.appendChild(order);
 });
