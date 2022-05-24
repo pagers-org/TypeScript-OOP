@@ -1,20 +1,16 @@
-import Option from '@/Model/Option';
-
-/*
-  추후... 지원....
-  '카페오레',
-  '카푸치노',
-  '코레토',
-  '에스프레소',
-  '룽고',
-  '마끼아또',
-  '리스트레또',
-*/
+import Option from '~/src/Model/OptionGroup';
 
 export const DrinkMap = {
-  아메리카노: 'americano',
-  카페라떼: 'latte',
-  카페모카: 'mocha',
+  americano: '아메리카노',
+  latte: '카페라떼',
+  mocha: '카페모카',
+  aulait: '카페오레',
+  capuccino: '카푸치노',
+  corretto: '코레토',
+  espresso: '에스프레소',
+  lungo: '룽고',
+  macciatto: '마끼아또',
+  ristretto: '리스트레또',
 } as const;
 
 export const Drinks = Object.keys(DrinkMap).map(key => key as keyof typeof DrinkMap);
