@@ -1,13 +1,17 @@
 import Component, { Template } from '@/core/Component';
+import Order from '@/Model/Order';
+import { ORDERS } from '@/Stores/constants';
 
 class OrderRow extends Component {
-  order: Order;
+  $container!: HTMLElement;
+  order!: Order;
 
   protected componentDidMonted: () => void = () => {
-    // TODO: 변경 리스너 붙이기
-  }
+    this.addEventListener(ORDERS, e => {
+      this.setOrder(e.detail!.payload as Order);
+    });
+  };
 
-  // TODO: Order 객체 완성하기
   public setOrder(order: Order) {
     this.order = order;
     this.render();
@@ -56,27 +60,32 @@ class OrderRow extends Component {
   }
 
   protected template: () => Template = () => {
-    // TODO: order가 없으면 빈 Template을 반환하기
-
     const tableRowWrapper = document.createElement('div');
     tableRowWrapper.classList.add('table-row');
+    this.$container = tableRowWrapper;
+
+    if (!this.order) {
+      const div = document.createElement('div');
+      div.textContent = 'loading...';
+      return {
+        parent: tableRowWrapper,
+        children: [div],
+      };
+    }
 
     const idCell = this.createCell('id', 1);
-    const cafe = this.createCell('메뉴명', '카페라떼');
-    const size = this.createCell('사이즈', 'Grande');
-    const shot = this.createCell('샷', 1);
-    const syrup = this.createCell('시럽', 1);
-    const temp = this.createCell('ICE/HOT', 'ICE');
-    const ice = this.createCell('얼음종류', '각얼음');
-    const cream = this.createCell('휘핑크림', '-');
-    const extra = this.createCell('엑스트라', '-');
-    const cup = this.createCell('컵', '1회용 컵');
+    const cafe = this.createCell('메뉴명', this.order.drink.menuName);
+    const $optionGroups = this.order.optionGroups.map(optionGroup => {
+      const optionName = optionGroup.name;
+      const selectedOption = optionGroup.getSelectedOption()[0];
+      return this.createCell(optionName, selectedOption.name);
+    }, this);
     const editButton = this.appendButtonIcon(this.createCell('수정하기'));
     const deleteButton = this.appendButtonIcon(this.createCell('삭제하기'));
 
     return {
       parent: tableRowWrapper,
-      children: [idCell, cafe, size, shot, syrup, temp, ice, cream, extra, cup, editButton, deleteButton],
+      children: [idCell, cafe, ...$optionGroups, editButton, deleteButton],
     };
   };
 }
