@@ -1,18 +1,20 @@
+import { nanoid } from 'nanoid';
+
 import Drink from '@/Model/Drink';
-import OptionGroup from './OptionGroup';
+import OptionGroup from '@/Model/OptionGroup';
 
 // 주문을 set하는 순간부터 생성
 class Order {
   id: string;
   drink: Drink;
-  options: OptionGroup;
+  optionGroups: OptionGroup[];
   orderTime = -1;
   finishTime = -1;
 
-  constructor(id: string, drink: Drink, options: OptionGroup) {
-    this.id = id;
+  constructor(drink: Drink, optionGroups: OptionGroup[]) {
+    this.id = nanoid();
     this.drink = drink;
-    this.options = options;
+    this.optionGroups = optionGroups;
   }
 }
 
