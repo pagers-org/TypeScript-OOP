@@ -1,5 +1,5 @@
 import Drink from '@/Model/Drink';
-import DrinkFactory from '@/Model/DrinkFactory';
+import DrinkFactory from '~/src/Model/OrderFactory';
 import Kitchen from '@/View/Kitchen/Kitchen';
 
 export interface OrderControllerObsever {

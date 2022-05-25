@@ -1,35 +1,18 @@
 import Drink from '@/Model/Drink';
+import OptionGroup from './OptionGroup';
 
 // 주문을 set하는 순간부터 생성
 class Order {
-  id: number;
-  drinks: Drink[] = [];
+  id: string;
+  drink: Drink;
+  options: OptionGroup;
   orderTime = -1;
   finishTime = -1;
 
-  constructor(id: number, drink: Drink) {
+  constructor(id: string, drink: Drink, options: OptionGroup) {
     this.id = id;
-    this.drinks.push(drink);
-  }
-
-  addDrink(drink: Drink) {
-    this.drinks.push(drink);
-  }
-
-  deleteDrink(index: number) {
-    this.drinks.splice(index, 1);
-  }
-
-  private recordNow() {
-    return new Date().getUTCMilliseconds();
-  }
-
-  setOrderInPlace() {
-    this.orderTime = this.recordNow();
-  }
-
-  finishOrder() {
-    this.finishTime = this.recordNow();
+    this.drink = drink;
+    this.options = options;
   }
 }
 
