@@ -24,6 +24,13 @@ export class OptionGroup {
     this.options = constructor.options || [];
   }
 
+  public random() {
+    const newOptionGroup = this.clone();
+    newOptionGroup.resetSelected();
+    newOptionGroup.randomSelected();
+    return newOptionGroup;
+  }
+
   public isMultiple(): boolean {
     return this.type === TYPE_MULTIPLE;
   }

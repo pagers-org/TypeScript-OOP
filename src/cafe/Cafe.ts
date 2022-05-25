@@ -1,6 +1,5 @@
 import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
 import { nanoid } from 'nanoid';
-import { getRandomRange } from '@/common';
 
 export type CafeOrder = {
   order: Order;
@@ -60,30 +59,18 @@ export class Cafe {
     return { order, beverage };
   }
 
-  public async createRandomOrder(menuId: number) {
-    const optionGroups = await this.createRandomSelectedOptionGroups();
+  public async createRandomOrder(beverageId: number) {
+    const optionGroups = await this.api.getOptionGroupsAll();
+    const randomOptionGroups = optionGroups.map(item => item.random());
 
     return new Order({
       id: nanoid(),
-      beverageId: menuId,
-      optionGroups,
+      beverageId,
+      optionGroups: randomOptionGroups,
     });
   }
 
-  public async createRandomBeverageOrder() {
-    const beveragesCount = await this.api.getBeveragesCount();
-
-    return this.createRandomOrder(getRandomRange(1, beveragesCount));
-  }
-
-  private async createRandomSelectedOptionGroups() {
-    const optionGroups = await this.api.getOptionGroupsAll();
-
-    return optionGroups.map(item => {
-      const newGroup = item.clone();
-      newGroup.resetSelected();
-      newGroup.randomSelected();
-      return newGroup;
-    });
+  public async getBeveragesCount() {
+    return this.api.getBeveragesCount();
   }
 }

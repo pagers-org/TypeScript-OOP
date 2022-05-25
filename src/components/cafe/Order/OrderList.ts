@@ -3,6 +3,7 @@ import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
 import { CafeOrder } from '@/cafe';
 import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { getRandomRange } from '@/common';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -30,7 +31,11 @@ export class OrderList extends Component {
   protected bindEvents() {
     this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
-      await this.addOrder(await this.cafe.createRandomBeverageOrder());
+
+      const beveragesCount = await this.cafe.getBeveragesCount();
+      const randomRange = getRandomRange(1, beveragesCount);
+
+      await this.addOrder(await this.cafe.createRandomOrder(randomRange));
     });
   }
 
