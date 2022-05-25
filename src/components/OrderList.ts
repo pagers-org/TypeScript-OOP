@@ -4,7 +4,7 @@ import { DOM } from '../constants';
 import { $ } from '../utils/dom';
 import { ORDER_TEMPLATE } from '../templates';
 
-import type { TMenuName } from '../@types';
+import type { MenuNameType } from '../@types';
 
 class OrderList {
   #orderList: Order[];
@@ -40,7 +40,7 @@ class OrderList {
     return this.#orderList.length;
   }
 
-  getCurrentOrderMenuNames(): TMenuName[] {
+  getCurrentOrderMenuNames(): MenuNameType[] {
     return this.#orderList.map(order => order.menuName);
   }
 

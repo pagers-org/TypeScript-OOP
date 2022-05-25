@@ -2,40 +2,40 @@ import { pickRandomInArray, pickRandomUniqueId } from '../utils/random.js';
 import { ORDER } from '../constants/index.js';
 
 import {
-  TMenuName,
-  TMenuSize,
-  TShot,
-  TSyrup,
-  TTemporature,
-  TIce,
-  TWippedCream,
-  TExtra,
-  TCup,
+  MenuNameType,
+  MenuSizeType,
+  ShotType,
+  SyrupType,
+  TemporatureType,
+  IceType,
+  WippedCreamType,
+  ExtraType,
+  CupType,
 } from '../@types/index.js';
 
 class Order {
   id: string;
-  menuName: TMenuName;
-  size: TMenuSize;
-  shot: TShot;
-  syrup: TSyrup;
-  temporature: TTemporature;
-  ice: TIce;
-  wippedCream: TWippedCream;
-  extra: TExtra;
-  cup: TCup;
+  menuName: MenuNameType;
+  size: MenuSizeType;
+  shot: ShotType;
+  syrup: SyrupType;
+  temporature: TemporatureType;
+  ice: IceType;
+  wippedCream: WippedCreamType;
+  extra: ExtraType;
+  cup: CupType;
 
   constructor() {
     this.id = pickRandomUniqueId();
-    this.menuName = pickRandomInArray<TMenuName>(ORDER.MENU_NAME);
-    this.size = pickRandomInArray<TMenuSize>(ORDER.MENU_SIZE);
-    this.shot = pickRandomInArray<TShot>(ORDER.MENU_SHOT);
-    this.syrup = pickRandomInArray<TSyrup>(ORDER.MENU_SYRUP);
-    this.temporature = pickRandomInArray<TTemporature>(ORDER.MENU_TEMPORATURE);
-    this.ice = pickRandomInArray<TIce>(ORDER.MENU_ICE);
-    this.wippedCream = pickRandomInArray<TWippedCream>(ORDER.MENU_WIPPED_CREAM);
-    this.extra = pickRandomInArray<TExtra>(ORDER.MENU_EXTRA);
-    this.cup = pickRandomInArray<TCup>(ORDER.MENU_CUP);
+    this.menuName = pickRandomInArray<MenuNameType>(ORDER.MENU_NAME);
+    this.size = pickRandomInArray<MenuSizeType>(ORDER.MENU_SIZE);
+    this.shot = pickRandomInArray<ShotType>(ORDER.MENU_SHOT);
+    this.syrup = pickRandomInArray<SyrupType>(ORDER.MENU_SYRUP);
+    this.temporature = pickRandomInArray<TemporatureType>(ORDER.MENU_TEMPORATURE);
+    this.ice = pickRandomInArray<IceType>(ORDER.MENU_ICE);
+    this.wippedCream = pickRandomInArray<WippedCreamType>(ORDER.MENU_WIPPED_CREAM);
+    this.extra = pickRandomInArray<ExtraType>(ORDER.MENU_EXTRA);
+    this.cup = pickRandomInArray<CupType>(ORDER.MENU_CUP);
   }
 
   // TODO: any 고쳐야함

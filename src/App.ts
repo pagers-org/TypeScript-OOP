@@ -2,7 +2,7 @@ import { CoffeeMakeModal, OrderList, Kitchen } from './components';
 
 import { DOM, ERROR } from './constants';
 import { $ } from './utils/dom';
-import { TMenuName } from './@types';
+import { MenuNameType } from './@types';
 
 class App {
   $target;
@@ -41,7 +41,7 @@ class App {
       this.checkKitchen();
     }
     if (target.classList.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
-      const clickCoffeName = target.textContent as TMenuName;
+      const clickCoffeName = target.textContent as MenuNameType;
       if (!this.kitchen.isExistClickMenuName(this.orderList.getCurrentOrderMenuNames(), clickCoffeName)) {
         alert(ERROR.NON_EXIST_SELECTED_COFFEE_ORDER);
         return;

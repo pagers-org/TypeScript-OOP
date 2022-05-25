@@ -1,7 +1,7 @@
 import { $ } from '../utils/dom.js';
 import { KITCHEN_TEMPLATE } from '../templates';
 
-import { TMenuName } from '../@types/index.js';
+import { MenuNameType } from '../@types/index.js';
 
 class Kitchen {
   $target: HTMLElement;
@@ -35,7 +35,7 @@ class Kitchen {
     $coffeeName.textContent = clickButton.textContent;
   }
 
-  isExistClickMenuName(currentOrderMenuNames: TMenuName[], clickMenuName: TMenuName) {
+  isExistClickMenuName(currentOrderMenuNames: MenuNameType[], clickMenuName: MenuNameType) {
     return currentOrderMenuNames.includes(clickMenuName);
   }
 }
