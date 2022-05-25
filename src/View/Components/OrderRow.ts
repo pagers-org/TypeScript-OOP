@@ -1,6 +1,6 @@
 import Component, { Template } from '@/core/Component';
-import { ORDER_STORE } from '@/Stores/constants';
-import { dispatch } from '@/Stores/orderStore';
+import { ORDER_STORE } from '@/Stores/orderStore/constants';
+import { dispatch } from '@/Stores/orderStore/orderStore';
 import Order from '@/Model/Order';
 
 class OrderRow extends Component {

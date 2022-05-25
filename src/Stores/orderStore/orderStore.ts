@@ -1,6 +1,6 @@
 import createStore from '@/core/Store';
 import type Order from '@/Model/Order';
-import { ORDER_STORE } from '@/Stores/constants';
+import { ORDER_STORE } from '@/Stores/orderStore/constants';
 
 interface OrdersStore {
   orders: Order[];
