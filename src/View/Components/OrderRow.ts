@@ -4,6 +4,7 @@ import { ORDERS } from '@/Stores/constants';
 
 class OrderRow extends Component {
   $container!: HTMLElement;
+  $optionGroups!: HTMLElement[];
   order!: Order;
 
   protected componentDidMonted: () => void = () => {
@@ -41,12 +42,19 @@ class OrderRow extends Component {
     return cell;
   }
 
-  private getButtonAttribute(type: string) {
+  private getButtonAttribute = (type: string) => {
     if (type === '수정하기') {
       return {
         icon: 'fa-pen',
         onClick: () => {
-          console.log('수정');
+          this.$optionGroups.forEach($optionGroup => {
+            const CONTENT_EDITABLE = 'contenteditable';
+            const isEditable = $optionGroup.getAttribute(CONTENT_EDITABLE);
+            if (isEditable) {
+              return $optionGroup.removeAttribute(CONTENT_EDITABLE);
+            }
+            $optionGroup.setAttribute(CONTENT_EDITABLE, 'true');
+          });
         },
       };
     }
@@ -54,10 +62,15 @@ class OrderRow extends Component {
     return {
       icon: 'fa-trash-can',
       onClick: () => {
-        console.log('삭제');
+        this.destroy();
       },
     };
-  }
+  };
+
+  private destroy = () => {
+    this.$container.remove();
+    this.remove();
+  };
 
   protected template: () => Template = () => {
     const tableRowWrapper = document.createElement('div');
@@ -75,17 +88,18 @@ class OrderRow extends Component {
 
     const idCell = this.createCell('id', 1);
     const cafe = this.createCell('메뉴명', this.order.drink.menuName);
-    const $optionGroups = this.order.optionGroups.map(optionGroup => {
+    const optionGroups = this.order.optionGroups.map(optionGroup => {
       const optionName = optionGroup.name;
       const selectedOption = optionGroup.getSelectedOption()[0];
       return this.createCell(optionName, selectedOption.name);
     }, this);
+    this.$optionGroups = optionGroups;
     const editButton = this.appendButtonIcon(this.createCell('수정하기'));
     const deleteButton = this.appendButtonIcon(this.createCell('삭제하기'));
 
     return {
       parent: tableRowWrapper,
-      children: [idCell, cafe, ...$optionGroups, editButton, deleteButton],
+      children: [idCell, cafe, ...optionGroups, editButton, deleteButton],
     };
   };
 }
