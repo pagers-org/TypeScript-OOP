@@ -1,11 +1,11 @@
-import Option from './Option';
+import Option from '@/Model/Option';
 
 class OptionGroup {
   name: string;
-  isMultiple = false;
   options: Option[];
+  isMultiple: boolean;
 
-  constructor({ name, options, isMultiple }: OptionGroup) {
+  constructor(name: string, options: Option[], isMultiple: boolean) {
     this.name = name;
     this.options = options;
     this.isMultiple = isMultiple;
