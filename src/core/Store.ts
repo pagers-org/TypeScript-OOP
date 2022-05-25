@@ -3,6 +3,11 @@ interface DisPatch {
   payload?: unknown;
 }
 
+interface PublishPayload<T> {
+  payload: unknown;
+  store: T;
+}
+
 function createStore<T>(name: string, callback: (store: T, action: DisPatch) => T, targetElement?: HTMLElement) {
   let currentStore: T;
   const reducer = callback;
@@ -12,8 +17,11 @@ function createStore<T>(name: string, callback: (store: T, action: DisPatch) => 
   listenerElement.addEventListener(dispatchEventName, (e: CustomEventInit<DisPatch>) => {
     currentStore = reducer(currentStore, e.detail!);
 
-    const publish = new CustomEvent<T>(name, {
-      detail: currentStore,
+    const publish = new CustomEvent<PublishPayload<T>>(name, {
+      detail: {
+        payload: e.detail!.payload,
+        store: currentStore,
+      },
     });
     dispatchEvent(publish);
   });
