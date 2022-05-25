@@ -1,9 +1,7 @@
-//import '@/View/OrderList/OrderList';
+import '@/View/OrderTable/OrderTable';
 import '@/View/Kitchen/Kitchen';
 
 import OrderRow from '@/View/Components/OrderRow';
-import OrderFactory from '@/Model/OrderFactory';
-import { dispatch } from '@/Stores/orderStore';
 
 customElements.define('cafe-order-row', OrderRow);
 
@@ -45,17 +43,4 @@ modalLayout.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLElement;
   if (!$target.matches('#close-icon')) return;
   modalLayout.classList.toggle('hidden');
-});
-
-const orderTable = document.getElementById('order-table')!;
-const newOrderButton = document.getElementById('new-order')!;
-
-newOrderButton.addEventListener('click', () => {
-  const $order = document.createElement('cafe-order-row') as OrderRow;
-  const orderFactory = new OrderFactory();
-  const newOrder = orderFactory.createRandomOrder();
-  dispatch({ type: 'add', payload: newOrder });
-  $order.setOrder(newOrder);
-
-  orderTable.appendChild($order);
 });
