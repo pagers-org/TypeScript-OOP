@@ -3,7 +3,7 @@ import OptionGroup from '@/Model/OptionGroup';
 import Option from '@/Model/Option';
 import Order from '@/Model/Order';
 import { drinkMap } from '@/Model/constants/drinks';
-import { optionGroups } from '~/src/Model/constants/optionGroups';
+import { optionGroups } from '@/Model/constants/optionGroups';
 import { getRandomElementInArray, getRandomNumber } from '@/utils/utils';
 
 class OrderFactory {
