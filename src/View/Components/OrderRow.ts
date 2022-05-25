@@ -1,6 +1,7 @@
 import Component, { Template } from '@/core/Component';
-import Order from '@/Model/Order';
 import { ORDER_STORE } from '@/Stores/constants';
+import { dispatch } from '@/Stores/orderStore';
+import Order from '@/Model/Order';
 
 class OrderRow extends Component {
   $container!: HTMLElement;
@@ -62,6 +63,7 @@ class OrderRow extends Component {
     return {
       icon: 'fa-trash-can',
       onClick: () => {
+        dispatch({ type: ORDER_STORE.types.DELETE, payload: this.order });
         this.destroy();
       },
     };
