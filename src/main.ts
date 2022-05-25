@@ -1,7 +1,7 @@
 import '@/View/OrderTable/OrderTable';
 import '@/View/Kitchen/Kitchen';
 
-import OrderRow from '@/View/Components/OrderRow';
+import OrderRow from '@/Components/OrderRow';
 
 customElements.define('cafe-order-row', OrderRow);
 

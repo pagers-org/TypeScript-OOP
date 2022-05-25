@@ -1,5 +1,5 @@
 import View from '@/core/View';
-import type OrderRow from '@/View/Components/OrderRow';
+import type OrderRow from '@/Components/OrderRow';
 import { dispatch } from '@/Stores/orderStore/orderStore';
 import OrderFactory from '@/Model/OrderFactory';
 
