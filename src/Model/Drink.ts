@@ -1,9 +1,11 @@
-class Drink {
-  id: number;
-  name: string;
-  menuName: string;
+import { drinkMap, DrinkMenuList } from '@/Model/constants/drinks';
 
-  constructor({ id, name, menuName }: Drink) {
+class Drink<T extends DrinkMenuList, P extends typeof drinkMap[T]> {
+  id: number;
+  name: T;
+  menuName: P;
+
+  constructor(id: number, name: T, menuName: P) {
     this.id = id;
     this.name = name;
     this.menuName = menuName;
