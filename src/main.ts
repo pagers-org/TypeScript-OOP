@@ -2,6 +2,8 @@
 import '@/View/Kitchen/Kitchen';
 
 import OrderRow from '@/View/Components/OrderRow';
+import OrderFactory from '@/Model/OrderFactory';
+import { dispatch } from '@/Stores/orderStore';
 
 customElements.define('cafe-order-row', OrderRow);
 
@@ -49,6 +51,11 @@ const orderTable = document.getElementById('order-table')!;
 const newOrderButton = document.getElementById('new-order')!;
 
 newOrderButton.addEventListener('click', () => {
-  const order = document.createElement('cafe-order-row');
-  orderTable.appendChild(order);
+  const $order = document.createElement('cafe-order-row') as OrderRow;
+  const orderFactory = new OrderFactory();
+  const newOrder = orderFactory.createRandomOrder();
+  dispatch({ type: 'add', payload: newOrder });
+  $order.setOrder(newOrder);
+
+  orderTable.appendChild($order);
 });
