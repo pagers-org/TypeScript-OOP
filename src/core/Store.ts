@@ -4,6 +4,7 @@ interface DisPatch {
 }
 
 interface PublishPayload<T> {
+  type: string;
   payload: unknown;
   store: T;
 }
@@ -19,6 +20,7 @@ function createStore<T>(name: string, callback: (store: T, action: DisPatch) => 
 
     const publish = new CustomEvent<PublishPayload<T>>(name, {
       detail: {
+        type: e.detail!.type,
         payload: e.detail!.payload,
         store: currentStore,
       },
