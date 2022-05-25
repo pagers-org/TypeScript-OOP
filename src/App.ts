@@ -1,5 +1,6 @@
 import { addCustomEventListener } from '@/common';
 import { Cafe, Events } from '@/cafe';
+import { eventListener } from '@/main';
 
 export class App {
   private readonly cafe: Cafe;
@@ -15,8 +16,7 @@ export class App {
       e.detail.component.setCafe(this.cafe);
     });
 
-    this.cafe
-      .getEventListener()
+    eventListener
       .orderAdded(({ order }) => {
         this.cafe.addOrder(order);
       })

@@ -3,6 +3,7 @@ import { ModalView } from './ModalView';
 import { Serving } from '@/domain';
 import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
 import { CafeOrder } from '@/cafe';
+import { eventDispatcher } from '@/main';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
@@ -68,7 +69,7 @@ export class Modal extends Component {
   }
 
   private async serving(cafeOrder: CafeOrder) {
-    this.cafe.getEventDispatcher().orderRemoved({ order: cafeOrder.order });
+    eventDispatcher.orderRemoved({ order: cafeOrder.order });
 
     const orderId = cafeOrder.order.getId();
     const beverageName = cafeOrder.beverage.getName();
@@ -76,13 +77,13 @@ export class Modal extends Component {
 
     const serving = new Serving({ orderId, beverageName, orderTime });
 
-    this.cafe.getEventDispatcher().beforeServing({ order: cafeOrder.order, serving });
+    eventDispatcher.beforeServing({ order: cafeOrder.order, serving });
 
     this.close();
 
     alert('서빙이 완료되었습니다');
 
-    this.cafe.getEventDispatcher().afterServing({ serving });
+    eventDispatcher.afterServing({ serving });
   }
 
   public open(cafeOrder: CafeOrder) {
@@ -90,13 +91,13 @@ export class Modal extends Component {
 
     document.body.appendChild(this);
 
-    this.cafe.getEventDispatcher().modalOpen({ opened: true });
+    eventDispatcher.modalOpen({ opened: true });
   }
 
   public close() {
     this.remove();
 
-    this.cafe.getEventDispatcher().modalOpen({ opened: false });
+    eventDispatcher.modalOpen({ opened: false });
   }
 
   private getOptionInputs(): OptionInput[] {
@@ -124,7 +125,7 @@ export class Modal extends Component {
   }
 
   private optionChanged(groupName: OptionGroupName, value: string) {
-    this.cafe.getEventDispatcher().optionChanged({ order: this.cafeOrder.order, groupName, value });
+    eventDispatcher.optionChanged({ order: this.cafeOrder.order, groupName, value });
 
     this.updateOrderInfo();
   }

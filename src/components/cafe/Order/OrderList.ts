@@ -2,7 +2,7 @@ import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
 import { CafeOrder } from '@/cafe';
-import { CUSTOM_ELEMENTS } from '@/main';
+import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -15,8 +15,7 @@ export class OrderList extends Component {
   }
 
   protected bindListeners() {
-    this.cafe
-      .getEventListener()
+    eventListener
       .orderRemoved(({ order }) => {
         this.removeOrderListItem(order.getId());
       })
@@ -48,7 +47,7 @@ export class OrderList extends Component {
     this.addListItem(listItem);
     this.updateListItemNo();
 
-    this.cafe.getEventDispatcher().orderAdded({ order });
+    eventDispatcher.orderAdded({ order });
   }
 
   private removeListItemElement(orderListItem: OrderListItem | undefined) {

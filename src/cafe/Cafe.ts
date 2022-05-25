@@ -1,8 +1,6 @@
 import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
 import { nanoid } from 'nanoid';
 import { getRandomRange } from '@/common';
-import { EventDispatcher } from '@/cafe/event/EventDispatcher';
-import { EventListener } from '@/cafe/event/EventListener';
 
 export type CafeOrder = {
   order: Order;
@@ -14,9 +12,6 @@ export class Cafe {
 
   private readonly orders: Orders;
   private readonly servings: Servings;
-
-  private readonly eventDispatcher = new EventDispatcher();
-  private readonly eventListener = new EventListener();
 
   constructor(api: AbstractApi, orders: Orders, servings: Servings) {
     this.api = api;
@@ -90,13 +85,5 @@ export class Cafe {
       newGroup.randomSelected();
       return newGroup;
     });
-  }
-
-  public getEventDispatcher() {
-    return this.eventDispatcher;
-  }
-
-  public getEventListener() {
-    return this.eventListener;
   }
 }

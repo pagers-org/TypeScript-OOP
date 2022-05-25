@@ -2,6 +2,7 @@ import { Component } from '@/components';
 import { OrderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
 import { CafeOrder } from '@/cafe';
+import { eventDispatcher, eventListener } from '@/main';
 
 export class OrderListItem extends Component {
   private cafeOrder!: CafeOrder;
@@ -21,7 +22,7 @@ export class OrderListItem extends Component {
   }
 
   protected bindListeners() {
-    this.cafe.getEventListener().changedOption(({ order }) => {
+    eventListener.changedOption(({ order }) => {
       if (order !== this.cafeOrder.order) {
         return;
       }
@@ -53,7 +54,7 @@ export class OrderListItem extends Component {
   }
 
   public removeOrder() {
-    this.cafe.getEventDispatcher().orderRemoved({ order: this.cafeOrder.order });
+    eventDispatcher.orderRemoved({ order: this.cafeOrder.order });
 
     this.remove();
   }

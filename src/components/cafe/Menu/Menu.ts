@@ -1,7 +1,7 @@
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
 import { Order } from '@/domain';
-import { CUSTOM_ELEMENTS } from '@/main';
+import { CUSTOM_ELEMENTS, eventListener } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 
@@ -23,8 +23,7 @@ export class Menu extends Component {
   }
 
   protected bindListeners(): void {
-    this.cafe
-      .getEventListener()
+    eventListener
       .modalOpen(({ opened }) => {
         this.modalOpened = opened;
       })

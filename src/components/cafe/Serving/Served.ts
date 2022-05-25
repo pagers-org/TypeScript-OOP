@@ -2,7 +2,7 @@ import { Component } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
-import { CUSTOM_ELEMENTS } from '@/main';
+import { CUSTOM_ELEMENTS, eventListener } from '@/main';
 
 export class Served extends Component {
   private $makedTable!: HTMLElement;
@@ -13,7 +13,7 @@ export class Served extends Component {
   }
 
   protected bindListeners() {
-    this.cafe.getEventListener().afterServing(({ serving }) => {
+    eventListener.afterServing(({ serving }) => {
       this.add(serving);
 
       //TODO 리팩토링 필요
