@@ -12,3 +12,4 @@ export const drinkMap = {
 } as const;
 
 export const drinkMenuList = Object.keys(drinkMap) as unknown as keyof typeof drinkMap;
+export type DrinkMenuList = typeof drinkMenuList;
