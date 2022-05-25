@@ -10,7 +10,10 @@ class OrderRow extends Component {
 
   protected componentDidMonted: () => void = () => {
     this.addEventListener(ORDER_STORE.event, e => {
-      this.setOrder(e.detail!.payload as Order);
+      const { type, payload } = e.detail
+      if (type === ORDER_STORE.types.UPDATE && this.order.id === payload.id) {
+        this.setOrder(payload as Order);
+      }
     });
   };
 
