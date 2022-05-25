@@ -2,7 +2,7 @@ import { CoffeeMakeModal, OrderList, Kitchen } from './components';
 
 import { DOM, ERROR } from './constants';
 import { $ } from './utils/dom';
-import { MenuName } from './@types';
+import { TMenuName } from './@types';
 
 class App {
   $target;
@@ -25,7 +25,7 @@ class App {
   }
 
   handleAppClick(event: MouseEvent) {
-    const target = event.target as Element;
+    const target = event.target as HTMLElement;
 
     if (target.closest('span')?.className === DOM.ORDER_EDIT_BUTTON_CLASS) {
       const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
@@ -41,7 +41,7 @@ class App {
       this.checkKitchen();
     }
     if (target.classList.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
-      const clickCoffeName = target.textContent as MenuName;
+      const clickCoffeName = target.textContent as TMenuName;
       if (!this.kitchen.isExistClickMenuName(this.orderList.getCurrentOrderMenuNames(), clickCoffeName)) {
         alert(ERROR.NON_EXIST_SELECTED_COFFEE_ORDER);
         return;
@@ -54,18 +54,18 @@ class App {
     event.preventDefault();
     const target = event.target as Element;
 
-    if (target.id === DOM.KITCHEN_COFFEE_MAKE_BUTTON_ID) {
-      if (!this.kitchen.$selectedCoffee) {
-        alert(ERROR.NON_EXIST_SELECTED_COFFEE);
-        return;
-      }
-      this.coffeMakeModal.toggleModal();
-    }
+    if (!this.kitchen.$selectedCoffee) return alert(ERROR.NON_EXIST_SELECTED_COFFEE);
+
+    if (target.id === DOM.KITCHEN_COFFEE_MAKE_BUTTON_ID) this.coffeMakeModal.toggleModal();
   }
 
   checkKitchen() {
-    if (!this.orderList.getOrderTotalLength()) this.kitchen.closeKitchen();
-    else this.kitchen.openKitchen();
+    if (!this.orderList.getOrderTotalLength()) {
+      this.kitchen.closeKitchen();
+      return;
+    }
+
+    this.kitchen.openKitchen();
   }
 }
 

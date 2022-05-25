@@ -1,7 +1,7 @@
 import { $ } from '../utils/dom.js';
 import { KITCHEN_TEMPLATE } from '../templates';
 
-import { MenuName } from '../@types/index.js';
+import { TMenuName } from '../@types/index.js';
 
 class Kitchen {
   $target: HTMLElement;
@@ -21,8 +21,8 @@ class Kitchen {
   }
 
   fillingCoffee(clickButton: HTMLButtonElement) {
-    const $coffeeFilling = $('.filling') as HTMLDivElement;
-    const $coffeeName = $('.coffee_name') as HTMLHeadingElement;
+    const $coffeeFilling = $<HTMLDivElement>('.filling');
+    const $coffeeName = $<HTMLHeadingElement>('.coffee_name');
 
     if (this.$selectedCoffee) {
       this.$selectedCoffee.classList.remove('selected');
@@ -32,10 +32,10 @@ class Kitchen {
     this.$selectedCoffee = clickButton;
     $coffeeFilling.classList.add(this.$selectedCoffee.id);
     this.$selectedCoffee.classList.add('selected');
-    $coffeeName.innerText = clickButton.innerText;
+    $coffeeName.textContent = clickButton.textContent;
   }
 
-  isExistClickMenuName(currentOrderMenuNames: MenuName[], clickMenuName: MenuName) {
+  isExistClickMenuName(currentOrderMenuNames: TMenuName[], clickMenuName: TMenuName) {
     return currentOrderMenuNames.includes(clickMenuName);
   }
 }

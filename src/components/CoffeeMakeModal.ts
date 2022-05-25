@@ -4,7 +4,7 @@ class CoffeeMakeModal {
   $modalLayout: HTMLDivElement;
 
   constructor() {
-    this.$modalLayout = $('.modal-layout') as HTMLDivElement;
+    this.$modalLayout = $<HTMLDivElement>('.modal-layout');
   }
 
   toggleModal() {

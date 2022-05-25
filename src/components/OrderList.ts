@@ -4,7 +4,7 @@ import { DOM } from '../constants';
 import { $ } from '../utils/dom';
 import { ORDER_TEMPLATE } from '../templates';
 
-import type { MenuName } from '../@types';
+import type { TMenuName } from '../@types';
 
 class OrderList {
   #orderList: Order[];
@@ -40,11 +40,11 @@ class OrderList {
     return this.#orderList.length;
   }
 
-  getCurrentOrderMenuNames(): MenuName[] {
+  getCurrentOrderMenuNames(): TMenuName[] {
     return this.#orderList.map(order => order.menuName);
   }
 
-  changeTableRowToEditable(clickId: string | null | undefined) {
+  changeTableRowToEditable(clickId?: string | null) {
     const $clickElement = $(`[data-id="${clickId}"]`);
     const childrenNodes = $clickElement.children;
 
@@ -65,7 +65,7 @@ class OrderList {
     }
   }
 
-  removeTableRow(clickId: string | null | undefined) {
+  removeTableRow(clickId?: string | null) {
     if (clickId) this.removeOrder(clickId);
   }
 

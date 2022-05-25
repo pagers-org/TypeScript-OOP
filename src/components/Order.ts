@@ -1,31 +1,41 @@
 import { pickRandomInArray, pickRandomUniqueId } from '../utils/random.js';
 import { ORDER } from '../constants/index.js';
 
-import { MenuName, MenuSize, Shot, Syrup, Temporature, Ice, WippedCream, Extra, Cup } from '../@types/index.js';
+import {
+  TMenuName,
+  TMenuSize,
+  TShot,
+  TSyrup,
+  TTemporature,
+  TIce,
+  TWippedCream,
+  TExtra,
+  TCup,
+} from '../@types/index.js';
 
 class Order {
   id: string;
-  menuName: MenuName;
-  size: MenuSize;
-  shot: Shot;
-  syrup: Syrup;
-  temporature: Temporature;
-  ice: Ice;
-  wippedCream: WippedCream;
-  extra: Extra;
-  cup: Cup;
+  menuName: TMenuName;
+  size: TMenuSize;
+  shot: TShot;
+  syrup: TSyrup;
+  temporature: TTemporature;
+  ice: TIce;
+  wippedCream: TWippedCream;
+  extra: TExtra;
+  cup: TCup;
 
   constructor() {
     this.id = pickRandomUniqueId();
-    this.menuName = pickRandomInArray<MenuName>(ORDER.MENU_NAME);
-    this.size = pickRandomInArray<MenuSize>(ORDER.MENU_SIZE);
-    this.shot = pickRandomInArray<Shot>(ORDER.MENU_SHOT);
-    this.syrup = pickRandomInArray<Syrup>(ORDER.MENU_SYRUP);
-    this.temporature = pickRandomInArray<Temporature>(ORDER.MENU_TEMPORATURE);
-    this.ice = pickRandomInArray<Ice>(ORDER.MENU_ICE);
-    this.wippedCream = pickRandomInArray<WippedCream>(ORDER.MENU_WIPPED_CREAM);
-    this.extra = pickRandomInArray<Extra>(ORDER.MENU_EXTRA);
-    this.cup = pickRandomInArray<Cup>(ORDER.MENU_CUP);
+    this.menuName = pickRandomInArray<TMenuName>(ORDER.MENU_NAME);
+    this.size = pickRandomInArray<TMenuSize>(ORDER.MENU_SIZE);
+    this.shot = pickRandomInArray<TShot>(ORDER.MENU_SHOT);
+    this.syrup = pickRandomInArray<TSyrup>(ORDER.MENU_SYRUP);
+    this.temporature = pickRandomInArray<TTemporature>(ORDER.MENU_TEMPORATURE);
+    this.ice = pickRandomInArray<TIce>(ORDER.MENU_ICE);
+    this.wippedCream = pickRandomInArray<TWippedCream>(ORDER.MENU_WIPPED_CREAM);
+    this.extra = pickRandomInArray<TExtra>(ORDER.MENU_EXTRA);
+    this.cup = pickRandomInArray<TCup>(ORDER.MENU_CUP);
   }
 
   // TODO: any 고쳐야함
