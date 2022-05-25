@@ -1,6 +1,6 @@
 import Component, { Template } from '@/core/Component';
 import Order from '@/Model/Order';
-import { ORDERS } from '@/Stores/constants';
+import { ORDER_STORE } from '@/Stores/constants';
 
 class OrderRow extends Component {
   $container!: HTMLElement;
@@ -8,7 +8,7 @@ class OrderRow extends Component {
   order!: Order;
 
   protected componentDidMonted: () => void = () => {
-    this.addEventListener(ORDERS, e => {
+    this.addEventListener(ORDER_STORE.event, e => {
       this.setOrder(e.detail!.payload as Order);
     });
   };
