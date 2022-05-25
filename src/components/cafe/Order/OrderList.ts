@@ -24,7 +24,7 @@ export class OrderList extends Component {
         this.removeOrderListItem(serving.getOrderId());
       })
       .menuButtonClick(async ({ button }) => {
-        await this.addOrder(await this.cafe.createRandomOrder(button.getMenuId()));
+        await this.addOrder(await Order.RANDOM(button.getMenuId(), await this.cafe.getOptionGroupsAll()));
       });
   }
 
@@ -34,8 +34,7 @@ export class OrderList extends Component {
 
       const beveragesCount = await this.cafe.getBeveragesCount();
       const randomRange = getRandomRange(1, beveragesCount);
-
-      await this.addOrder(await this.cafe.createRandomOrder(randomRange));
+      await this.addOrder(await Order.RANDOM(randomRange, await this.cafe.getOptionGroupsAll()));
     });
   }
 

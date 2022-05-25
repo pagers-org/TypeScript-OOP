@@ -22,11 +22,13 @@ export class Order {
     this.orderTime = constructor.orderTime || new Date();
   }
 
-  public RANDOM() {
+  public static RANDOM(beverageId: number, optionGroups: OptionGroup[]) {
+    const randomOptionGroups = optionGroups.map(item => item.random());
+
     return new Order({
       id: nanoid(),
-      beverageId: 0,
-      optionGroups: this.optionGroups.map(item => item.random()),
+      beverageId,
+      optionGroups: randomOptionGroups,
     });
   }
 

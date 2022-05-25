@@ -1,5 +1,4 @@
 import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
-import { nanoid } from 'nanoid';
 
 export type CafeOrder = {
   order: Order;
@@ -42,6 +41,13 @@ export class Cafe {
     return await this.api.findBeverage(beverageId);
   }
 
+  public async firstOrder(): Promise<CafeOrder> {
+    const order = this.orders.firstOrder();
+    const beverage = await this.findBeverage(order.getBeverageId());
+
+    return { order, beverage };
+  }
+
   public async getMenu() {
     const beverages = await this.api.getBeveragesAll();
     const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
@@ -52,25 +58,11 @@ export class Cafe {
     return (await this.getMenu()).getMenuItems();
   }
 
-  public async firstOrder(): Promise<CafeOrder> {
-    const order = this.orders.firstOrder();
-    const beverage = await this.findBeverage(order.getBeverageId());
-
-    return { order, beverage };
-  }
-
-  public async createRandomOrder(beverageId: number) {
-    const optionGroups = await this.api.getOptionGroupsAll();
-    const randomOptionGroups = optionGroups.map(item => item.random());
-
-    return new Order({
-      id: nanoid(),
-      beverageId,
-      optionGroups: randomOptionGroups,
-    });
+  public async getOptionGroupsAll() {
+    return await this.api.getOptionGroupsAll();
   }
 
   public async getBeveragesCount() {
-    return this.api.getBeveragesCount();
+    return await this.api.getBeveragesCount();
   }
 }
