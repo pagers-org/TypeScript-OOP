@@ -16,6 +16,7 @@ class OptionGroup {
       option.setIsSelected(false);
       return option;
     });
+
     newOption[optionIndex].setIsSelected(true);
     this.options = newOption;
   };

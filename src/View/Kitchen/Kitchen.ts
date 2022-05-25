@@ -24,12 +24,15 @@ class Kitchen extends View {
       const { type, store, payload } = e.detail;
       if (type === ORDER_STORE.types.ADD) {
         const addedOrder = payload as Order;
+
         return this.addDrink(addedOrder.drink);
       }
+
       if (type === ORDER_STORE.types.DELETE) {
         const storedOrders = store.orders as Order[];
         const deletedOrder = payload as Order;
         const isSameCoffeeExist = storedOrders.find(order => order.drink.name === deletedOrder.drink.name);
+
         if (!isSameCoffeeExist) {
           this.removeDrink(deletedOrder.drink);
 
