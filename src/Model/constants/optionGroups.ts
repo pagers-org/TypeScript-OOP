@@ -1,4 +1,4 @@
-export const options = [
+export const optionGroups = [
   { groupName: '사이즈', options: ['Tall', 'Grande', 'Venti'], multiple: false },
   { groupName: '샷', options: ['1샷', '2샷', '3샷'], multiple: false },
   { groupName: '시럽', options: ['-', '1', '2'], multiple: false },
