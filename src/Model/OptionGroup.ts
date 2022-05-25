@@ -36,6 +36,10 @@ class OptionGroup {
 
     this.selectSingleOption(optionIndex);
   };
+
+  getSelectedOption = () => {
+    return this.options.filter(option => option.isSelected);
+  };
 }
 
 export default OptionGroup;
