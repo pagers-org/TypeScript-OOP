@@ -1,23 +1,25 @@
-import Drink from '@/Model/Drink';
+import View from '@/core/View';
 import type Order from '@/Model/Order';
-import { ORDER_STORE } from '@/Stores/constants';
+import Drink from '@/Model/Drink';
+import { ORDER_STORE } from '@/Stores/orderStore/constants';
 
-class Kitchen {
-  kitchenControllerElement = document.getElementById('coffee-list-kitchen')!;
+class Kitchen extends View {
+  $kitchenController = document.getElementById('coffee-list-kitchen')!;
+  $kitchenCover = document.getElementById('kitchen-cover')!;
   buttons: { [id: string]: HTMLButtonElement } = {};
-  kitchenCoverElement = document.getElementById('kitchen-cover')!;
   isKichenOpen = false;
 
   constructor() {
-    const children = Array.from(this.kitchenControllerElement.children);
+    super();
+    const children = Array.from(this.$kitchenController.children);
     this.mapCoffeeCategoryButton(children);
-    this.bindeEvent();
   }
 
-  private bindeEvent = () => {
-    this.kitchenCoverElement.addEventListener('click', () => {
+  protected bindEvents = () => {
+    this.$kitchenCover.addEventListener('click', () => {
       alert('주문해주세요!');
     });
+
     window.addEventListener(ORDER_STORE.event, e => {
       const { type, store, payload } = e.detail;
       if (type === ORDER_STORE.types.ADD) {
@@ -52,11 +54,11 @@ class Kitchen {
   }
 
   private veilKitchenCover = () => {
-    this.kitchenCoverElement.classList.remove('hide');
+    this.$kitchenCover.classList.remove('hide');
   };
 
   private unVeilKitchenCover = () => {
-    this.kitchenCoverElement.classList.add('hide');
+    this.$kitchenCover.classList.add('hide');
   };
 
   private closeKitchen() {
