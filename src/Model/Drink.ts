@@ -8,6 +8,10 @@ class Drink {
     this.name = name;
     this.menuName = drinkMap[name];
   }
+
+  isSameDrink = (otherDrink: Drink) => {
+    return this.name === otherDrink.name;
+  };
 }
 
 export default Drink;

@@ -31,7 +31,7 @@ class Kitchen extends View {
       if (type === ORDER_STORE.types.DELETE) {
         const storedOrders = store.orders as Order[];
         const deletedOrder = payload as Order;
-        const isSameCoffeeExist = storedOrders.find(order => order.drink.name === deletedOrder.drink.name);
+        const isSameCoffeeExist = storedOrders.find(order => order.drink.isSameDrink(deletedOrder.drink));
 
         if (!isSameCoffeeExist) {
           this.removeDrink(deletedOrder.drink);
