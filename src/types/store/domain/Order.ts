@@ -2,6 +2,7 @@ import * as Option from "../../config/option";
 import { generateRandomNumber } from "../../util/numberGenerator";
 
 export default class Order {
+  private no: number;
   private coffee: Option;
   private size: Option;
   private shot: Option;
@@ -14,7 +15,8 @@ export default class Order {
 
   private isServed: boolean;
 
-  constructor() {
+  constructor(no = 0) {
+    this.no = no + 1;
     this.generateRandomOrder();
     this.isServed = false;
   }
