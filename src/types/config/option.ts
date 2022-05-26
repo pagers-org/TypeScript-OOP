@@ -8,7 +8,7 @@ export const COFFEE: Option[] = [
   { key: "ESPRESSO", name: "에스프레소" },
   { key: "RISTRETTO", name: "리스트레또" },
   { key: "LONGO", name: "룽고" },
-];
+] as const;
 
 export const SIZE: Option[] = [
   {
@@ -17,7 +17,7 @@ export const SIZE: Option[] = [
   },
   { key: "GRANDE", name: '"Grande"' },
   { key: "VENTI", name: "Venti" },
-];
+] as const;
 
 export const SYRUP: Option[] = [
   {
@@ -29,7 +29,7 @@ export const SYRUP: Option[] = [
     name: "헤이즐넛",
   },
   { key: "CARAMEL", name: "카라멜" },
-];
+] as const;
 
 export const WHIPPING_CREAM: Option[] = [
   {
@@ -38,7 +38,7 @@ export const WHIPPING_CREAM: Option[] = [
   },
   { key: "ENOUGH", name: "적당히" },
   { key: "LOT", name: "많이" },
-];
+] as const;
 
 export const ICE_OR_HOT: Option[] = [
   {
@@ -46,14 +46,14 @@ export const ICE_OR_HOT: Option[] = [
     name: "아이스",
   },
   { key: "HOT", name: "핫" },
-];
+] as const;
 
 export const EXTRA: Option[] = [
   { key: "JAVA_CHIP", type: "CHIP", name: "자바칩" },
   { key: "CHOCO_DRIZZLE", name: "초코 드리즐" },
   { key: "ALMOND", name: "아몬드" },
   { key: "CINNAMON", name: "시나몬" },
-];
+] as const;
 
 export const ICE: Option[] = [
   {
@@ -64,7 +64,7 @@ export const ICE: Option[] = [
     key: "DEFAULT",
     name: "기본 얼음",
   },
-];
+] as const;
 
 export const CUP: Option[] = [
   {
@@ -77,7 +77,7 @@ export const CUP: Option[] = [
   },
   { key: "MUG", name: "머그컵" },
   { key: "RECYCLE", name: "재활용 컵" },
-];
+] as const;
 
 export const SHOT: Option[] = [
   {
@@ -92,4 +92,4 @@ export const SHOT: Option[] = [
     key: "3",
     name: "3",
   },
-];
+] as const;
