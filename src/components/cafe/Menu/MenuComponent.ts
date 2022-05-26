@@ -1,7 +1,8 @@
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
-import { Beverage, Menu, MenuItem, Order } from '@/domain';
-import { api, CUSTOM_ELEMENTS, eventListener } from '@/main';
+import { Beverage, Order } from '@/domain';
+import { CUSTOM_ELEMENTS, eventListener } from '@/main';
+import { createMenu } from '@/common';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 
@@ -44,7 +45,7 @@ export class MenuComponent extends Component {
   }
 
   private async createMenuButtons() {
-    const menuItems = await this.getMenuItems();
+    const menuItems = (await createMenu()).getMenuItems();
 
     for (const menuItem of menuItems) {
       const $button = await this.createMenuButton(menuItem.getBeverage());
@@ -101,16 +102,6 @@ export class MenuComponent extends Component {
 
     const $modal = this.createComponent<Modal>(CUSTOM_ELEMENTS.MODAL);
     $modal.open(await this.cafe.firstOrder());
-  }
-
-  private async getMenu() {
-    const beverages = await api.getBeveragesAll();
-    const menuItems = beverages.map(item => new MenuItem({ beverage: item }));
-    return new Menu({ menuItems });
-  }
-
-  private async getMenuItems() {
-    return (await this.getMenu()).getMenuItems();
   }
 
   protected view(): string {

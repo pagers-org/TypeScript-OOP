@@ -1,5 +1,4 @@
 import { Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
-import { BeverageName } from '@/@types';
 
 export abstract class AbstractApi {
   protected abstract beverages(): Promise<Beverage[]>;

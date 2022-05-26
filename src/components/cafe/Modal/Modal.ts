@@ -71,7 +71,7 @@ export class Modal extends Component {
     eventDispatcher.orderRemoved({ order });
 
     const orderId = order.getId();
-    const beverageName = order.getBeverage().getName();
+    const beverageName = order.getBeverageName();
     const orderTime = order.getOrderTime();
 
     const serving = new Serving({ orderId, beverageName, orderTime });

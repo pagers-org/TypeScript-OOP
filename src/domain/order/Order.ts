@@ -22,16 +22,6 @@ export class Order {
     this.orderTime = constructor.orderTime || new Date();
   }
 
-  public static RANDOM(beverage: Beverage, optionGroups: OptionGroup[]) {
-    const randomOptionGroups = optionGroups.map(item => item.random());
-
-    return new Order({
-      id: nanoid(),
-      beverage,
-      optionGroups: randomOptionGroups,
-    });
-  }
-
   public validate() {
     this.optionGroups.forEach(optionGroup => {
       if (optionGroup.isEmptySelected()) {
@@ -72,6 +62,10 @@ export class Order {
     return this.beverage.getId();
   }
 
+  public getBeverageName() {
+    return this.beverage.getName();
+  }
+
   public getId() {
     return this.id;
   }
@@ -87,9 +81,5 @@ export class Order {
       orderTime: this.orderTime,
       optionGroups: this.optionGroups,
     });
-  }
-
-  public getBeverage() {
-    return this.beverage;
   }
 }

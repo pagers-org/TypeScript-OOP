@@ -22,7 +22,7 @@ export const ModalView = (order: Order) => String.raw`
       </div>
       <div class="table-row order-info">
         <div class="cell" data-title="No">1</div>
-        <div class="cell" data-title="메뉴명">${order.getBeverage().getName()}</div>
+        <div class="cell" data-title="메뉴명">${order.getBeverageName()}</div>
         <div class="cell" data-title="사이즈"></div>
         <div class="cell" data-title="샷"></div>
         <div class="cell" data-title="시럽"></div>

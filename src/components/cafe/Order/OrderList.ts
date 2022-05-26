@@ -1,8 +1,8 @@
 import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
-import { api, CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
-import { getRandomRange } from '@/common';
+import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { createRandomOrder, createRandomOrderByBeverageId } from '@/common';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
@@ -23,9 +23,7 @@ export class OrderList extends Component {
         this.removeOrderListItem(serving.getOrderId());
       })
       .menuButtonClick(async ({ button }) => {
-        const beverage = await api.findBeverage(button.getMenuId());
-
-        await this.addOrder(await Order.RANDOM(beverage, await api.getOptionGroupsAll()));
+        this.addOrder(await createRandomOrderByBeverageId(button.getMenuId()));
       });
   }
 
@@ -33,11 +31,7 @@ export class OrderList extends Component {
     this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
 
-      const beveragesCount = await api.getBeveragesCount();
-      const randomBeverageId = getRandomRange(1, beveragesCount);
-      const beverage = await api.findBeverage(randomBeverageId);
-
-      await this.addOrder(await Order.RANDOM(beverage, await api.getOptionGroupsAll()));
+      this.addOrder(await createRandomOrder());
     });
   }
 
@@ -47,7 +41,7 @@ export class OrderList extends Component {
     this.updateListItemNo();
   }
 
-  private async addOrder(order: Order) {
+  private addOrder(order: Order) {
     const listItem = this.createListItem(order);
 
     this.addListItem(listItem);
