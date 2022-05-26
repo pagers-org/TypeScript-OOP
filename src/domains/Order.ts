@@ -36,7 +36,7 @@ export class Order {
     this.cup = order.cup;
   }
 
-  public getOrderDatas(): OrderInterface {
+  get orderDatas(): OrderInterface {
     return {
       id: this.id,
       menuName: this.menuName,
@@ -51,11 +51,11 @@ export class Order {
     };
   }
 
-  public getId(): string {
+  get orderId(): string {
     return this.id;
   }
 
-  public getMenuName(): MenuNameType {
+  get orderMenuName(): MenuNameType {
     return this.menuName;
   }
 
