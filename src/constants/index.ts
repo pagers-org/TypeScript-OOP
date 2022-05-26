@@ -4,7 +4,7 @@ export const MENUS: Menu[] = [
   {
     id: 'americano',
     type: 'americano',
-    required: [
+    requiredIngredients: [
       { type: 'shot', amount: 2 },
       { type: 'water', amount: 5 },
     ],
@@ -12,12 +12,12 @@ export const MENUS: Menu[] = [
   {
     id: 'espresso',
     type: 'espresso',
-    required: [{ type: 'shot', amount: 3 }],
+    requiredIngredients: [{ type: 'shot', amount: 3 }],
   },
   {
     id: 'cappuccino',
     type: 'cappuccino',
-    required: [
+    requiredIngredients: [
       { type: 'shot', amount: 3 },
       { type: 'formMilk', amount: 3 },
       { type: 'hotMilk', amount: 3 },
@@ -26,7 +26,30 @@ export const MENUS: Menu[] = [
 ];
 
 export const EXTRA_OPTIONS: ExtraIngredientRecord[] = [
-  { type: 'size', selectableList: ['tall', 'grande', 'venti'], default: 'tall' },
-  { type: 'cup', selectableList: ['reusable', 'mug', 'tumbler', 'disposable'], default: 'reusable' },
-  { type: 'shots', selectableList: ['none', '1shot', '2shots', '3shots'], default: 'none' },
+  { id: 'size', type: 'size', selectableList: ['tall', 'grande', 'venti'], default: 'tall', currentSelected: 'tall' },
+  {
+    id: 'cup',
+    type: 'cup',
+    selectableList: ['reusable', 'mug', 'tumbler', 'disposable'],
+    default: 'reusable',
+    currentSelected: 'reusable',
+  },
+  {
+    id: 'shots',
+    type: 'shots',
+    selectableList: ['none', '1shot', '2shots', '3shots'],
+    default: 'none',
+    currentSelected: 'none',
+  },
 ];
+
+export const EVENTS = {
+  createOrder: { random: 'random', completed: 'completed' },
+  deleteOrder: {
+    byId: 'byId',
+  },
+  editOrder: {
+    byId: 'byId',
+    completed: 'completed',
+  },
+} as const;

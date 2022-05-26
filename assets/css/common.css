@@ -129,6 +129,12 @@ button:hover {
   cursor: pointer;
 }
 
+button:disabled{
+  background: unset;
+  cursor: not-allowed;
+}
+
+
 /* button:disabled {
   cursor: not-allowed !important;
   color: #ffffff !important;
