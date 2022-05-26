@@ -1,23 +1,12 @@
 import { $ } from '../utils/dom.js';
-import { KITCHEN_TEMPLATE } from '../templates';
 
 import { MenuNameType } from '../@types/index.js';
 
 class Kitchen {
-  $target: HTMLElement;
   $selectedCoffee: HTMLButtonElement | null;
 
   constructor() {
-    this.$target = $(`#right-section`);
     this.$selectedCoffee = null;
-  }
-
-  closeKitchen() {
-    this.$target.innerHTML = KITCHEN_TEMPLATE.close();
-  }
-
-  openKitchen() {
-    this.$target.innerHTML = KITCHEN_TEMPLATE.open();
   }
 
   fillingCoffee(clickButton: HTMLButtonElement) {

@@ -1,3 +1,4 @@
 import { OrderListView } from './OrderListView';
+import { KitchenView } from './KitchenView';
 
-export { OrderListView };
+export { OrderListView, KitchenView };

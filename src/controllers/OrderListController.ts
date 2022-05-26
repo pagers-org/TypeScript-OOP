@@ -1,5 +1,5 @@
 import { OrderList } from '../domains';
-import { OrderListView } from '../views';
+import { KitchenView, OrderListView } from '../views';
 
 import { DOM, ORDER } from '../constants';
 import { pickRandomInArray, pickRandomUniqueId } from '../utils/random';
@@ -19,39 +19,58 @@ import type {
 export class OrderListController {
   private readonly orderList;
   private readonly orderListView;
+  private readonly kitchenView;
 
-  constructor(orderList: OrderList, orderListView: typeof OrderListView) {
+  constructor(orderList: OrderList, orderListView: typeof OrderListView, kitchenView: typeof KitchenView) {
     this.orderList = orderList;
     this.orderListView = orderListView;
+    this.kitchenView = kitchenView;
   }
 
-  public isClickOrderEditButton(target: HTMLElement): boolean {
+  public handleOrderListClickEvents(target: HTMLElement) {
+    if (this.isClickOrderEditButton(target)) {
+      this.changeOrderToEditable(target);
+    }
+
+    if (this.isClickOrderRemoveButton(target)) {
+      this.removeOrder(target);
+      if (!this.orderList.orderTotalLength) this.kitchenView.close();
+    }
+
+    if (this.isClickOrderAddButton(target)) {
+      if (!this.orderList.orderTotalLength) this.kitchenView.open();
+      this.addRandomOrder();
+    }
+  }
+
+  private isClickOrderEditButton(target: HTMLElement): boolean {
     return target.closest('span')?.className === DOM.ORDER_EDIT_BUTTON_CLASS;
   }
 
-  public isClickOrderRemoveButton(target: HTMLElement): boolean {
+  private isClickOrderRemoveButton(target: HTMLElement): boolean {
     return target.closest('span')?.className === DOM.ORDER_REMOVE_BUTTON_CLASS;
   }
 
-  public isClickOrderAddButton(target: HTMLElement): boolean {
+  private isClickOrderAddButton(target: HTMLElement): boolean {
     return target.className === DOM.ORDER_BUTTON_CLASS;
   }
 
-  public changeOrderToEditable(target: HTMLElement): void {
+  private changeOrderToEditable(target: HTMLElement): void {
     const clickId = this.getClickOrderId(target);
     if (!clickId) throw new Error('클릭한 order의 id를 받지 못했습니다.');
 
     this.orderListView.changeTableRowToEditable(clickId);
   }
 
-  public removeOrder(target: HTMLElement): void {
+  private removeOrder(target: HTMLElement): void {
     const clickId = this.getClickOrderId(target);
     if (!clickId) throw new Error('클릭한 order의 id를 받지 못했습니다.');
 
     this.orderList.removeOrder(clickId);
     this.orderListView.renderOrderList(this.orderList.orderListDatas);
   }
-  public addRandomOrder(): void {
+
+  private addRandomOrder(): void {
     this.orderList.addOrder({
       id: pickRandomUniqueId(),
       menuName: pickRandomInArray<MenuNameType>(ORDER.MENU_NAME),
