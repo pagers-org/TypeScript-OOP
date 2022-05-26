@@ -92,7 +92,7 @@ class OrderRow extends Component {
     }
 
     const idCell = this.createCell('id', 1);
-    const cafe = this.createCell('메뉴명', this.order.drink.menuName);
+    const cafe = this.createCell('메뉴명', this.order.menuName());
     const optionGroups = this.order.optionGroups.map(optionGroup => {
       const optionName = optionGroup.name;
       const selectedOption = optionGroup.getSelectedOption()[0];

@@ -16,6 +16,10 @@ class Order {
     this.drink = drink;
     this.optionGroups = optionGroups;
   }
+
+  menuName() {
+    return this.drink.menuName;
+  }
 }
 
 export default Order;
