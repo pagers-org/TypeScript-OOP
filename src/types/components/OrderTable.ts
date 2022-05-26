@@ -104,6 +104,14 @@ export default class OrderTableComponent extends HTMLElement {
           `;
   };
 
+  editOrder(rowElement) {
+    return () => {
+      rowElement
+        .querySelectorAll(".cell p")
+        .forEach((el) => el.setAttribute("contenteditable", true));
+    };
+  }
+
   removeOrder = (rowElement) => {
     return () => {
       const orderNumber = rowElement.querySelector("[data-no]").dataset.no;
