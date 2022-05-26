@@ -8,7 +8,7 @@ import {
   OrderAddDetail,
   OrderRemovedDetail,
 } from '@/@types';
-import { Events } from '@/cafe';
+import { Events } from '@/event';
 
 export class EventDispatcher {
   public menuButtonClick(detail: MenuButtonClickDetail) {

@@ -9,7 +9,7 @@ import {
   OrderRemovedDetail,
 } from '@/@types';
 import { addCustomEventListener } from '@/common';
-import { EventName, Events } from '@/cafe';
+import { EventName, Events } from '@/event';
 
 export class EventListener {
   private listen<T>(name: EventName, callback: EventListenArg<T>) {

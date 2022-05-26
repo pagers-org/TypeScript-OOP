@@ -1,9 +1,10 @@
 import { createCustomElement } from '@/common';
 import { Header, MenuComponent, MenuButton, Modal, OrderList, OrderListItem, Served, ServedItem } from '@/components';
 import { App } from '@/App';
-import { Cafe, EventDispatcher, EventListener } from '@/cafe';
+import { Cafe } from '@/cafe';
 import { Orders, Servings } from '@/domain';
 import { FetchApi } from '@/api/FetchApi';
+import { EventDispatcher, EventListener } from '@/event';
 
 export const eventListener = new EventListener();
 export const eventDispatcher = new EventDispatcher();

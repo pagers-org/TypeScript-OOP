@@ -1,6 +1,7 @@
 import { addCustomEventListener } from '@/common';
-import { Cafe, Events } from '@/cafe';
+import { Cafe } from '@/cafe';
 import { eventListener } from '@/main';
+import { Events } from '@/event';
 
 export class App {
   private readonly cafe: Cafe;
