@@ -4,6 +4,7 @@ import { generateRandomNumber } from "../../util/numberGenerator";
 export default class Order {
   private coffee: Option;
   private size: Option;
+  private shot: Option;
   private syrup: Option;
   private iceOrHot: Option;
   private ice: Option;
@@ -19,14 +20,19 @@ export default class Order {
   }
 
   generateRandomOrder() {
-    this.coffee = Option.COFFEE[generateRandomNumber];
-    this.size = Option.SIZE[generateRandomNumber];
-    this.syrup = Option.SYRUP[generateRandomNumber];
-    this.iceOrHot = Option.ICE_OR_HOT[generateRandomNumber];
-    this.ice = Option.ICE[generateRandomNumber];
-    this.whippingCream = Option.WHIPPING_CREAM[generateRandomNumber];
-    this.extra = Option.EXTRA[generateRandomNumber];
-    this.cup = Option.CUP[generateRandomNumber];
+    this.coffee = Option.COFFEE[generateRandomNumber(0, Option.COFFEE.length)];
+    this.size = Option.SIZE[generateRandomNumber(0, Option.SIZE.length)];
+    this.syrup = Option.SYRUP[generateRandomNumber(0, Option.SYRUP.length)];
+    this.shot = Option.SHOT[generateRandomNumber(0, Option.SHOT.length)];
+    this.iceOrHot =
+      Option.ICE_OR_HOT[generateRandomNumber(0, Option.ICE_OR_HOT.length)];
+    this.ice = Option.ICE[generateRandomNumber(0, Option.ICE.length)];
+    this.whippingCream =
+      Option.WHIPPING_CREAM[
+        generateRandomNumber(0, Option.WHIPPING_CREAM.length)
+      ];
+    this.extra = Option.EXTRA[generateRandomNumber(0, Option.EXTRA.length)];
+    this.cup = Option.CUP[generateRandomNumber(0, Option.CUP.length)];
   }
 
   makeRandomOrder() {
