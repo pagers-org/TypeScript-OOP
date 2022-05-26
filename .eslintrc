@@ -13,7 +13,8 @@
   ],
   "plugins": [
     "prettier",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
   "parserOptions": {
     "parser": "@typescript-eslint/parser",
@@ -35,6 +36,7 @@
         "arrowParens": "avoid",
         "endOfLine": "auto"
       }
-    ]
+    ],
+    "import/newline-after-import": "error"
   }
 }
