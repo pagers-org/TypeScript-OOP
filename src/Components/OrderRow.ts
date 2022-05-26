@@ -8,7 +8,7 @@ class OrderRow extends Component {
   $optionGroups!: HTMLElement[];
   order!: Order;
 
-  protected componentDidMonted: () => void = () => {
+  protected componentDidMounted: () => void = () => {
     this.addEventListener(ORDER_STORE.event, e => {
       const { type, payload } = e.detail
       if (type === ORDER_STORE.types.UPDATE && this.order.id === payload.id) {

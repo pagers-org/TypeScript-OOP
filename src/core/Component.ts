@@ -13,7 +13,7 @@ abstract class Component extends HTMLElement {
 
   private connectedCallback() {
     this.render();
-    this.componentDidMonted();
+    this.componentDidMounted();
   }
   private disconnectedCallback() {
     this.componentDidUpdated();
@@ -22,7 +22,7 @@ abstract class Component extends HTMLElement {
     this.componentDidUnMounted();
   }
 
-  protected componentDidMonted: () => void = () => {
+  protected componentDidMounted: () => void = () => {
     // override
   };
   protected componentDidUpdated: () => void = () => {
