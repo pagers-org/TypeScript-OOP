@@ -28,6 +28,7 @@ export class OrderListController {
   }
 
   public handleOrderListClickEvents(target: HTMLElement) {
+    // TODO: editable 고치는 것 말고, 진짜로 고치는 로직 추가해야 함
     if (this.isClickOrderEditButton(target)) {
       this.changeOrderToEditable(target);
     }

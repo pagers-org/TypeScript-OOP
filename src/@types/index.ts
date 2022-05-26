@@ -19,7 +19,7 @@ export type WippedCreamType = '없음' | '보통' | '많이';
 export type ExtraType = '자바칩' | '카라멜드리즐' | '초코드리즐' | '아몬드' | '시나몬';
 export type CupType = '1회용컵' | '텀블러' | '머그컵' | '재사용컵';
 
-export interface IOrder {
+export interface OrderInterface {
   id: string;
   menuName: MenuNameType;
   size: MenuSizeType;
