@@ -41,6 +41,15 @@ export default class OrderTableComponent extends HTMLElement {
       const tableRowElement = document.createElement("div");
       tableRowElement.setAttribute("class", "table-row");
       tableRowElement.innerHTML = this.getNewOrderMarkup(order);
+
+      tableRowElement
+        .querySelector(".edit-order")
+        .addEventListener("click", this.editOrder(tableRowElement));
+
+      tableRowElement
+        .querySelector(".remove-order")
+        .addEventListener("click", this.removeOrder(tableRowElement));
+
       target.parentElement.append(tableRowElement);
     });
   };
@@ -76,16 +85,16 @@ export default class OrderTableComponent extends HTMLElement {
 
   getNewOrderMarkup = (order: Order) => {
     return /* html */ `
-            <div class="cell" data-title="No">0</div>
-            <div class="cell" data-title="메뉴명">${order.coffee.name}</div>
-            <div class="cell" data-title="사이즈">${order.size.name}</div>
-            <div class="cell" data-title="샷">${order.shot.name}</div>
-            <div class="cell" data-title="시럽">${order.syrup.name}</div>
-            <div class="cell" data-title="ICE/HOT">${order.iceOrHot.name}</div>
-            <div class="cell" data-title="얼음 종류">${order.ice.name}</div>
-            <div class="cell" data-title="휘핑 크림">${order.whippingCream.name}</div>
-            <div class="cell" data-title="엑스트라">${order.extra.name}</div>
-            <div class="cell" data-title="컵">${order.cup.name}</div>
+            <div class="cell" data-no="${order.no}">${order.no}</div>
+            <div class="cell" data-title="메뉴명"><p>${order.coffee.name}</p></div>
+            <div class="cell" data-title="사이즈"><p>${order.size.name}</p></div>
+            <div class="cell" data-title="샷"><p>${order.shot.name}</p></div>
+            <div class="cell" data-title="시럽"><p>${order.syrup.name}</p></div>
+            <div class="cell" data-title="ICE/HOT"><p>${order.iceOrHot.name}</p></div>
+            <div class="cell" data-title="얼음 종류"><p>${order.ice.name}</p></div>
+            <div class="cell" data-title="휘핑 크림"><p>${order.whippingCream.name}</p></div>
+            <div class="cell" data-title="엑스트라"><p>${order.extra.name}</p></div>
+            <div class="cell" data-title="컵"><p>${order.cup.name}</p></div>
             <div class="cell" data-title="수정하기">
                 <span class="edit-order">수정</span>
             </div>
@@ -93,5 +102,13 @@ export default class OrderTableComponent extends HTMLElement {
                 <span class="remove-order">삭제</span>
             </div>
           `;
+  };
+
+  removeOrder = (rowElement) => {
+    return () => {
+      const orderNumber = rowElement.querySelector("[data-no]").dataset.no;
+      this.Store.dispatch("removeOrder", Number(orderNumber));
+      this.renderOrderList();
+    };
   };
 }
