@@ -1,21 +1,18 @@
-import { EVENT } from '@/constant';
-import { BaseComponent } from '@/components';
-import { Order } from '@/domain';
-import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
-import { getBeverageName } from '@/cafe';
+import { Component } from '@/components';
 import { OrderListItemView } from './OrderListItemView';
-import { OPTION_GROUP_NAMES, OptionGroupName, OrderChangeType } from '@/@types';
+import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
+import { CafeOrder } from '@/cafe';
+import { eventDispatcher, eventListener } from '@/main';
 
-@Component('cafe-order-list-item')
-export class OrderListItem extends BaseComponent {
-  private order!: Order;
+export class OrderListItem extends Component {
+  private cafeOrder!: CafeOrder;
 
   private $removeOrderButton!: HTMLElement;
   private $editOrderButton!: HTMLElement;
   private $no!: HTMLElement;
 
-  public setOrder(order: Order) {
-    this.order = order;
+  public setOrder(order: CafeOrder) {
+    this.cafeOrder = order;
   }
 
   protected bindElements() {
@@ -25,10 +22,8 @@ export class OrderListItem extends BaseComponent {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.CHANGE_OPTION, e => {
-      const { order }: OrderChangeType = e.detail;
-
-      if (order !== this.order) {
+    eventListener.changedOption(({ order }) => {
+      if (order !== this.cafeOrder.order) {
         return;
       }
 
@@ -59,11 +54,9 @@ export class OrderListItem extends BaseComponent {
   }
 
   public removeOrder() {
-    dispatchCustomEvent(EVENT.ORDER_LIST_ITEM_REMOVED, { order: this.order });
+    eventDispatcher.orderRemoved({ order: this.cafeOrder.order });
 
     this.remove();
-
-    dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: this.order });
   }
 
   private updateOptions() {
@@ -74,7 +67,7 @@ export class OrderListItem extends BaseComponent {
 
   private setOptionGroupText(selected: OptionGroupName) {
     const $el = this.getOptionGroupElement(selected);
-    $el.textContent = this.order.getSelectedOptionValue(selected);
+    $el.textContent = this.cafeOrder.order.getSelectedOptionValue(selected);
   }
 
   private getOptionGroupElement(optionGroupName: OptionGroupName) {
@@ -88,7 +81,7 @@ export class OrderListItem extends BaseComponent {
     const contentEditAble = this.$container.getAttribute(key);
 
     if (contentEditAble === 'true') {
-      this.order.validate();
+      this.cafeOrder.order.validate();
 
       this.$container.removeAttribute(key);
     } else {
@@ -96,10 +89,7 @@ export class OrderListItem extends BaseComponent {
     }
   }
 
-  protected view() {
-    const order = this.order;
-    const beverageName = getBeverageName(order.getBeverageId());
-
-    return OrderListItemView(beverageName, order);
+  protected async view() {
+    return OrderListItemView(this.cafeOrder.beverage.getName(), this.cafeOrder.order);
   }
 }

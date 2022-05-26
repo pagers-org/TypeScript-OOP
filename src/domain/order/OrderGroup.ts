@@ -1,12 +1,17 @@
 import { Order } from '@/domain';
 
+export type OrderGroupConstructor = {
+  id: number;
+  orderList?: Order[];
+};
+
 export class OrderGroup {
   private readonly id: number;
   private orderList: Order[];
 
-  constructor(id: number, orderList: Order[] = []) {
-    this.orderList = orderList;
-    this.id = id;
+  constructor(constructor: OrderGroupConstructor) {
+    this.id = constructor.id;
+    this.orderList = constructor.orderList || [];
   }
 
   public getId() {
@@ -21,7 +26,15 @@ export class OrderGroup {
     this.orderList = this.orderList.filter(item => item.getId() !== order.getId());
   }
 
+  public findOrder(order: Order) {
+    return this.orderList.find(item => item.getId() === order.getId());
+  }
+
   public first(): Order {
+    if (this.isEmpty()) {
+      throw new Error();
+    }
+
     return this.orderList[0];
   }
 

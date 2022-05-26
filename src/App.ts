@@ -1,9 +1,6 @@
-import { EVENT } from '@/constant';
 import { addCustomEventListener } from '@/common';
-import { BaseComponent } from '@/components';
-import { Cafe } from '@/cafe';
-import { OrderChangeType } from '@/@types';
-import { Serving } from '@/domain';
+import { Cafe, Events } from '@/cafe';
+import { eventListener } from '@/main';
 
 export class App {
   private readonly cafe: Cafe;
@@ -15,31 +12,22 @@ export class App {
   }
 
   private bindListeners() {
-    addCustomEventListener(EVENT.COMPONENT_INITIALIZE, e => {
-      const { component } = (e as CustomEvent).detail;
-      (component as BaseComponent).setCafe(this.cafe);
+    addCustomEventListener(Events.COMPONENT_INITIALIZE, e => {
+      e.detail.component.setCafe(this.cafe);
     });
 
-    addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      this.cafe.addOrderGroup(e.detail.order);
-    });
-
-    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      this.cafe.removeOrderGroup(e.detail.order);
-    });
-
-    addCustomEventListener(EVENT.CHANGE_OPTION, e => {
-      const { order, groupName, value }: OrderChangeType = e.detail;
-      order.setSelectedOptionValue(groupName, value);
-    });
-
-    addCustomEventListener(EVENT.SERVED, e => {
-      const serving = e.detail.serving as Serving;
-      this.cafe.addServing(serving);
-    });
-
-    addCustomEventListener(EVENT.MODAL_OPEN, e => {
-      this.cafe.setOpenModal(e.detail.opened);
-    });
+    eventListener
+      .orderAdded(({ order }) => {
+        this.cafe.addOrder(order);
+      })
+      .orderRemoved(({ order }) => {
+        this.cafe.removeOrder(order);
+      })
+      .changedOption(({ order, groupName, value }) => {
+        order.setSelectedOptionValue(groupName, value);
+      })
+      .afterServing(({ serving }) => {
+        this.cafe.addServing(serving);
+      });
   }
 }

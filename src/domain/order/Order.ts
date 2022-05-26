@@ -1,5 +1,13 @@
 import { OptionGroup } from '@/domain';
 import { OptionGroupName, OptionName } from '@/@types';
+import { nanoid } from 'nanoid';
+
+export type OrderConstructor = {
+  id: string;
+  beverageId: number;
+  optionGroups?: OptionGroup[];
+  orderTime?: Date;
+};
 
 export class Order {
   private readonly id: string;
@@ -7,11 +15,21 @@ export class Order {
   private readonly optionGroups: OptionGroup[] = [];
   private readonly orderTime: Date;
 
-  constructor(id: string, beverage: number, optionGroups: OptionGroup[] = [], orderTime: Date = new Date()) {
-    this.id = id;
-    this.beverageId = beverage;
-    this.optionGroups = optionGroups;
-    this.orderTime = orderTime;
+  constructor(constructor: OrderConstructor) {
+    this.id = constructor.id;
+    this.beverageId = constructor.beverageId;
+    this.optionGroups = constructor.optionGroups || [];
+    this.orderTime = constructor.orderTime || new Date();
+  }
+
+  public static RANDOM(beverageId: number, optionGroups: OptionGroup[]) {
+    const randomOptionGroups = optionGroups.map(item => item.random());
+
+    return new Order({
+      id: nanoid(),
+      beverageId,
+      optionGroups: randomOptionGroups,
+    });
   }
 
   public validate() {
@@ -60,5 +78,14 @@ export class Order {
 
   public getOrderTime() {
     return this.orderTime;
+  }
+
+  public clone() {
+    return new Order({
+      id: this.id,
+      beverageId: this.beverageId,
+      orderTime: this.orderTime,
+      optionGroups: this.optionGroups,
+    });
   }
 }

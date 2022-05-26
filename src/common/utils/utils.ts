@@ -1,13 +1,14 @@
-import { CustomEventCallback } from '@/@types';
+import { CustomEventListener } from '@/@types';
+import { EventName } from '@/cafe';
 
 export function getRandomRange(start: number, end: number): number {
   return Math.floor(Math.random() * (end - start + 1) + start);
 }
 
-export function createElement(html: string): HTMLElement {
+export function createElement<T extends HTMLElement>(html: string): T {
   const template = document.createElement('template');
   template.insertAdjacentHTML('beforeend', html);
-  return template.children.item(0) as HTMLElement;
+  return template.children.item(0) as T;
 }
 
 export function createCustomElement(name: string, customElementConstructor: CustomElementConstructor): void {
@@ -16,11 +17,11 @@ export function createCustomElement(name: string, customElementConstructor: Cust
   }
 }
 
-export function dispatchCustomEvent(eventName: string, detail: any = {}): void {
+export function dispatchCustomEvent<T>(eventName: EventName, detail: T = {} as T): void {
   dispatchEvent(new CustomEvent(eventName, { detail }));
 }
 
-export function addCustomEventListener(eventName: string, callback: CustomEventCallback): void {
+export function addCustomEventListener(eventName: EventName, callback: CustomEventListener): void {
   addEventListener(eventName, e => {
     callback(e as CustomEvent);
   });

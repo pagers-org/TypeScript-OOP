@@ -1,12 +1,10 @@
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { ServedView } from './ServedView';
 import { Serving } from '@/domain';
-import { addCustomEventListener, Component } from '@/common';
-import { EVENT } from '@/constant';
 import { ServedItem } from '@/components/cafe/Serving/Item/ServedItem';
+import { CUSTOM_ELEMENTS, eventListener } from '@/main';
 
-@Component('cafe-served')
-export class Served extends BaseComponent {
+export class Served extends Component {
   private $makedTable!: HTMLElement;
   private $servedList: ServedItem[] = [];
 
@@ -15,15 +13,18 @@ export class Served extends BaseComponent {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.SERVED, e => {
-      const serving = e.detail.serving as Serving;
+    eventListener.afterServing(({ serving }) => {
       this.add(serving);
-      this.updateListNo();
+
+      //TODO 리팩토링 필요
+      setTimeout(() => {
+        this.updateListNo();
+      }, 10);
     });
   }
 
   private add(serving: Serving) {
-    const servingElement = this.createComponent('cafe-served-item') as ServedItem;
+    const servingElement = this.createComponent<ServedItem>(CUSTOM_ELEMENTS.SERVED_ITEM);
     servingElement.setServing(serving);
 
     this.$servedList.push(servingElement);

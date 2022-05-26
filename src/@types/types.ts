@@ -1,4 +1,5 @@
-import { Order } from '@/domain';
+import { Order, Serving } from '@/domain';
+import { MenuButton } from '@/components';
 
 export const MATERIAL_NAMES = ['물', '커피', '우유', '데운 우유', '밀크 폼', '리퀴르', '초콜릿', '휘핑 크림'] as const;
 
@@ -65,6 +66,39 @@ export type OrderChangeType = {
   value: string;
 };
 
-export interface CustomEventCallback {
+export interface CustomEventListener {
   (evt: CustomEvent): void;
 }
+
+export type EventListenArg<T> = {
+  (param: T): void;
+};
+
+export type OrderDetail = {
+  order: Order;
+};
+
+export type OrderAddDetail = OrderDetail;
+
+export type OrderRemovedDetail = OrderDetail;
+
+export type BeforeServingDetail = {
+  serving: Serving;
+} & OrderDetail;
+
+export type AfterServingDetail = {
+  serving: Serving;
+};
+
+export type MenuButtonClickDetail = {
+  button: MenuButton;
+};
+
+export type OptionChangedDetail = {
+  groupName: OptionGroupName;
+  value: string;
+} & OrderDetail;
+
+export type ModalOpenDetail = {
+  opened: boolean;
+};

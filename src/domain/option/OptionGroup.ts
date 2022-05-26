@@ -4,21 +4,31 @@ import { getRandomRange } from '@/common';
 
 const TYPE_MULTIPLE = 'multiple';
 
+export type OptionGroupConstructor = {
+  id: number;
+  name: OptionGroupName;
+  type?: string;
+  options?: Option[];
+};
+
 export class OptionGroup {
   private readonly id: number;
   private readonly name: OptionGroupName;
   private readonly type?: string;
   private readonly options: Option[];
 
-  constructor(id: number, name: OptionGroupName, type?: string, options: Option[] = []) {
-    this.id = id;
-    this.name = name;
-    this.options = options;
-    this.type = type;
+  constructor(constructor: OptionGroupConstructor) {
+    this.id = constructor.id;
+    this.name = constructor.name;
+    this.type = constructor.type;
+    this.options = constructor.options || [];
   }
 
-  public getName(): OptionGroupName {
-    return this.name;
+  public random() {
+    const newOptionGroup = this.clone();
+    newOptionGroup.resetSelected();
+    newOptionGroup.randomSelected();
+    return newOptionGroup;
   }
 
   public isMultiple(): boolean {
@@ -71,5 +81,18 @@ export class OptionGroup {
     }
 
     option.setSelected(!option.isSelected());
+  }
+
+  public getName(): OptionGroupName {
+    return this.name;
+  }
+
+  public clone() {
+    return new OptionGroup({
+      id: this.id,
+      name: this.name,
+      type: this.type,
+      options: this.options.map(option => option.clone()),
+    });
   }
 }

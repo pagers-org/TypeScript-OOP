@@ -1,28 +1,39 @@
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { ModalView } from './ModalView';
-import { Beverage, Order, Serving } from '@/domain';
-import { Component, dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/constant';
-import { OPTION_GROUP_NAMES } from '@/@types';
-import { getBeverageName } from '@/cafe';
+import { Serving } from '@/domain';
+import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
+import { CafeOrder } from '@/cafe';
+import { eventDispatcher } from '@/main';
 
 const CLASS_NAME_HIDDEN = 'hidden';
 
-@Component('cafe-modal')
-export class Modal extends BaseComponent {
+export type OptionInput = {
+  groupName: OptionGroupName;
+  elements: HTMLInputElement[];
+};
+
+export class Modal extends Component {
   private $closeButton!: HTMLElement;
   private $servingButton!: HTMLElement;
   private $optionGroups!: HTMLElement[];
   private $orderInfo!: HTMLElement;
 
-  private order!: Order;
-  private beverage!: Beverage;
+  private cafeOrder!: CafeOrder;
 
   protected bindElements() {
     this.$closeButton = this.$container.querySelector('#close-icon') as HTMLElement;
     this.$optionGroups = Array.from(this.$container.querySelectorAll('.option-group'));
     this.$orderInfo = this.$container.querySelector('.order-info') as HTMLElement;
     this.$servingButton = this.$container.querySelector('.serving-button') as HTMLElement;
+  }
+
+  public setOrder(cafeOrder: CafeOrder) {
+    this.cafeOrder = cafeOrder;
+  }
+
+  protected mounted() {
+    this.updateOrderInfo();
+    this.show();
   }
 
   protected bindEvents() {
@@ -32,20 +43,14 @@ export class Modal extends BaseComponent {
       this.close();
     });
 
-    this.$optionGroups.forEach($optionGroup => {
-      const groupName = $optionGroup.dataset['groupName'];
-      const $inputs = Array.from($optionGroup.querySelectorAll('input'));
+    this.getOptionInputs().forEach(item => {
+      const { groupName, elements } = item;
 
-      $inputs.forEach($input => {
+      elements.forEach($input => {
         $input.addEventListener('change', e => {
           e.preventDefault();
 
-          const value = $input.value;
-          const order = this.order;
-
-          dispatchCustomEvent(EVENT.CHANGE_OPTION, { order, groupName, value });
-
-          this.updateOrderInfo();
+          this.optionChanged(groupName, $input.value);
         });
       });
     });
@@ -54,57 +59,64 @@ export class Modal extends BaseComponent {
       e.preventDefault();
 
       try {
-        this.order.validate();
+        this.cafeOrder.order.validate();
 
-        const servingOrder = this.cafe.firstOrderShift();
-
-        if (servingOrder) {
-          dispatchCustomEvent(EVENT.ORDER_REMOVED, { order: servingOrder });
-
-          const serving = new Serving(
-            servingOrder.getId(),
-            getBeverageName(servingOrder.getBeverageId()),
-            servingOrder.getOrderTime(),
-          );
-
-          dispatchCustomEvent(EVENT.SERVING, { serving });
-
-          this.cafe.addServing(serving);
-          this.close();
-          alert('서빙이 완료되었습니다');
-
-          dispatchCustomEvent(EVENT.SERVED, { serving });
-        }
+        this.serving(this.cafeOrder);
       } catch (e) {
         return alert((e as Error).message);
       }
     });
   }
 
-  public setOrderWithBeverage(order: Order, beverage: Beverage) {
-    this.order = order;
-    this.beverage = beverage;
+  private async serving(cafeOrder: CafeOrder) {
+    eventDispatcher.orderRemoved({ order: cafeOrder.order });
+
+    const orderId = cafeOrder.order.getId();
+    const beverageName = cafeOrder.beverage.getName();
+    const orderTime = cafeOrder.order.getOrderTime();
+
+    const serving = new Serving({ orderId, beverageName, orderTime });
+
+    eventDispatcher.beforeServing({ order: cafeOrder.order, serving });
+
+    this.close();
+
+    alert('서빙이 완료되었습니다');
+
+    eventDispatcher.afterServing({ serving });
   }
 
-  public open(order: Order, beverage: Beverage) {
-    this.setOrderWithBeverage(order, beverage);
-    document.body.appendChild(this);
-    this.updateOrderInfo();
-    this.show();
+  public open(cafeOrder: CafeOrder) {
+    this.setOrder(cafeOrder);
 
-    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: true });
+    document.body.appendChild(this);
+
+    eventDispatcher.modalOpen({ opened: true });
   }
 
   public close() {
     this.remove();
 
-    dispatchCustomEvent(EVENT.MODAL_OPEN, { opened: false });
+    eventDispatcher.modalOpen({ opened: false });
+  }
+
+  private getOptionInputs(): OptionInput[] {
+    const result: OptionInput[] = [];
+
+    this.$optionGroups.forEach($optionGroup => {
+      const groupName = `${$optionGroup.dataset['groupName']}` as OptionGroupName;
+      const elements = Array.from($optionGroup.querySelectorAll('input'));
+
+      result.push({ groupName, elements });
+    });
+
+    return result;
   }
 
   private updateOrderInfo() {
     OPTION_GROUP_NAMES.forEach(optionGroupName => {
       const $el = this.$orderInfo.querySelector(`[data-title="${optionGroupName}"]`) as HTMLElement;
-      $el.textContent = this.order.getSelectedOptionValue(optionGroupName);
+      $el.textContent = this.cafeOrder.order.getSelectedOptionValue(optionGroupName);
     });
   }
 
@@ -112,7 +124,13 @@ export class Modal extends BaseComponent {
     this.$container.classList.remove(CLASS_NAME_HIDDEN);
   }
 
+  private optionChanged(groupName: OptionGroupName, value: string) {
+    eventDispatcher.optionChanged({ order: this.cafeOrder.order, groupName, value });
+
+    this.updateOrderInfo();
+  }
+
   protected view() {
-    return ModalView(this.order, this.beverage);
+    return ModalView(this.cafeOrder.order, this.cafeOrder.beverage);
   }
 }

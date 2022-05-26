@@ -1,12 +1,11 @@
-import { EVENT } from '@/constant';
-import { BaseComponent, OrderListItem } from '@/components';
-import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
-import { createRandomOrder } from '@/cafe';
-import { Order, Serving } from '@/domain';
+import { Component, OrderListItem } from '@/components';
+import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
+import { CafeOrder } from '@/cafe';
+import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { getRandomRange } from '@/common';
 
-@Component('cafe-order-list')
-export class OrderList extends BaseComponent {
+export class OrderList extends Component {
   private $orderTable!: HTMLElement;
   private $orderButton!: HTMLElement;
   private $listItemElements: OrderListItem[] = [];
@@ -17,42 +16,55 @@ export class OrderList extends BaseComponent {
   }
 
   protected bindListeners() {
-    addCustomEventListener(EVENT.ORDER_LIST_ITEM_REMOVED, e => {
-      const order = e.detail.order as Order;
-      this.removeOrderListItem(order.getId());
-    });
-
-    addCustomEventListener(EVENT.SERVING, e => {
-      const serving = e.detail.serving as Serving;
-      this.removeOrderListItem(serving.getOrderId());
-    });
+    eventListener
+      .orderRemoved(({ order }) => {
+        this.removeOrderListItem(order.getId());
+      })
+      .beforeServing(({ serving }) => {
+        this.removeOrderListItem(serving.getOrderId());
+      })
+      .menuButtonClick(async ({ button }) => {
+        await this.addOrder(await Order.RANDOM(button.getMenuId(), await this.cafe.getOptionGroupsAll()));
+      });
   }
 
   protected bindEvents() {
-    this.$orderButton.addEventListener('click', e => {
+    this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
-      this.addOrder(createRandomOrder());
+
+      const beveragesCount = await this.cafe.getBeveragesCount();
+      const randomRange = getRandomRange(1, beveragesCount);
+      await this.addOrder(await Order.RANDOM(randomRange, await this.cafe.getOptionGroupsAll()));
     });
   }
 
   private removeOrderListItem(orderId: string) {
-    this.removeListItemElement(this.findOrderListItemElement(orderId));
+    const $el = this.findOrderListItemElement(orderId);
+    this.removeListItemElement($el);
     this.updateListItemNo();
   }
 
-  private addOrder(order: Order): void {
-    this.addListItem(this.createListItem(order));
+  private async addOrder(order: Order) {
+    const beverage = await this.cafe.findBeverage(order.getBeverageId());
+    const listItem = this.createListItem({ order, beverage });
+
+    this.addListItem(listItem);
     this.updateListItemNo();
 
-    dispatchCustomEvent(EVENT.ORDER_ADDED, { order });
+    eventDispatcher.orderAdded({ order });
   }
 
   private removeListItemElement(orderListItem: OrderListItem | undefined) {
     if (!orderListItem) {
-      throw new Error();
+      return;
     }
 
-    this.findOrderListItemElement(orderListItem.getDataId())?.remove();
+    const $el = this.findOrderListItemElement(orderListItem.getDataId());
+
+    if ($el) {
+      $el.remove();
+    }
+
     this.removeOrderListItemElement(orderListItem);
   }
 
@@ -64,9 +76,10 @@ export class OrderList extends BaseComponent {
     this.$listItemElements = this.$listItemElements.filter(o => o !== orderListItem);
   }
 
-  private createListItem(order: Order): OrderListItem {
-    const $orderListItem = this.createComponent('cafe-order-list-item') as OrderListItem;
+  private createListItem(order: CafeOrder): OrderListItem {
+    const $orderListItem = this.createComponent<OrderListItem>(CUSTOM_ELEMENTS.ORDER_LIST_ITEM);
     $orderListItem.setOrder(order);
+
     return $orderListItem;
   }
 
@@ -77,7 +90,10 @@ export class OrderList extends BaseComponent {
 
   private updateListItemNo() {
     this.$listItemElements.forEach((orderListItem, index) => {
-      orderListItem.setNo(index + 1);
+      //TODO 수정이 필요함
+      setTimeout(() => {
+        orderListItem.setNo(index + 1);
+      }, 10);
     });
   }
 

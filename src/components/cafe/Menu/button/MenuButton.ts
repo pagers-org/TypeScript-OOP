@@ -1,11 +1,10 @@
-import { BaseComponent } from '@/components';
+import { Component } from '@/components';
 import { MenuButtonView } from './MenuButtonView';
-import { Component } from '@/common';
+import { eventDispatcher } from '@/main';
 
 const CLASS_NAME_SELECTED = 'selected';
 
-@Component('cafe-menu-button')
-export class MenuButton extends BaseComponent {
+export class MenuButton extends Component {
   private menuId!: number;
   private menuName!: string;
 
@@ -15,6 +14,12 @@ export class MenuButton extends BaseComponent {
 
   public setMenuName(menuName: string) {
     this.menuName = menuName;
+  }
+
+  protected bindEvents() {
+    this.$container.addEventListener('click', () => {
+      eventDispatcher.menuButtonClick({ button: this });
+    });
   }
 
   public active() {

@@ -1,15 +1,21 @@
 import { OptionName } from '@/@types';
 
+export type OptionConstructor = {
+  id: number;
+  optionGroupId: number;
+  name: OptionName;
+};
+
 export class Option {
   private readonly id: number;
   private readonly optionGroupId: number;
   private readonly name: OptionName;
   private selected = false;
 
-  constructor(id: number, optionGroupId: number, name: OptionName) {
-    this.id = id;
-    this.optionGroupId = optionGroupId;
-    this.name = name;
+  constructor(constructor: OptionConstructor) {
+    this.id = constructor.id;
+    this.optionGroupId = constructor.optionGroupId;
+    this.name = constructor.name;
   }
 
   public isSelected(): boolean {
@@ -26,5 +32,13 @@ export class Option {
 
   public getGroupId(): number {
     return this.optionGroupId;
+  }
+
+  public clone() {
+    return new Option({
+      id: this.id,
+      optionGroupId: this.optionGroupId,
+      name: this.name,
+    });
   }
 }

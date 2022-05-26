@@ -1,19 +1,17 @@
-import { addCustomEventListener, Component, dispatchCustomEvent } from '@/common';
-import { EVENT } from '@/constant';
-import { BaseComponent, MenuButton, Modal } from '@/components';
+import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
-import { getBeverageById } from '@/cafe';
 import { Order } from '@/domain';
+import { CUSTOM_ELEMENTS, eventListener } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-@Component('cafe-menu')
-export class Menu extends BaseComponent {
+export class Menu extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
   private $menuButtons: MenuButton[] = [];
+  private modalOpened = false;
 
   protected bindElements(): void {
     this.$form = this.$container.querySelector('.coffee-add-area form') as HTMLElement;
@@ -25,52 +23,40 @@ export class Menu extends BaseComponent {
   }
 
   protected bindListeners(): void {
-    addCustomEventListener(EVENT.ORDER_ADDED, e => {
-      e.preventDefault();
-
-      this.showAndActiveMenu(e.detail.order);
-    });
-
-    addCustomEventListener(EVENT.ORDER_REMOVED, e => {
-      e.preventDefault();
-
-      this.hideAndUnActiveMenu(e.detail.order);
-    });
+    eventListener
+      .modalOpen(({ opened }) => {
+        this.modalOpened = opened;
+      })
+      .orderAdded(({ order }) => {
+        this.showAndActiveMenu(order);
+      })
+      .orderRemoved(({ order }) => {
+        this.hideAndUnActiveMenu(order);
+      });
   }
 
   protected bindEvents(): void {
     this.$form.addEventListener('submit', event => {
       event.preventDefault();
 
-      if (this.cafe.isOpenModal()) {
-        return;
-      }
-
-      if (this.cafe.isEmptyOrder()) {
-        return alert(MSG_ALERT);
-      }
-
-      const order = this.cafe.firstOrder();
-      const beverage = getBeverageById(order.getBeverageId());
-
-      (this.createComponent('cafe-modal') as Modal).open(order, beverage);
-
-      dispatchCustomEvent(EVENT.ORDER_SUBMIT);
+      this.openModal();
     });
   }
 
-  private createMenuButtons(): void {
-    this.cafe.menuItems().forEach(menuItem => {
-      const $button = this.createMenuButton(menuItem.getBeverageId());
+  private async createMenuButtons() {
+    const menuItems = await this.cafe.getMenuItems();
+
+    for (const menuItem of menuItems) {
+      const $button = await this.createMenuButton(menuItem.getBeverageId());
 
       this.$menuButtons.push($button);
       this.$buttons.appendChild($button);
-    });
+    }
   }
 
-  private createMenuButton(beverageId: number) {
-    const beverage = getBeverageById(beverageId);
-    const $button = this.createComponent('cafe-menu-button') as MenuButton;
+  private async createMenuButton(beverageId: number) {
+    const beverage = await this.cafe.findBeverage(beverageId);
+    const $button = this.createComponent<MenuButton>(CUSTOM_ELEMENTS.MENU_BUTTON);
 
     $button.setMenuId(beverage.getId());
     $button.setMenuName(beverage.getName());
@@ -103,6 +89,19 @@ export class Menu extends BaseComponent {
 
   private show(): void {
     this.$container.classList.remove(CLASS_NAME_NONE_ORDER);
+  }
+
+  private async openModal() {
+    if (this.modalOpened) {
+      return;
+    }
+
+    if (this.cafe.isEmptyOrder()) {
+      return alert(MSG_ALERT);
+    }
+
+    const $modal = this.createComponent<Modal>(CUSTOM_ELEMENTS.MODAL);
+    $modal.open(await this.cafe.firstOrder());
   }
 
   protected view(): string {
