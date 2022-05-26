@@ -1,48 +1,52 @@
-import { CoffeeMakeModal, OrderList, Kitchen } from './components';
+import { CoffeeMakeModal, Kitchen } from './components';
+import { OrderList } from './domains';
+import { OrderListView } from './views';
+import { OrderListController } from './controllers/';
 
 import { DOM, ERROR } from './constants';
 import { $ } from './utils/dom';
 import { MenuNameType } from './@types';
 
 class App {
-  $target;
-  coffeMakeModal;
-  orderList;
-  kitchen;
+  private $target: HTMLDivElement;
+  private coffeMakeModal: CoffeeMakeModal;
+  private orderListController: OrderListController;
+  private kitchen: Kitchen;
 
   constructor($target: HTMLDivElement) {
     this.$target = $target;
     this.coffeMakeModal = new CoffeeMakeModal();
-    this.orderList = new OrderList();
     this.kitchen = new Kitchen();
+    this.orderListController = new OrderListController(new OrderList(), OrderListView);
     this.addEvents();
     this.checkKitchen();
   }
 
-  addEvents() {
+  private addEvents() {
     $(`#${DOM.APP_ID}`).addEventListener('click', this.handleAppClick.bind(this));
     $(`#${DOM.APP_ID}`).addEventListener('submit', this.handleAppSubmit.bind(this));
   }
 
-  handleAppClick(event: MouseEvent) {
+  private handleAppClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
 
-    if (target.closest('span')?.className === DOM.ORDER_EDIT_BUTTON_CLASS) {
-      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
-      this.orderList.changeTableRowToEditable(clickId);
+    if (this.orderListController.isClickOrderEditButton(target)) {
+      this.orderListController.changeOrderToEditable(target);
     }
-    if (target.closest('span')?.className === DOM.ORDER_REMOVE_BUTTON_CLASS) {
-      const clickId = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
-      this.orderList.removeTableRow(clickId);
+
+    if (this.orderListController.isClickOrderRemoveButton(target)) {
+      this.orderListController.removeOrder(target);
       this.checkKitchen();
     }
-    if (target.className === DOM.ORDER_BUTTON_CLASS) {
-      this.orderList.addRandomOrder();
+
+    if (this.orderListController.isClickOrderAddButton(target)) {
+      this.orderListController.addRandomOrder();
       this.checkKitchen();
     }
+
     if (target.classList.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
       const clickCoffeName = target.textContent as MenuNameType;
-      if (!this.kitchen.isExistClickMenuName(this.orderList.getCurrentOrderMenuNames(), clickCoffeName)) {
+      if (!this.kitchen.isExistClickMenuName(this.orderListController.getCurrentOrderMenuNames(), clickCoffeName)) {
         alert(ERROR.NON_EXIST_SELECTED_COFFEE_ORDER);
         return;
       }
@@ -50,7 +54,7 @@ class App {
     }
   }
 
-  handleAppSubmit(event: SubmitEvent) {
+  private handleAppSubmit(event: SubmitEvent) {
     event.preventDefault();
     const target = event.target as HTMLButtonElement;
 
@@ -59,8 +63,8 @@ class App {
     if (target.id === DOM.KITCHEN_COFFEE_MAKE_BUTTON_ID) this.coffeMakeModal.toggleModal();
   }
 
-  checkKitchen() {
-    if (!this.orderList.getOrderTotalLength()) {
+  private checkKitchen() {
+    if (!this.orderListController.getCurrentOrderLegnth()) {
       this.kitchen.closeKitchen();
       return;
     }
