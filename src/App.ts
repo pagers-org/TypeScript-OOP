@@ -37,7 +37,7 @@ class App {
       this.checkKitchen();
     }
     if (target.className === DOM.ORDER_BUTTON_CLASS) {
-      this.orderList.addOrder();
+      this.orderList.addRandomOrder();
       this.checkKitchen();
     }
     if (target.classList.contains(DOM.KITCHEN_COFFEE_CATEGORY_BUTTON_CLASS)) {
@@ -52,7 +52,7 @@ class App {
 
   handleAppSubmit(event: SubmitEvent) {
     event.preventDefault();
-    const target = event.target as Element;
+    const target = event.target as HTMLButtonElement;
 
     if (!this.kitchen.$selectedCoffee) return alert(ERROR.NON_EXIST_SELECTED_COFFEE);
 

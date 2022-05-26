@@ -1,10 +1,21 @@
-import Order from './Order';
+import { Order } from '../domains';
 
-import { DOM } from '../constants';
+import { DOM, ORDER } from '../constants';
 import { $ } from '../utils/dom';
 import { ORDER_TEMPLATE } from '../templates';
 
-import type { MenuNameType } from '../@types';
+import type {
+  CupType,
+  ExtraType,
+  IceType,
+  MenuNameType,
+  MenuSizeType,
+  ShotType,
+  SyrupType,
+  TemporatureType,
+  WippedCreamType,
+} from '../@types';
+import { pickRandomInArray, pickRandomUniqueId } from '../utils/random';
 
 class OrderList {
   #orderList: Order[];
@@ -15,20 +26,32 @@ class OrderList {
     this.$table = $(`#${DOM.ORDER_TABLE_ID}`);
   }
 
-  addOrder() {
-    const newOrder = new Order();
-    this.#orderList = [...this.#orderList, newOrder];
+  addRandomOrder() {
+    const newRandomOrder = new Order({
+      id: pickRandomUniqueId(),
+      menuName: pickRandomInArray<MenuNameType>(ORDER.MENU_NAME),
+      size: pickRandomInArray<MenuSizeType>(ORDER.MENU_SIZE),
+      shot: pickRandomInArray<ShotType>(ORDER.MENU_SHOT),
+      syrup: pickRandomInArray<SyrupType>(ORDER.MENU_SYRUP),
+      temporature: pickRandomInArray<TemporatureType>(ORDER.MENU_TEMPORATURE),
+      ice: pickRandomInArray<IceType>(ORDER.MENU_ICE),
+      wippedCream: pickRandomInArray<WippedCreamType>(ORDER.MENU_WIPPED_CREAM),
+      extra: pickRandomInArray<ExtraType>(ORDER.MENU_EXTRA),
+      cup: pickRandomInArray<CupType>(ORDER.MENU_CUP),
+    });
+
+    this.#orderList = [...this.#orderList, newRandomOrder];
     this.renderOrderList();
   }
 
   removeOrder(removeId: string) {
-    this.#orderList = this.#orderList.filter(order => order.id !== removeId);
+    this.#orderList = this.#orderList.filter(order => order.getId() !== removeId);
     this.renderOrderList();
     console.log(this.#orderList);
   }
 
   editOrder(editId: string) {
-    const Order = this.#orderList.find(order => order.id === editId);
+    const Order = this.#orderList.find(order => order.getId() === editId);
     const newOrder = $(`[data-id="${editId}"]`).children;
     Array.from(newOrder).forEach(($el, index) => {
       if ($el.getAttribute('data-title') === '수정하기' || $el.getAttribute('data-title') === '삭제하기') return;
@@ -41,7 +64,7 @@ class OrderList {
   }
 
   getCurrentOrderMenuNames(): MenuNameType[] {
-    return this.#orderList.map(order => order.menuName);
+    return this.#orderList.map(order => order.getMenuName());
   }
 
   changeTableRowToEditable(clickId?: string | null) {

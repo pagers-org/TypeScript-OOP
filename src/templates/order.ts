@@ -1,8 +1,8 @@
-import { Order } from '../components';
+import { Order } from '../domains';
 
 const ORDER_TEMPLATE = Object.freeze({
   order(order: Order, index: number) {
-    const { id, menuName, size, shot, syrup, ice, temporature, wippedCream, extra, cup }: Order = order;
+    const { id, menuName, size, shot, syrup, ice, temporature, wippedCream, extra, cup } = order.getOrderDatas();
     return String.raw`
       <div class="table-row" data-id="${id}">
         <div class="cell" data-title="No">${index}</div>
