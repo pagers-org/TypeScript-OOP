@@ -1,6 +1,8 @@
 import { CoffeeOptions } from 'Coffee';
+import Id from './id';
 import Order from './order';
-import { qs, qsAll } from './utils/helpers';
+import { ATTR_CONTENT_EDITABLE, TAB_NAME } from './utils/constants';
+import { genRandomOne, qs } from './utils/helpers';
 import View from './views/View';
 
 export default class Controller {
@@ -8,15 +10,16 @@ export default class Controller {
   private headerView;
   private modalView;
   private order;
-  private index;
+  private orderId;
 
   constructor({ mainView, headerView, modalView }: { mainView: View; headerView: View; modalView: View }) {
     this.mainView = mainView;
     this.headerView = headerView;
     this.modalView = modalView;
-    this.index = 0;
+    this.orderId = new Id();
     this.order = new Order();
     this.subscribeViewEvents();
+    this.bindedEvents();
     this.renderMainView();
   }
 
@@ -27,80 +30,71 @@ export default class Controller {
   }
 
   private subscribeViewEvents() {
-    addEventListener('@add', () => {
-      this.addOrder();
+    addEventListener('@add', this.addOrder.bind(this));
+    addEventListener('@submit', this.handleSubmit.bind(this));
+    addEventListener('@buttonClick', e => {
+      this.selectCoffee((e as CustomEvent).detail);
     });
-    addEventListener('@submit', () => {
-      this.handleSubmit();
+    addEventListener('@edit', e => {
+      this.editOrder((e as CustomEvent).detail);
     });
-    this.mainView.on('click', () => this.editOrder());
-    this.mainView.on('click', () => this.selectCoffee());
-    this.headerView.on('click', () => this.handleTab());
-    this.modalView.on('click', () => this.handleClose());
+  }
+
+  private bindedEvents() {
+    this.headerView.on('click', this.handleTab.bind(this));
+    this.modalView.on('click', this.handleClose.bind(this));
+  }
+
+  private selectCoffee(currentElement: HTMLButtonElement) {
+    const coffeeFilling = qs('.filling') as HTMLDivElement;
+    const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
+    if (this.order.isEmpty()) {
+      alert('주문내역이 없습니다 🥲');
+      return;
+    }
+
+    if (currentElement) {
+      currentElement.classList.remove('selected');
+      coffeeFilling.classList.remove(currentElement.id);
+    }
+
+    coffeeFilling.classList.add(currentElement.id);
+    currentElement.classList.add('selected');
+    coffeeName.innerText = currentElement.innerText;
   }
 
   private Tabrender() {
-    const tabName = '재료관리';
-    if (tabName === '재료관리') {
+    const tabName = TAB_NAME.INGREDIENT_MANAGEMENT;
+    if (tabName === TAB_NAME.INGREDIENT_MANAGEMENT) {
       // TODO
     }
 
     this.renderMainView();
   }
 
-  private editOrder() {
-    qs('.wrapper')?.addEventListener('click', event => {
-      event.stopPropagation();
-      const $target = event.target as HTMLElement;
-      const tableRow = $target.closest('.table-row');
-      if ($target.matches('.fa-pen')) {
-        if (tableRow?.hasAttribute('contenteditable')) {
-          alert('수정이 완료 되었습니다 😇');
-          tableRow.removeAttribute('contenteditable');
-          return;
-        } else {
-          tableRow?.setAttribute('contenteditable', 'true');
-        }
+  private editOrder(currentElement: HTMLDivElement) {
+    const tableRow = currentElement.closest('.table-row');
+    if (currentElement.closest('.edit-order')) {
+      if (tableRow?.hasAttribute(ATTR_CONTENT_EDITABLE)) {
+        alert('수정이 완료 되었습니다 😇');
+        tableRow.removeAttribute(ATTR_CONTENT_EDITABLE);
+        return;
+      } else {
+        tableRow?.setAttribute(ATTR_CONTENT_EDITABLE, 'true');
       }
-      if ($target.matches('.fa-trash-can')) {
-        const randomMenu = this.order.getOrderItem;
-        const filtered = randomMenu.filter(item => item.id !== $target.id);
-        this.order.setOrderItem = filtered;
-        this.renderOrderTable();
-      }
-    });
+    }
+    if (currentElement.closest('.remove-order')) {
+      this.order.remove(currentElement);
+      this.renderOrderTable();
+    }
   }
 
   private addOrder() {
-    this.index++;
-    const randomMenu = this.order.getRandomOrder;
-    this.order.addOrderItem = Object.assign(randomMenu, { id: this.index.toString() });
+    this.orderId.addOrderId();
+    const randomMenu = genRandomOne();
+    this.order.addMenu(randomMenu, this.orderId.OrderId);
     this.Tabrender();
     this.renderOrderTable();
-  }
-
-  private selectCoffee() {
-    let currentElement: HTMLButtonElement | null = null;
-    const coffeeFilling = qs('.filling') as HTMLDivElement;
-    const coffeeName = qs('.coffee_name') as HTMLHeadingElement;
-    const buttons = qsAll('.coffee-category-button') as HTMLButtonElement[];
-    if (this.order.getOrderItem.length === 0) {
-      alert('주문내역이 없습니다 🥲');
-      return;
-    }
-    buttons.forEach(button =>
-      button.addEventListener('click', event => {
-        if (currentElement) {
-          currentElement.classList.remove('selected');
-          coffeeFilling.classList.remove(currentElement.id);
-        }
-
-        currentElement = button;
-        coffeeFilling.classList.add(currentElement.id);
-        currentElement.classList.add('selected');
-        coffeeName.innerText = button.innerText;
-      }),
-    );
   }
 
   private handleSubmit() {
@@ -145,10 +139,9 @@ export default class Controller {
   <div class="cell">수정하기</div>
   <div class="cell">삭제하기</div>
 </div>
-${this.order.getOrderItem
-  .map(
-    (item: CoffeeOptions) =>
-      `
+${this.order.OrderItem.map(
+  (item: CoffeeOptions) =>
+    `
 <div class="table-row">
 <div class="cell" data-title="No">${item.id}</div>
 <div class="cell" data-title="메뉴명">${item.menu}</div>
@@ -172,8 +165,7 @@ ${this.order.getOrderItem
 </div>
 </div>
 `,
-  )
-  .join('')}
+).join('')}
   `;
     const $orderTable = qs('.table') as HTMLDivElement;
     $orderTable.innerHTML = $contents;

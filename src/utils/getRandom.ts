@@ -1,3 +1,3 @@
-export const getRandomInt = (arr: string[]) => {
-  return Math.floor(Math.random() * arr.length);
+export const getRandomInt = (coffeeOptionsList: string[]) => {
+  return Math.floor(Math.random() * coffeeOptionsList.length);
 };

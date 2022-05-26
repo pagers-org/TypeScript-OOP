@@ -1,6 +1,4 @@
 import { CoffeeOptions } from 'Coffee';
-import { COFFEE, CUP, EXTRA, ICE, ICEORHOT, SIZE, SYRUP, WHIPPEDCREAM, SHOT } from './utils/constants';
-import { getRandomInt } from './utils/getRandom';
 
 export default class Order {
   private orderList: CoffeeOptions[];
@@ -9,21 +7,20 @@ export default class Order {
     this.orderList = [];
   }
 
-  get getRandomOrder() {
-    return {
-      menu: COFFEE[getRandomInt(COFFEE)],
-      size: SIZE[getRandomInt(SIZE)],
-      shot: SHOT[getRandomInt(SHOT)],
-      syrup: SYRUP[getRandomInt(SYRUP)],
-      iceOrHot: ICEORHOT[getRandomInt(ICEORHOT)],
-      ice: ICE[getRandomInt(ICE)],
-      whippedCream: WHIPPEDCREAM[getRandomInt(WHIPPEDCREAM)],
-      extra: EXTRA[getRandomInt(EXTRA)],
-      cup: CUP[getRandomInt(CUP)],
-    };
+  addMenu(randomMenu: Omit<CoffeeOptions, 'id'>, orderId: number) {
+    this.orderList.push(Object.assign(randomMenu, { id: orderId.toString() }));
   }
 
-  get getOrderItem() {
+  isEmpty() {
+    return this.orderList.length === 0;
+  }
+
+  remove(currentElement: HTMLDivElement) {
+    const filtered = this.orderList.filter(item => item.id !== currentElement.id);
+    this.setOrderItem = filtered;
+  }
+
+  get OrderItem() {
     return this.orderList;
   }
 
