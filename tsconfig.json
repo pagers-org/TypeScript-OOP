@@ -13,6 +13,7 @@
       "DOM"
     ],
     "skipLibCheck": true,
+    "types": ["node", "jest"],
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
@@ -24,14 +25,15 @@
       ],
       "@/*": [
         "src/*"
-      ],
+      ]
     },
     "typeRoots": [
       "@types/"
     ]
   },
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "node_modules/@types/jest/index.d.ts",
   ],
   "exclude": [
     "node_modules"
