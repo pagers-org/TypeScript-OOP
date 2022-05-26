@@ -1,4 +1,11 @@
-import CoffeeShop from './CoffeeShop';
+import Kitchen from './components/Kitchen';
+import OrderList from './components/OrderList';
+
+(() => {
+  const orderList = new OrderList(document.querySelector('.order-list'));
+  const kitchen = new Kitchen(document.querySelector('#right-section'));
+  kitchen.subscription = orderList.subscribe(kitchen.subscriber.bind(kitchen));
+})();
 
 // let currentElement: HTMLButtonElement | null = null;
 // const pageNav = document.querySelector('header') as HTMLHeadElement;
@@ -39,8 +46,3 @@ import CoffeeShop from './CoffeeShop';
 //   if (!$target.matches('#close-icon')) return;
 //   modalLayout.classList.toggle('hidden');
 // });
-
-(() => {
-  const jerrysCoffeeShop = new CoffeeShop();
-  jerrysCoffeeShop.getReady();
-})();
