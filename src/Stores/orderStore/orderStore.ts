@@ -20,7 +20,7 @@ export const { dispatch, getStore } = createStore<OrdersStore>(ORDER_STORE.event
     }
     case UPDATE: {
       const newOrders = store.orders.map(order => {
-        if (order.id === action.payload.id as string) {
+        if (order.isSameOrder(action.payload as Order)) {
           return action.payload as Order;
         }
         return order;
@@ -30,7 +30,7 @@ export const { dispatch, getStore } = createStore<OrdersStore>(ORDER_STORE.event
       return store;
     }
     case DELETE: {
-      const targetIndex = store.orders.findIndex(order => order.id === action.payload.id as string);
+      const targetIndex = store.orders.findIndex(order => order.isSameOrder(action.payload as Order));
       if (targetIndex !== -1) {
         store.orders.splice(targetIndex, 1);
       }

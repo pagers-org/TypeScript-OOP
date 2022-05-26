@@ -17,6 +17,10 @@ class Order {
     this.optionGroups = optionGroups;
   }
 
+  isSameOrder = (otherOrder: Order) => {
+    return this.id === otherOrder.id;
+  };
+
   menuName() {
     return this.drink.menuName;
   }

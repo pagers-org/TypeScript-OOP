@@ -11,7 +11,7 @@ class OrderRow extends Component {
   protected componentDidMounted: () => void = () => {
     this.addEventListener(ORDER_STORE.event, e => {
       const { type, payload } = e.detail
-      if (type === ORDER_STORE.types.UPDATE && this.order.id === payload.id) {
+      if (type === ORDER_STORE.types.UPDATE && this.order.isSameOrder(payload as Order)) {
         this.setOrder(payload as Order);
       }
     });
@@ -51,6 +51,7 @@ class OrderRow extends Component {
     span.appendChild(i);
     span.addEventListener('click', onClick);
     cell.appendChild(span);
+
     return cell;
   }
 
