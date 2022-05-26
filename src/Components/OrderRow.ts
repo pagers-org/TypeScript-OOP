@@ -30,6 +30,14 @@ class OrderRow extends Component {
     return cell;
   }
 
+  private createOptionGroups() {
+    return this.order.optionGroups.map(optionGroup => {
+      const optionName = optionGroup.name;
+      const selectedOption = optionGroup.getSelectedOption()[0];
+      return this.createCell(optionName, selectedOption.name);
+    }, this);
+  }
+
   private appendButtonIcon(cell: HTMLDivElement) {
     const span = document.createElement('span');
     span.classList.add('edit-order');
@@ -93,14 +101,11 @@ class OrderRow extends Component {
 
     const idCell = this.createCell('id', 1);
     const cafe = this.createCell('메뉴명', this.order.menuName());
-    const optionGroups = this.order.optionGroups.map(optionGroup => {
-      const optionName = optionGroup.name;
-      const selectedOption = optionGroup.getSelectedOption()[0];
-      return this.createCell(optionName, selectedOption.name);
-    }, this);
-    this.$optionGroups = optionGroups;
+    const optionGroups = this.createOptionGroups();
     const editButton = this.appendButtonIcon(this.createCell('수정하기'));
     const deleteButton = this.appendButtonIcon(this.createCell('삭제하기'));
+
+    this.$optionGroups = optionGroups;
 
     return {
       parent: tableRowWrapper,
