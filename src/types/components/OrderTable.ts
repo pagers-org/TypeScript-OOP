@@ -1,5 +1,6 @@
+import store from "../store";
 export default class OrderTableComponent extends HTMLElement {
-  constructor() {
+  constructor(private readonly Store = store) {
     super();
 
     this.attachShadow({ mode: "open" });
@@ -50,6 +51,10 @@ export default class OrderTableComponent extends HTMLElement {
                         </div>
                     </div>
                 </div>`;
+
+    wrapper.querySelector(".order-button")?.addEventListener("click", () => {
+      Store.dispatch("makeOrder");
+    });
 
     this.shadowRoot.append(wrapper);
   }

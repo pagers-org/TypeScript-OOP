@@ -21,6 +21,7 @@ export default class Store {
         }
 
         state[key] = value;
+        console.log(`state is changed! State ${state}`);
 
         self.status = "resting";
 

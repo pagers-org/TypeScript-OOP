@@ -15,11 +15,6 @@ const setEvent = () => {
   ) as HTMLFormElement;
   const modalLayout = document.querySelector(".modal-layout") as HTMLDivElement;
 
-  const orderBtn = document.querySelector(".order-button");
-  orderBtn.addEventListener("click", (event) => {
-    console.log(event);
-  });
-
   pageNav.addEventListener("click", (event: MouseEvent) => {
     const $target = event.target as HTMLInputElement;
     if (!$target.matches('[type="radio"]')) return;

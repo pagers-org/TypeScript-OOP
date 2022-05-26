@@ -1,5 +1,5 @@
-import * as Option from "@/types/config/option";
-import { generateRandomNumber } from "@/types/util";
+import * as Option from "../../config/option";
+import { generateRandomNumber } from "../../util/numberGenerator";
 
 export default class Order {
   private coffee: Option;
