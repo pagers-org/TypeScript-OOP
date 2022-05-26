@@ -1,9 +1,9 @@
 import { Order } from '@/domain';
 
-export const OrderListItemView = (name: string, order: Order) => String.raw`
+export const OrderListItemView = (order: Order) => String.raw`
 <div class='table-row order-list-item' data-order-id='${order.getId()}'>
     <div class='cell' data-title='No'></div>
-    <div class='cell' data-title='메뉴명'>${name}</div>
+    <div class='cell' data-title='메뉴명'>${order.getBeverage().getName()}</div>
     <div class='cell' data-title='사이즈'>${order.getSelectedOptionValue('사이즈')}</div>
     <div class='cell' data-title='샷'>${order.getSelectedOptionValue('샷')}</div>
     <div class='cell' data-title='시럽'>${order.getSelectedOptionValue('시럽')}</div>

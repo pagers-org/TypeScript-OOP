@@ -1,8 +1,7 @@
 import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
-import { CafeOrder } from '@/cafe';
-import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { api, CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
 import { getRandomRange } from '@/common';
 
 export class OrderList extends Component {
@@ -24,7 +23,9 @@ export class OrderList extends Component {
         this.removeOrderListItem(serving.getOrderId());
       })
       .menuButtonClick(async ({ button }) => {
-        await this.addOrder(await Order.RANDOM(button.getMenuId(), await this.cafe.getOptionGroupsAll()));
+        const beverage = await api.findBeverage(button.getMenuId());
+
+        await this.addOrder(await Order.RANDOM(beverage, await api.getOptionGroupsAll()));
       });
   }
 
@@ -32,9 +33,11 @@ export class OrderList extends Component {
     this.$orderButton.addEventListener('click', async e => {
       e.preventDefault();
 
-      const beveragesCount = await this.cafe.getBeveragesCount();
-      const randomRange = getRandomRange(1, beveragesCount);
-      await this.addOrder(await Order.RANDOM(randomRange, await this.cafe.getOptionGroupsAll()));
+      const beveragesCount = await api.getBeveragesCount();
+      const randomBeverageId = getRandomRange(1, beveragesCount);
+      const beverage = await api.findBeverage(randomBeverageId);
+
+      await this.addOrder(await Order.RANDOM(beverage, await api.getOptionGroupsAll()));
     });
   }
 
@@ -45,8 +48,7 @@ export class OrderList extends Component {
   }
 
   private async addOrder(order: Order) {
-    const beverage = await this.cafe.findBeverage(order.getBeverageId());
-    const listItem = this.createListItem({ order, beverage });
+    const listItem = this.createListItem(order);
 
     this.addListItem(listItem);
     this.updateListItemNo();
@@ -76,7 +78,7 @@ export class OrderList extends Component {
     this.$listItemElements = this.$listItemElements.filter(o => o !== orderListItem);
   }
 
-  private createListItem(order: CafeOrder): OrderListItem {
+  private createListItem(order: Order): OrderListItem {
     const $orderListItem = this.createComponent<OrderListItem>(CUSTOM_ELEMENTS.ORDER_LIST_ITEM);
     $orderListItem.setOrder(order);
 

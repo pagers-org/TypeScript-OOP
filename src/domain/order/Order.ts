@@ -1,33 +1,33 @@
-import { OptionGroup } from '@/domain';
+import { Beverage, OptionGroup } from '@/domain';
 import { OptionGroupName, OptionName } from '@/@types';
 import { nanoid } from 'nanoid';
 
 export type OrderConstructor = {
   id: string;
-  beverageId: number;
+  beverage: Beverage;
   optionGroups?: OptionGroup[];
   orderTime?: Date;
 };
 
 export class Order {
   private readonly id: string;
-  private readonly beverageId: number;
+  private readonly beverage: Beverage;
   private readonly optionGroups: OptionGroup[] = [];
   private readonly orderTime: Date;
 
   constructor(constructor: OrderConstructor) {
     this.id = constructor.id;
-    this.beverageId = constructor.beverageId;
+    this.beverage = constructor.beverage;
     this.optionGroups = constructor.optionGroups || [];
     this.orderTime = constructor.orderTime || new Date();
   }
 
-  public static RANDOM(beverageId: number, optionGroups: OptionGroup[]) {
+  public static RANDOM(beverage: Beverage, optionGroups: OptionGroup[]) {
     const randomOptionGroups = optionGroups.map(item => item.random());
 
     return new Order({
       id: nanoid(),
-      beverageId,
+      beverage,
       optionGroups: randomOptionGroups,
     });
   }
@@ -69,7 +69,7 @@ export class Order {
   }
 
   public getBeverageId() {
-    return this.beverageId;
+    return this.beverage.getId();
   }
 
   public getId() {
@@ -83,9 +83,13 @@ export class Order {
   public clone() {
     return new Order({
       id: this.id,
-      beverageId: this.beverageId,
+      beverage: this.beverage,
       orderTime: this.orderTime,
       optionGroups: this.optionGroups,
     });
+  }
+
+  public getBeverage() {
+    return this.beverage;
   }
 }

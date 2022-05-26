@@ -1,6 +1,6 @@
-import { Beverage, Order } from '@/domain';
+import { Order } from '@/domain';
 
-export const ModalView = (order: Order, beverage: Beverage) => String.raw`
+export const ModalView = (order: Order) => String.raw`
 <div class="modal-layout hidden cafe-modal">
   <div class="modal-header">
     <span><i id="close-icon" class="fa-solid fa-square-xmark fa-2xl"></i></span>
@@ -22,7 +22,7 @@ export const ModalView = (order: Order, beverage: Beverage) => String.raw`
       </div>
       <div class="table-row order-info">
         <div class="cell" data-title="No">1</div>
-        <div class="cell" data-title="메뉴명">${beverage.getName()}</div>
+        <div class="cell" data-title="메뉴명">${order.getBeverage().getName()}</div>
         <div class="cell" data-title="사이즈"></div>
         <div class="cell" data-title="샷"></div>
         <div class="cell" data-title="시럽"></div>

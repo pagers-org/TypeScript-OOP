@@ -1,15 +1,17 @@
+import { Beverage } from '@/domain';
+
 export type MenuItemConstructor = {
-  beverageId: number;
+  beverage: Beverage;
 };
 
 export class MenuItem {
-  private readonly beverageId: number;
+  private readonly beverage: Beverage;
 
   constructor(constructor: MenuItemConstructor) {
-    this.beverageId = constructor.beverageId;
+    this.beverage = constructor.beverage;
   }
 
-  public getBeverageId() {
-    return this.beverageId;
+  public getBeverage() {
+    return this.beverage;
   }
 }

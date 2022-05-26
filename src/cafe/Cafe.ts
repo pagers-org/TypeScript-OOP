@@ -1,18 +1,10 @@
-import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
-
-export type CafeOrder = {
-  order: Order;
-  beverage: Beverage;
-};
+import { Order, Orders, Serving, Servings } from '@/domain';
 
 export class Cafe {
-  private readonly api: AbstractApi;
-
   private readonly orders: Orders;
   private readonly servings: Servings;
 
-  constructor(api: AbstractApi, orders: Orders, servings: Servings) {
-    this.api = api;
+  constructor(orders: Orders, servings: Servings) {
     this.orders = orders;
     this.servings = servings;
   }
@@ -33,36 +25,11 @@ export class Cafe {
     this.orders.removeOrder(order);
   }
 
+  public firstOrder(): Order {
+    return this.orders.firstOrder();
+  }
+
   public addServing(serving: Serving) {
     this.servings.add(serving);
-  }
-
-  public async findBeverage(beverageId: number) {
-    return await this.api.findBeverage(beverageId);
-  }
-
-  public async firstOrder(): Promise<CafeOrder> {
-    const order = this.orders.firstOrder();
-    const beverage = await this.findBeverage(order.getBeverageId());
-
-    return { order, beverage };
-  }
-
-  public async getMenu() {
-    const beverages = await this.api.getBeveragesAll();
-    const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
-    return new Menu({ menuItems });
-  }
-
-  public async getMenuItems() {
-    return (await this.getMenu()).getMenuItems();
-  }
-
-  public async getOptionGroupsAll() {
-    return await this.api.getOptionGroupsAll();
-  }
-
-  public async getBeveragesCount() {
-    return await this.api.getBeveragesCount();
   }
 }

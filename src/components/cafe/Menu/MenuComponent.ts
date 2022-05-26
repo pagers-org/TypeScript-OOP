@@ -1,13 +1,13 @@
 import { Component, MenuButton, Modal } from '@/components';
 import { MenuView } from './MenuView';
-import { Order } from '@/domain';
-import { CUSTOM_ELEMENTS, eventListener } from '@/main';
+import { Beverage, Menu, MenuItem, Order } from '@/domain';
+import { api, CUSTOM_ELEMENTS, eventListener } from '@/main';
 
 const CLASS_NAME_NONE_ORDER = 'none-order';
 
 const MSG_ALERT = '주문을 추가하세요';
 
-export class Menu extends Component {
+export class MenuComponent extends Component {
   private $form!: HTMLElement;
   private $buttons!: HTMLElement;
   private $menuButtons: MenuButton[] = [];
@@ -44,18 +44,17 @@ export class Menu extends Component {
   }
 
   private async createMenuButtons() {
-    const menuItems = await this.cafe.getMenuItems();
+    const menuItems = await this.getMenuItems();
 
     for (const menuItem of menuItems) {
-      const $button = await this.createMenuButton(menuItem.getBeverageId());
+      const $button = await this.createMenuButton(menuItem.getBeverage());
 
       this.$menuButtons.push($button);
       this.$buttons.appendChild($button);
     }
   }
 
-  private async createMenuButton(beverageId: number) {
-    const beverage = await this.cafe.findBeverage(beverageId);
+  private async createMenuButton(beverage: Beverage) {
     const $button = this.createComponent<MenuButton>(CUSTOM_ELEMENTS.MENU_BUTTON);
 
     $button.setMenuId(beverage.getId());
@@ -102,6 +101,16 @@ export class Menu extends Component {
 
     const $modal = this.createComponent<Modal>(CUSTOM_ELEMENTS.MODAL);
     $modal.open(await this.cafe.firstOrder());
+  }
+
+  private async getMenu() {
+    const beverages = await api.getBeveragesAll();
+    const menuItems = beverages.map(item => new MenuItem({ beverage: item }));
+    return new Menu({ menuItems });
+  }
+
+  private async getMenuItems() {
+    return (await this.getMenu()).getMenuItems();
   }
 
   protected view(): string {

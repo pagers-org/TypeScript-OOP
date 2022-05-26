@@ -35,10 +35,4 @@ export abstract class AbstractApi {
 
     return beverage.clone();
   }
-
-  public async findBeverageName(id: number): Promise<BeverageName> {
-    const beverage = await this.findBeverage(id);
-
-    return beverage.getName();
-  }
 }
