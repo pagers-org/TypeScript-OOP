@@ -17,8 +17,9 @@ class OrderTable extends View {
       const $order = document.createElement('cafe-order-row') as OrderRow;
       const orderFactory = new OrderFactory();
       const newOrder = orderFactory.createRandomOrder();
+      const componentId = $order.getComponentId();
       setTimeout(() => {
-        dispatch({ type: 'add', payload: newOrder });
+        dispatch({ type: 'add', payload: { componentId, order: newOrder } });
       }, 2000);
 
       this.$orderTable.appendChild($order);

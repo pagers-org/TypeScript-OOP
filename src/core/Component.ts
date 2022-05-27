@@ -1,9 +1,13 @@
+import { nanoid } from 'nanoid';
+
 export interface Template {
   parent: Element | Node;
   children?: (Template | Element | Node | DocumentFragment)[];
 }
 
 abstract class Component extends HTMLElement {
+  private componentId = nanoid();
+
   constructor() {
     super();
   }
@@ -29,8 +33,16 @@ abstract class Component extends HTMLElement {
     // override
   };
 
-  protected addEventListenerToWindow = (eventName: string, callback: (e: Event) => void) => {
-    window.addEventListener(eventName, callback.bind(this));
+  public setComponentId(componentId: string | number) {
+    this.componentId = componentId;
+  }
+
+  public getComponentId() {
+    return this.componentId;
+  }
+
+  protected addEventListenerToWindow = (eventName: string, callback: (e: CustomEvent) => void) => {
+    window.addEventListener(eventName, callback.bind(this) as EventListener);
   };
 
   // 각 컴포넌트의 렌더링이 어떻게 될지는 알아서

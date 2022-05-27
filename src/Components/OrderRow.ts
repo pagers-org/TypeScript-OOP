@@ -10,14 +10,17 @@ class OrderRow extends Component {
   protected componentDidMounted: () => void = () => {
     this.classList.add('table-row');
 
-    function callback(e: Event) {
-      const { type, payload } = e.detail
+    function callback(this: OrderRow, e: CustomEvent) {
+      const { type, payload } = e.detail;
+
+      if (payload.componentId !== this.getComponentId()) return;
+
       if (type === ORDER_STORE.types.ADD && !this.order) {
-        return this.setOrder(payload as Order);
+        return this.setOrder(payload.order as Order);
       }
 
       if (type === ORDER_STORE.types.UPDATE && this.order.isSameOrder(payload as Order)) {
-        return this.setOrder(payload as Order);
+        return this.setOrder(payload.order as Order);
       }
     }
 
