@@ -52,7 +52,7 @@ export class FetchApi extends AbstractApi {
 
   protected async beverages(): Promise<Beverage[]> {
     const res = await this.fetch<BeverageConstructor>(API_URL.BEVERAGES);
-    const result = res.map(item => Beverage.fromObject(item));
+    const result = res.map(item => new Beverage(item));
 
     return new Promise<Beverage[]>(resolve => resolve(result));
   }

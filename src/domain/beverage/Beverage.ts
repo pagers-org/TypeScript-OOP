@@ -26,7 +26,7 @@ export class Beverage {
     return new Beverage({ id: this.id, name: this.name });
   }
 
-  public static fromObject(item: any) {
-    return new Beverage({ id: item.id, name: item.name });
+  public static fromObject(item: BeverageConstructor) {
+    return new Beverage(item);
   }
 }
