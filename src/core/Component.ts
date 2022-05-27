@@ -29,6 +29,10 @@ abstract class Component extends HTMLElement {
     // override
   };
 
+  protected addEventListenerToWindow = (eventName: string, callback: (e: Event) => void) => {
+    window.addEventListener(eventName, callback.bind(this));
+  };
+
   // 각 컴포넌트의 렌더링이 어떻게 될지는 알아서
   // 사용자 자유! 이 안에 렌더할 것을 넣어주세요!
   protected abstract template: () => Template;
@@ -52,7 +56,7 @@ abstract class Component extends HTMLElement {
     const newTemplate = this.template();
     const rootElement = this.composeComponents(newTemplate);
 
-    this.replaceWith(rootElement);
+    this.replaceChildren(rootElement);
   };
 }
 

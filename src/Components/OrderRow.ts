@@ -4,17 +4,24 @@ import { dispatch } from '@/Stores/orderStore/orderStore';
 import Order from '@/Model/Order';
 
 class OrderRow extends Component {
-  $container!: HTMLElement;
   $optionGroups!: HTMLElement[];
   order!: Order;
 
   protected componentDidMounted: () => void = () => {
-    this.addEventListener(ORDER_STORE.event, e => {
+    this.classList.add('table-row');
+
+    function callback(e: Event) {
       const { type, payload } = e.detail
-      if (type === ORDER_STORE.types.UPDATE && this.order.isSameOrder(payload as Order)) {
-        this.setOrder(payload as Order);
+      if (type === ORDER_STORE.types.ADD && !this.order) {
+        return this.setOrder(payload as Order);
       }
-    });
+
+      if (type === ORDER_STORE.types.UPDATE && this.order.isSameOrder(payload as Order)) {
+        return this.setOrder(payload as Order);
+      }
+    }
+
+    this.addEventListenerToWindow(ORDER_STORE.event, callback);
   };
 
   public setOrder(order: Order) {
@@ -82,20 +89,17 @@ class OrderRow extends Component {
   };
 
   private destroy = () => {
-    this.$container.remove();
     this.remove();
   };
 
   protected template: () => Template = () => {
-    const tableRowWrapper = document.createElement('div');
-    tableRowWrapper.classList.add('table-row');
-    this.$container = tableRowWrapper;
+    const fragment = document.createDocumentFragment();
 
     if (!this.order) {
       const div = document.createElement('div');
       div.textContent = 'loading...';
       return {
-        parent: tableRowWrapper,
+        parent: fragment,
         children: [div],
       };
     }
@@ -109,7 +113,7 @@ class OrderRow extends Component {
     this.$optionGroups = optionGroups;
 
     return {
-      parent: tableRowWrapper,
+      parent: fragment,
       children: [idCell, cafe, ...optionGroups, editButton, deleteButton],
     };
   };
