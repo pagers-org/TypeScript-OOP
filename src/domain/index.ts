@@ -8,6 +8,7 @@ export * from '@/domain/beverage/Beverage';
 
 export * from '@/domain/option/OptionGroup';
 export * from '@/domain/option/Option';
+export * from '@/domain/option/Options';
 
 export * from '@/domain/menu/Menu';
 export * from '@/domain/menu/MenuItem';

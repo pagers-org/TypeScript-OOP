@@ -30,7 +30,7 @@ export class OrderGroup {
     return this.orderList.find(item => item.getId() === order.getId());
   }
 
-  public first(): Order {
+  public firstOrder(): Order {
     if (this.isEmpty()) {
       throw new Error();
     }

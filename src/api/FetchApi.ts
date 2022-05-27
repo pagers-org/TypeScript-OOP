@@ -8,6 +8,7 @@ import {
   OptionConstructor,
   OptionGroup,
   OptionGroupConstructor,
+  Options,
   Recipe,
   RecipeConstructor,
 } from '@/domain';
@@ -75,7 +76,7 @@ export class FetchApi extends AbstractApi {
         id: item.id,
         name: item.name,
         type: item.type,
-        options,
+        options: new Options({ options }),
       });
     });
 

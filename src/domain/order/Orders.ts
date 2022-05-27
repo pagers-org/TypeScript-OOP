@@ -1,34 +1,29 @@
 import { Order } from '@/domain';
-import { OrderGroup } from '@/domain/order/OrderGroup';
+import { OrderGroups } from '@/domain/order/OrderGroups';
 
 export class Orders {
-  private orderGroups: OrderGroup[] = [];
+  private orderGroups: OrderGroups = new OrderGroups();
 
   public addOrder(order: Order): void {
-    const orderGroup = this.getOrderGroup(order.getBeverageId());
-
-    if (orderGroup.isEmpty()) {
-      this.orderGroups.push(orderGroup);
-    }
-
+    const orderGroup = this.orderGroups.add(order.getBeverageId());
     orderGroup.add(order);
   }
 
   public removeOrder(order: Order): void {
-    const orderGroup = this.getOrderGroup(order.getBeverageId());
+    const orderGroup = this.orderGroups.find(order.getBeverageId());
     orderGroup.remove(order);
 
     if (orderGroup.isEmpty()) {
-      this.orderGroups = this.orderGroups.filter(orderGroup => orderGroup.getId() !== order.getBeverageId());
+      this.orderGroups.remove(order.getBeverageId());
     }
   }
 
   public isEmptyOrderGroup(groupId: number) {
-    return this.getOrderGroup(groupId).isEmpty();
+    return this.orderGroups.isEmptyById(groupId);
   }
 
   public firstOrderShift(): Order {
-    const order = this.firstOrderGroup().shift();
+    const order = this.orderGroups.first().shift();
 
     if (order) {
       this.removeOrder(order);
@@ -38,7 +33,7 @@ export class Orders {
   }
 
   public firstOrder(): Order {
-    const order = this.firstOrderGroup().first();
+    const order = this.orderGroups.first().firstOrder();
 
     if (!order) {
       throw new Error();
@@ -48,19 +43,6 @@ export class Orders {
   }
 
   public isEmpty(): boolean {
-    return this.orderGroups.length == 0;
-  }
-
-  private firstOrderGroup(): OrderGroup {
-    if (this.isEmpty()) {
-      throw new Error();
-    }
-
-    return this.orderGroups[0];
-  }
-
-  private getOrderGroup(groupId: number): OrderGroup {
-    const result = this.orderGroups.find(orderGroup => orderGroup.getId() === groupId);
-    return result ? result : new OrderGroup({ id: groupId });
+    return this.orderGroups.isEmpty();
   }
 }
