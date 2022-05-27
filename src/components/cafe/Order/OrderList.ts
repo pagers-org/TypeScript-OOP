@@ -11,9 +11,7 @@ export class OrderList extends Component {
 
   protected mounted() {
     setTimeout(() => {
-      cafeStorage.getOrders().forEach((order: Order) => {
-        this.addOrder(order);
-      });
+      this.addOrderAll(cafeStorage.getOrders());
     }, 20);
   }
 
@@ -32,6 +30,7 @@ export class OrderList extends Component {
       })
       .menuButtonClick(async ({ button }) => {
         this.addOrder(await createRandomOrderByBeverageId(button.getMenuId()));
+        cafeStorage.saveOrders(this.cafe.getOrderAll());
       });
   }
 
@@ -40,6 +39,7 @@ export class OrderList extends Component {
       e.preventDefault();
 
       this.addOrder(await createRandomOrder());
+      cafeStorage.saveOrders(this.cafe.getOrderAll());
     });
   }
 
@@ -47,6 +47,10 @@ export class OrderList extends Component {
     const $el = this.findOrderListItemElement(orderId);
     this.removeListItemElement($el);
     this.updateListItemNo();
+  }
+
+  private addOrderAll(orders: Order[]) {
+    orders.forEach(order => this.addOrder(order));
   }
 
   private addOrder(order: Order) {

@@ -85,7 +85,7 @@ export class FetchApi extends AbstractApi {
 
   protected async recipes(): Promise<Recipe[]> {
     const res = await this.fetch<RecipeConstructor>(API_URL.RECIPES);
-    const result = res.map(item => Recipe.fromObject(item));
+    const result = res.map(item => new Recipe(item));
 
     return new Promise<Recipe[]>(resolve => resolve(result));
   }

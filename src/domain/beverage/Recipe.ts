@@ -17,8 +17,4 @@ export class Recipe {
     this.materialId = constructor.materialId;
     this.count = constructor.count;
   }
-
-  public static fromObject(item: RecipeConstructor) {
-    return new Recipe({ id: item.id, beverageId: item.beverageId, materialId: item.materialId, count: item.count });
-  }
 }

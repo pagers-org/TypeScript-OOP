@@ -39,7 +39,7 @@ export class CafeStorage {
 
     return orders.map((item: any) => {
       const groups = item.optionGroups.optionGroups;
-      const beverage = Beverage.fromObject(item.beverage);
+      const beverage = new Beverage(item.beverage);
 
       const optionGroups = groups.map((optionGroup: any) => {
         const optionList = optionGroup.options.options as OptionConstructor[];

@@ -4,7 +4,7 @@ export interface Storage {
 }
 
 export class LocalStorage implements Storage {
-  get(key: string, defaultValue = '{}'): any {
+  get(key: string, defaultValue = {}): any {
     const item = localStorage.getItem(key);
 
     if (!item) {

@@ -1,5 +1,6 @@
 import { Order, Serving, Servings } from '@/domain';
 import { OrderGroups } from '@/domain/order/group/OrderGroups';
+import { cafeStorage } from '@/main';
 
 export class Cafe {
   private readonly orderGroups: OrderGroups;
@@ -40,5 +41,13 @@ export class Cafe {
 
   public getServingAll() {
     return this.servings.getAll();
+  }
+
+  public saveOrders() {
+    cafeStorage.saveOrders(this.orderGroups.getOrderAll());
+  }
+
+  public saveServings() {
+    cafeStorage.saveServings(this.servings.getAll());
   }
 }

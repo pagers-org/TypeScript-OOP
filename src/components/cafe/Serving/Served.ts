@@ -9,9 +9,7 @@ export class Served extends Component {
   private $servedList: ServedItem[] = [];
 
   protected mounted() {
-    this.cafe.getServingAll().forEach(serving => {
-      this.add(serving);
-    });
+    this.addAll(this.cafe.getServingAll());
   }
 
   protected bindElements() {
@@ -35,6 +33,10 @@ export class Served extends Component {
 
     this.$servedList.push(servingElement);
     this.$makedTable.appendChild(servingElement);
+  }
+
+  private addAll(servings: Serving[]) {
+    servings.forEach(serving => this.add(serving));
   }
 
   private updateListNo() {

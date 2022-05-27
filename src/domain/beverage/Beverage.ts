@@ -25,8 +25,4 @@ export class Beverage {
   public clone() {
     return new Beverage({ id: this.id, name: this.name });
   }
-
-  public static fromObject(item: BeverageConstructor) {
-    return new Beverage(item);
-  }
 }
