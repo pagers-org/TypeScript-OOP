@@ -1,32 +1,33 @@
-import { Order, Orders, Serving, Servings } from '@/domain';
+import { Order, Serving, Servings } from '@/domain';
+import { OrderGroups } from '@/domain/order/group/OrderGroups';
 
 export class Cafe {
-  private readonly orders: Orders;
+  private readonly orderGroups: OrderGroups;
   private readonly servings: Servings;
 
-  constructor(orders: Orders, servings: Servings) {
-    this.orders = orders;
+  constructor(orderGroups: OrderGroups, servings: Servings) {
+    this.orderGroups = orderGroups;
     this.servings = servings;
   }
 
   public isEmptyOrder(): boolean {
-    return this.orders.isEmpty();
+    return this.orderGroups.isEmpty();
   }
 
   public isEmptyOrderGroup(beverageId: number): boolean {
-    return this.orders.isEmptyOrderGroup(beverageId);
+    return this.orderGroups.isEmptyById(beverageId);
   }
 
   public addOrder(order: Order): void {
-    this.orders.addOrder(order);
+    this.orderGroups.addOrder(order);
   }
 
   public removeOrder(order: Order): void {
-    this.orders.removeOrder(order);
+    this.orderGroups.removeOrder(order);
   }
 
   public firstOrder(): Order {
-    return this.orders.firstOrder();
+    return this.orderGroups.firstOrder();
   }
 
   public addServing(serving: Serving) {

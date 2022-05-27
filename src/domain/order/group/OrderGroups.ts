@@ -1,4 +1,5 @@
 import { OrderGroup } from '@/domain/order/group/OrderGroup';
+import { Order } from '@/domain';
 
 export class OrderGroups {
   private orderGroups: OrderGroup[] = [];
@@ -40,5 +41,22 @@ export class OrderGroups {
   public find(groupId: number): OrderGroup {
     const result = this.orderGroups.find(orderGroup => orderGroup.getId() === groupId);
     return result ? result : new OrderGroup({ id: groupId });
+  }
+
+  firstOrder() {
+    return this.first().firstOrder();
+  }
+
+  addOrder(order: Order) {
+    this.add(order.getBeverageId()).add(order);
+  }
+
+  removeOrder(order: Order) {
+    const orderGroup = this.find(order.getBeverageId());
+    orderGroup.remove(order);
+
+    if (orderGroup.isEmpty()) {
+      this.remove(order.getBeverageId());
+    }
   }
 }

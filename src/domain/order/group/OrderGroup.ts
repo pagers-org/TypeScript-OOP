@@ -1,17 +1,17 @@
-import { Order } from '@/domain';
+import { Order, Orders } from '@/domain';
 
 export type OrderGroupConstructor = {
   id: number;
-  orderList?: Order[];
+  orders?: Orders;
 };
 
 export class OrderGroup {
   private readonly id: number;
-  private orderList: Order[];
+  private orders: Orders;
 
   constructor(constructor: OrderGroupConstructor) {
     this.id = constructor.id;
-    this.orderList = constructor.orderList || [];
+    this.orders = constructor.orders || new Orders({ orders: [] });
   }
 
   public getId() {
@@ -19,31 +19,27 @@ export class OrderGroup {
   }
 
   public add(order: Order): void {
-    this.orderList = [...this.orderList, order];
+    this.orders.add(order);
   }
 
   public remove(order: Order): void {
-    this.orderList = this.orderList.filter(item => item.getId() !== order.getId());
+    this.orders.remove(order);
   }
 
   public findOrder(order: Order) {
-    return this.orderList.find(item => item.getId() === order.getId());
+    return this.orders.findOrder(order);
   }
 
   public firstOrder(): Order {
-    if (this.isEmpty()) {
-      throw new Error();
-    }
-
-    return this.orderList[0];
+    return this.orders.firstOrder();
   }
 
-  public shift(): Order | undefined {
-    return this.orderList.shift();
+  public shiftOrder(): Order | undefined {
+    return this.orders.shiftOrder();
   }
 
   public size(): number {
-    return this.orderList.length;
+    return this.orders.size();
   }
 
   public isEmpty(): boolean {

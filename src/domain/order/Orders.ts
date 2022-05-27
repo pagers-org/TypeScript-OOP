@@ -1,48 +1,45 @@
 import { Order } from '@/domain';
-import { OrderGroups } from '@/domain/order/group/OrderGroups';
+
+export type OrdersConstructor = {
+  orders: Order[];
+};
 
 export class Orders {
-  private orderGroups: OrderGroups = new OrderGroups();
+  private orders: Order[];
 
-  public addOrder(order: Order): void {
-    const orderGroup = this.orderGroups.add(order.getBeverageId());
-    orderGroup.add(order);
+  constructor(constructor: OrdersConstructor) {
+    this.orders = constructor.orders || [];
   }
 
-  public removeOrder(order: Order): void {
-    const orderGroup = this.orderGroups.find(order.getBeverageId());
-    orderGroup.remove(order);
-
-    if (orderGroup.isEmpty()) {
-      this.orderGroups.remove(order.getBeverageId());
-    }
+  public add(order: Order): void {
+    this.orders = [...this.orders, order];
   }
 
-  public isEmptyOrderGroup(groupId: number) {
-    return this.orderGroups.isEmptyById(groupId);
+  public remove(order: Order): void {
+    this.orders = this.orders.filter(item => item.getId() !== order.getId());
   }
 
-  public firstOrderShift(): Order {
-    const order = this.orderGroups.first().shift();
-
-    if (order) {
-      this.removeOrder(order);
-    }
-
-    return order as Order;
+  public findOrder(order: Order) {
+    return this.orders.find(item => item.getId() === order.getId());
   }
 
   public firstOrder(): Order {
-    const order = this.orderGroups.first().firstOrder();
-
-    if (!order) {
+    if (this.isEmpty()) {
       throw new Error();
     }
 
-    return order;
+    return this.orders[0];
+  }
+
+  public shiftOrder(): Order | undefined {
+    return this.orders.shift();
+  }
+
+  public size(): number {
+    return this.orders.length;
   }
 
   public isEmpty(): boolean {
-    return this.orderGroups.isEmpty();
+    return this.size() == 0;
   }
 }
