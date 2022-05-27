@@ -1,5 +1,5 @@
 import { Order } from '@/domain';
-import { OrderGroups } from '@/domain/order/OrderGroups';
+import { OrderGroups } from '@/domain/order/group/OrderGroups';
 
 export class Orders {
   private orderGroups: OrderGroups = new OrderGroups();

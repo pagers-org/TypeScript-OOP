@@ -1,4 +1,4 @@
-import { OrderGroup } from '@/domain/order/OrderGroup';
+import { OrderGroup } from '@/domain/order/group/OrderGroup';
 
 export class OrderGroups {
   private orderGroups: OrderGroup[] = [];

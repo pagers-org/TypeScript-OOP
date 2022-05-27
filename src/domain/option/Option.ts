@@ -33,12 +33,4 @@ export class Option {
   public getGroupId(): number {
     return this.optionGroupId;
   }
-
-  public clone() {
-    return new Option({
-      id: this.id,
-      optionGroupId: this.optionGroupId,
-      name: this.name,
-    });
-  }
 }

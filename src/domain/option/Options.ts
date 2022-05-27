@@ -50,10 +50,4 @@ export class Options {
   private getSelectedOptions(): Option[] {
     return this.options.filter(item => item.isSelected());
   }
-
-  public clone() {
-    return new Options({
-      options: this.options,
-    });
-  }
 }

@@ -1,6 +1,6 @@
 import { api } from '@/main';
 import { getRandomRange } from '@/common/CommonUtils';
-import { Menu, MenuItem, Order } from '@/domain';
+import { Menu, MenuItem, OptionGroups, Order } from '@/domain';
 import { nanoid } from 'nanoid';
 
 export async function createMenu() {
@@ -20,7 +20,7 @@ export async function createRandomOrderByBeverageId(beverageId: number) {
   return new Order({
     id: nanoid(),
     beverage,
-    optionGroups: await randomOptionGroups(),
+    optionGroups: new OptionGroups({ optionGroups: await randomOptionGroups() }),
   });
 }
 
