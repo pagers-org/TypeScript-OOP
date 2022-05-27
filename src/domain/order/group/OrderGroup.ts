@@ -11,6 +11,7 @@ export class OrderGroup {
 
   constructor(constructor: OrderGroupConstructor) {
     this.id = constructor.id;
+
     this.orders = constructor.orders || new Orders({ orders: [] });
   }
 
@@ -44,5 +45,9 @@ export class OrderGroup {
 
   public isEmpty(): boolean {
     return this.size() == 0;
+  }
+
+  public getOrders() {
+    return this.orders.getOrders();
   }
 }

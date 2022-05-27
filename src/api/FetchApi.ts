@@ -8,7 +8,6 @@ import {
   OptionConstructor,
   OptionGroup,
   OptionGroupConstructor,
-  Options,
   Recipe,
   RecipeConstructor,
 } from '@/domain';
@@ -53,7 +52,7 @@ export class FetchApi extends AbstractApi {
 
   protected async beverages(): Promise<Beverage[]> {
     const res = await this.fetch<BeverageConstructor>(API_URL.BEVERAGES);
-    const result = res.map(item => new Beverage({ id: item.id, name: item.name }));
+    const result = res.map(item => Beverage.fromObject(item));
 
     return new Promise<Beverage[]>(resolve => resolve(result));
   }
@@ -71,13 +70,7 @@ export class FetchApi extends AbstractApi {
 
     const result = res.map(item => {
       const options = optionsAll.filter(option => option.getGroupId() == item.id);
-
-      return new OptionGroup({
-        id: item.id,
-        name: item.name,
-        type: item.type,
-        options: new Options({ options }),
-      });
+      return OptionGroup.fromObject({ ...item, options });
     });
 
     return new Promise<OptionGroup[]>(resolve => resolve(result));
@@ -85,16 +78,14 @@ export class FetchApi extends AbstractApi {
 
   protected async options(): Promise<Option[]> {
     const res = await this.fetch<OptionConstructor>(API_URL.OPTIONS);
-    const result = res.map(item => new Option({ id: item.id, optionGroupId: item.optionGroupId, name: item.name }));
+    const result = res.map(item => new Option(item));
 
     return new Promise<Option[]>(resolve => resolve(result));
   }
 
   protected async recipes(): Promise<Recipe[]> {
     const res = await this.fetch<RecipeConstructor>(API_URL.RECIPES);
-    const result = res.map(
-      item => new Recipe({ id: item.id, beverageId: item.beverageId, materialId: item.materialId, count: item.count }),
-    );
+    const result = res.map(item => Recipe.fromObject(item));
 
     return new Promise<Recipe[]>(resolve => resolve(result));
   }

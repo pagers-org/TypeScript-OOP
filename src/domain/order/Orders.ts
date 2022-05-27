@@ -42,4 +42,8 @@ export class Orders {
   public isEmpty(): boolean {
     return this.size() == 0;
   }
+
+  public getOrders() {
+    return this.orders;
+  }
 }

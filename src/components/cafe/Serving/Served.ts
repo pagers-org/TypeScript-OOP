@@ -8,6 +8,12 @@ export class Served extends Component {
   private $makedTable!: HTMLElement;
   private $servedList: ServedItem[] = [];
 
+  protected mounted() {
+    this.cafe.getServingAll().forEach(serving => {
+      this.add(serving);
+    });
+  }
+
   protected bindElements() {
     this.$makedTable = this.$container.querySelector('#maked-table') as HTMLElement;
   }

@@ -1,7 +1,7 @@
 import { createCustomElement } from '@/common';
 import { Header, MenuButton, MenuComponent, Modal, OrderList, OrderListItem, Served, ServedItem } from '@/components';
 import { App } from '@/App';
-import { Cafe } from '@/cafe';
+import { Cafe, CafeStorage, LocalStorage } from '@/cafe';
 import { Servings } from '@/domain';
 import { FetchApi } from '@/api/FetchApi';
 import { EventDispatcher, EventListener } from '@/event';
@@ -11,10 +11,10 @@ export const eventListener = new EventListener();
 export const eventDispatcher = new EventDispatcher();
 
 // const api =new InMemoryApi();
-
+export const cafeStorage = new CafeStorage(new LocalStorage());
 export const api = new FetchApi();
 
-new App(new Cafe(new OrderGroups(), new Servings()));
+new App(new Cafe(new OrderGroups(), new Servings({ servings: cafeStorage.getServings() })));
 
 export const CUSTOM_ELEMENTS = {
   HEADER: 'cafe-header',

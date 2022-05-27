@@ -1,8 +1,17 @@
 import { OrderGroup } from '@/domain/order/group/OrderGroup';
 import { Order } from '@/domain';
 
+export type OrderGroupsConstructor = {
+  orderGroups: OrderGroup[];
+};
+
 export class OrderGroups {
-  private orderGroups: OrderGroup[] = [];
+  private orderGroups: OrderGroup[];
+  private orderItems: Order[] = [];
+
+  constructor(constructor: OrderGroupsConstructor = { orderGroups: [] }) {
+    this.orderGroups = constructor.orderGroups;
+  }
 
   public add(groupId: number): OrderGroup {
     const orderGroup = this.find(groupId);
@@ -49,6 +58,8 @@ export class OrderGroups {
 
   addOrder(order: Order) {
     this.add(order.getBeverageId()).add(order);
+
+    this.orderItems.push(order);
   }
 
   removeOrder(order: Order) {
@@ -58,5 +69,11 @@ export class OrderGroups {
     if (orderGroup.isEmpty()) {
       this.remove(order.getBeverageId());
     }
+
+    this.orderItems = this.orderItems.filter(orderItem => orderItem !== order);
+  }
+
+  getOrderAll() {
+    return this.orderItems;
   }
 }

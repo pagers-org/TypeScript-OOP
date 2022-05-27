@@ -33,4 +33,12 @@ export class Cafe {
   public addServing(serving: Serving) {
     this.servings.add(serving);
   }
+
+  public getOrderAll() {
+    return this.orderGroups.getOrderAll();
+  }
+
+  public getServingAll() {
+    return this.servings.getAll();
+  }
 }

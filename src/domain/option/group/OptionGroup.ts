@@ -71,4 +71,15 @@ export class OptionGroup {
       options: this.options,
     });
   }
+
+  public static fromObject(item: any) {
+    const { options } = item;
+
+    return new OptionGroup({
+      id: item.id,
+      name: item.name,
+      type: item.type,
+      options: new Options({ options }),
+    });
+  }
 }

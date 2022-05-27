@@ -52,4 +52,8 @@ export class Order {
   public getOrderTime() {
     return this.orderTime;
   }
+
+  public static from(o: any) {
+
+  }
 }

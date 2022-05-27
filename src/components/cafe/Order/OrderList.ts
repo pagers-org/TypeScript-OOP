@@ -1,13 +1,21 @@
 import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
-import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { cafeStorage, CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
 import { createRandomOrder, createRandomOrderByBeverageId } from '@/common';
 
 export class OrderList extends Component {
   private $orderTable!: HTMLElement;
   private $orderButton!: HTMLElement;
   private $listItemElements: OrderListItem[] = [];
+
+  protected mounted() {
+    setTimeout(() => {
+      cafeStorage.getOrders().forEach((order: Order) => {
+        this.addOrder(order);
+      });
+    }, 20);
+  }
 
   protected bindElements() {
     this.$orderTable = this.$container.querySelector('#order-table') as HTMLElement;

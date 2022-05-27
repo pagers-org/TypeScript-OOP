@@ -1,3 +1,5 @@
+import { Options } from '@/domain';
+
 export type RecipeConstructor = {
   id: number;
   beverageId: number;
@@ -16,5 +18,9 @@ export class Recipe {
     this.beverageId = constructor.beverageId;
     this.materialId = constructor.materialId;
     this.count = constructor.count;
+  }
+
+  public static fromObject(item: any) {
+    return new Recipe({ id: item.id, beverageId: item.beverageId, materialId: item.materialId, count: item.count });
   }
 }
