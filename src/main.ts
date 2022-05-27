@@ -1,3 +1,5 @@
+import OrderItem from './components/OrderItem';
+
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;
 const coffeeName = document.querySelector('.coffee_name') as HTMLHeadingElement;
@@ -5,6 +7,7 @@ const coffeeFilling = document.querySelector('.filling') as HTMLDivElement;
 const buttons = document.querySelectorAll<HTMLButtonElement>('.coffee-category-button');
 const addCoffeeOptionsForm = document.querySelector('.coffee-add-area form') as HTMLFormElement;
 const modalLayout = document.querySelector('.modal-layout') as HTMLDivElement;
+const orderButton = document.querySelector('.order-button') as HTMLButtonElement;
 
 pageNav.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLInputElement;
@@ -36,4 +39,13 @@ modalLayout.addEventListener('click', (event: MouseEvent) => {
   const $target = event.target as HTMLElement;
   if (!$target.matches('#close-icon')) return;
   modalLayout.classList.toggle('hidden');
+});
+
+function createOrderItem() {
+  const tableRowHeader = document.querySelector('.table-row.header') as HTMLDivElement;
+  tableRowHeader.insertAdjacentHTML('afterend', OrderItem());
+}
+
+orderButton.addEventListener('click', () => {
+  createOrderItem();
 });
