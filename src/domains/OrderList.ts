@@ -20,15 +20,14 @@ export class OrderList {
     this.orderList = this.orderList.filter(order => order.orderId !== removeId);
   }
 
-  // TODO: 로직 고칠 수 있지 않을까?..
   editOrder(editId: string) {
     const Order = this.orderList.find(order => order.orderId === editId);
-    const newOrder = $(`[data-id="${editId}"]`).children;
+    if (!Order) throw new Error(`${editId}의 id가진 order를 찾지못했습니다.`);
 
-    Array.from(newOrder).forEach(($el, index) => {
-      if ($el.getAttribute('data-title') === '수정하기' || $el.getAttribute('data-title') === '삭제하기') return;
-      Order?.updateOrder($el.textContent, index);
-    });
+    const newOrder = $(`[data-id="${editId}"]`).children;
+    const EDIT_CONTENT_COUNT = newOrder.length - 2;
+
+    for (let i = 1; i < EDIT_CONTENT_COUNT; i++) Order.updateOrder(newOrder[i].textContent, i);
   }
 
   get orderListDatas(): OrderInterface[] {

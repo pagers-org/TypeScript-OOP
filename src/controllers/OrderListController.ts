@@ -28,9 +28,12 @@ export class OrderListController {
   }
 
   public handleOrderListClickEvents(target: HTMLElement) {
-    // TODO: editable 고치는 것 말고, 진짜로 고치는 로직 추가해야 함
     if (this.isClickOrderEditButton(target)) {
-      this.changeOrderToEditable(target);
+      if (this.isEditableMode(target)) this.editOrder(target);
+
+      this.toggleContentEditable(target);
+
+      console.log(this.orderList.orderListDatas);
     }
 
     if (this.isClickOrderRemoveButton(target)) {
@@ -56,19 +59,26 @@ export class OrderListController {
     return target.className === DOM.ORDER_BUTTON_CLASS;
   }
 
-  private changeOrderToEditable(target: HTMLElement): void {
-    const clickId = this.getClickOrderId(target);
-    if (!clickId) throw new Error('클릭한 order의 id를 받지 못했습니다.');
+  private isEditableMode(target: HTMLElement): boolean {
+    return !!target.closest('.table-row')?.children[1].hasAttribute('contentEditAble');
+  }
 
-    this.orderListView.changeTableRowToEditable(clickId);
+  private toggleContentEditable(target: HTMLElement): void {
+    const clickId = this.getClickOrderId(target);
+    this.orderListView.toggleContentEditable(clickId);
   }
 
   private removeOrder(target: HTMLElement): void {
     const clickId = this.getClickOrderId(target);
-    if (!clickId) throw new Error('클릭한 order의 id를 받지 못했습니다.');
-
     this.orderList.removeOrder(clickId);
     this.orderListView.renderOrderList(this.orderList.orderListDatas);
+  }
+
+  private editOrder(target: HTMLElement): void {
+    const $editedOrderRow = target.closest('.table-row');
+    if (!$editedOrderRow) throw new Error('제일 가까운 곳에 .table-row 클래스 이름을 가진 요소가 없습니다.');
+
+    this.orderList.editOrder(this.getClickOrderId(target));
   }
 
   private addRandomOrder(): void {
@@ -95,7 +105,14 @@ export class OrderListController {
     return this.orderList.orderTotalLength;
   }
 
-  private getClickOrderId(target: HTMLElement): string | null | undefined {
-    return target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`)?.getAttribute('data-id');
+  private getClickOrderId(target: HTMLElement): string {
+    const clickedOrder = target.closest(`.${DOM.ORDER_TABLE_ROW_CLASS}`);
+    if (!clickedOrder)
+      throw new Error(`가까운 곳에 ${DOM.ORDER_TABLE_ROW_CLASS}의 클래스 이름을 가진 요소가 없습니다.`);
+
+    const clickedOrderId = clickedOrder.getAttribute('data-id');
+    if (!clickedOrderId) throw new Error('클릭된 곳의 table row에 id값이 존재하지 않습니다.');
+
+    return clickedOrderId;
   }
 }
