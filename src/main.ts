@@ -11,10 +11,15 @@ export const eventListener = new EventListener();
 export const eventDispatcher = new EventDispatcher();
 
 // const api =new InMemoryApi();
-export const cafeStorage = new CafeStorage(new LocalStorage());
 export const api = new FetchApi();
 
-new App(new Cafe(new OrderGroups(), new Servings({ servings: cafeStorage.getServings() })));
+new App(
+  new Cafe({
+    servings: new Servings(),
+    orderGroups: new OrderGroups(),
+    storage: new CafeStorage(new LocalStorage()),
+  }),
+);
 
 export const CUSTOM_ELEMENTS = {
   HEADER: 'cafe-header',

@@ -1,14 +1,22 @@
 import { Order, Serving, Servings } from '@/domain';
 import { OrderGroups } from '@/domain/order/group/OrderGroups';
-import { cafeStorage } from '@/main';
+import { CafeStorage } from '@/cafe/CafeStorage';
+
+export type CafeConstructor = {
+  orderGroups: OrderGroups;
+  servings: Servings;
+  storage: CafeStorage;
+};
 
 export class Cafe {
   private readonly orderGroups: OrderGroups;
   private readonly servings: Servings;
+  private readonly storage: CafeStorage;
 
-  constructor(orderGroups: OrderGroups, servings: Servings) {
-    this.orderGroups = orderGroups;
-    this.servings = servings;
+  constructor(constructor: CafeConstructor) {
+    this.orderGroups = constructor.orderGroups;
+    this.servings = constructor.servings;
+    this.storage = constructor.storage;
   }
 
   public isEmptyOrder(): boolean {
@@ -35,19 +43,19 @@ export class Cafe {
     this.servings.add(serving);
   }
 
-  public getOrderAll() {
-    return this.orderGroups.getOrderAll();
-  }
-
-  public getServingAll() {
-    return this.servings.getAll();
-  }
-
   public saveOrders() {
-    cafeStorage.saveOrders(this.orderGroups.getOrderAll());
+    this.storage.saveOrders(this.orderGroups.getOrderAll());
   }
 
   public saveServings() {
-    cafeStorage.saveServings(this.servings.getAll());
+    this.storage.saveServings(this.servings.getAll());
+  }
+
+  public getOrderAllFromStorage() {
+    return this.storage.getOrders();
+  }
+
+  public getServingAllFromStorage() {
+    return this.storage.getServings();
   }
 }

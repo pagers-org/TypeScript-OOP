@@ -1,7 +1,7 @@
 import { Component, OrderListItem } from '@/components';
 import { Order } from '@/domain';
 import { OrderListView } from './OrderListView';
-import { cafeStorage, CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
+import { CUSTOM_ELEMENTS, eventDispatcher, eventListener } from '@/main';
 import { createRandomOrder, createRandomOrderByBeverageId } from '@/common';
 
 export class OrderList extends Component {
@@ -11,7 +11,7 @@ export class OrderList extends Component {
 
   protected mounted() {
     setTimeout(() => {
-      this.addOrderAll(cafeStorage.getOrders());
+      this.addOrderAll(this.cafe.getOrderAllFromStorage());
     }, 20);
   }
 
@@ -30,7 +30,7 @@ export class OrderList extends Component {
       })
       .menuButtonClick(async ({ button }) => {
         this.addOrder(await createRandomOrderByBeverageId(button.getMenuId()));
-        cafeStorage.saveOrders(this.cafe.getOrderAll());
+        this.cafe.saveOrders();
       });
   }
 
@@ -39,7 +39,7 @@ export class OrderList extends Component {
       e.preventDefault();
 
       this.addOrder(await createRandomOrder());
-      cafeStorage.saveOrders(this.cafe.getOrderAll());
+      this.cafe.saveOrders();
     });
   }
 

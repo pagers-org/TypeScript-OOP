@@ -9,7 +9,7 @@ export class Served extends Component {
   private $servedList: ServedItem[] = [];
 
   protected mounted() {
-    this.addAll(this.cafe.getServingAll());
+    this.addAll(this.cafe.getServingAllFromStorage());
   }
 
   protected bindElements() {

@@ -1,6 +1,6 @@
 import { addCustomEventListener } from '@/common';
 import { Cafe } from '@/cafe';
-import { cafeStorage, eventListener } from '@/main';
+import { eventListener } from '@/main';
 import { Events } from '@/event';
 
 export class App {
@@ -20,18 +20,18 @@ export class App {
     eventListener
       .orderAdded(({ order }) => {
         this.cafe.addOrder(order);
-        cafeStorage.saveOrders(this.cafe.getOrderAll());
+        this.cafe.saveOrders();
       })
       .orderRemoved(({ order }) => {
         this.cafe.removeOrder(order);
-        cafeStorage.saveOrders(this.cafe.getOrderAll());
+        this.cafe.saveOrders();
       })
       .changedOption(({ order, groupName, value }) => {
         order.setSelectedOptionValue(groupName, value);
       })
       .afterServing(({ serving }) => {
         this.cafe.addServing(serving);
-        cafeStorage.saveServings(this.cafe.getServingAll());
+        this.cafe.saveServings();
       });
   }
 }
