@@ -101,7 +101,12 @@ export class MenuComponent extends Component {
     }
 
     const $modal = this.createComponent<Modal>(CUSTOM_ELEMENTS.MODAL);
-    $modal.open(await this.cafe.firstOrder());
+
+    try {
+      $modal.open(await this.cafe.firstOrder());
+    } catch (e) {
+      alert((e as Error).message);
+    }
   }
 
   protected view(): string {

@@ -40,7 +40,7 @@ export class OrderGroups {
 
   public first(): OrderGroup {
     if (this.isEmpty()) {
-      throw new Error();
+      throw new Error('주문이 없습니다');
     }
 
     return this.orderGroups[0];
