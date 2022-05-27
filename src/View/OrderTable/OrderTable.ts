@@ -4,6 +4,11 @@ import { dispatch } from '@/Stores/orderStore/orderStore';
 import OrderFactory from '@/Model/OrderFactory';
 
 class OrderTable extends View {
+  constructor() {
+    super();
+    this.bindEvents();
+  }
+
   $orderTable = document.getElementById('order-table')!;
   $newOrderButton = document.getElementById('new-order')!;
 
@@ -12,8 +17,9 @@ class OrderTable extends View {
       const $order = document.createElement('cafe-order-row') as OrderRow;
       const orderFactory = new OrderFactory();
       const newOrder = orderFactory.createRandomOrder();
-      dispatch({ type: 'add', payload: newOrder });
-      $order.setOrder(newOrder);
+      setTimeout(() => {
+        dispatch({ type: 'add', payload: newOrder });
+      }, 2000);
 
       this.$orderTable.appendChild($order);
     });

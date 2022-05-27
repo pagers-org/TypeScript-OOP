@@ -1,11 +1,5 @@
 abstract class View {
-  constructor() {
-    this.bindEvents();
-  }
-
-  protected bindEvents = () => {
-    // override
-  };
+  protected abstract bindEvents: () => void;
 }
 
 export default View;
