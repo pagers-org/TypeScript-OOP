@@ -13,6 +13,7 @@ class Kitchen extends View {
     super();
     const children = Array.from(this.$kitchenController.children);
     this.mapCoffeeCategoryButton(children);
+    this.bindEvents();
   }
 
   protected bindEvents = () => {
@@ -20,17 +21,17 @@ class Kitchen extends View {
       alert('주문해주세요!');
     });
 
-    window.addEventListener(ORDER_STORE.event, e => {
+    const listener = (e: CustomEvent) => {
       const { type, store, payload } = e.detail;
       if (type === ORDER_STORE.types.ADD) {
-        const addedOrder = payload as Order;
+        const addedOrder = payload.order;
 
         return this.addDrink(addedOrder.drink);
       }
 
       if (type === ORDER_STORE.types.DELETE) {
         const storedOrders = store.orders as Order[];
-        const deletedOrder = payload as Order;
+        const deletedOrder = payload.order;
         const isSameCoffeeExist = storedOrders.find(order => order.drink.isSameDrink(deletedOrder.drink));
 
         if (!isSameCoffeeExist) {
@@ -41,7 +42,9 @@ class Kitchen extends View {
           }
         }
       }
-    });
+    };
+
+    window.addEventListener(ORDER_STORE.event, listener as EventListener);
   };
 
   private mapCoffeeCategoryButton(elements: Element[]) {
