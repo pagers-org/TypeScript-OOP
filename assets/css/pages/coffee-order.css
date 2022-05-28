@@ -295,6 +295,9 @@ div.whipped_cream {
 .coffee-category-button:hover {
   background: rgba(255, 255, 255, 0.6);
 }
+.coffee-category-button:hover:disabled {
+  background: unset;
+}
 
 .select-coffee-container .selected {
   background: rgba(255, 255, 255, 0.8);
