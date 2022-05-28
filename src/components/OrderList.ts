@@ -74,17 +74,20 @@ class OrderList extends Component implements Observable {
   private updateOrderById(id: number) {
     const order = findById(this.state.orders, id);
     if (!order) return;
+
     const $order = selectTarget(`[data-order-id="${order.id}"]`);
 
-    const optionValues = Array.from($order.childNodes).reduce<string[]>((acc, currNode) => {
+    const optionValues = Array.from($order.childNodes).reduce((acc, currNode) => {
       if (!(currNode instanceof HTMLDivElement) || !currNode.isContentEditable) return acc;
       return [...acc, currNode.textContent || ''];
-    }, []);
+    }, [] as string[]);
 
     order.options.forEach((option, index) => option.setValue(optionValues[index]));
 
     this.setState({
-      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: false } : _order)),
+      orders: this.state.orders.map(prevOrder =>
+        prevOrder.id === order.id ? { ...order, editable: false } : prevOrder,
+      ),
     });
   }
 
@@ -92,7 +95,9 @@ class OrderList extends Component implements Observable {
     const order = findById(this.state.orders, id);
     if (!order) return;
     this.setState({
-      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: true } : _order)),
+      orders: this.state.orders.map(prevOrder =>
+        prevOrder.id === order.id ? { ...order, editable: true } : prevOrder,
+      ),
     });
   }
 
@@ -102,13 +107,9 @@ class OrderList extends Component implements Observable {
     this.setState({ orders: this.state.orders.filter(v => v.id !== order.id) });
   }
 
-  private getUniqueId() {
-    return generator.getUniqueId();
-  }
-
   private getNewOrder(): Order {
     return {
-      id: this.getUniqueId(),
+      id: generator.getUniqueId(),
       editable: false,
       coffee: CoffeeService.getRandomCoffee(),
       options: CoffeeService.getRandomOptions(),

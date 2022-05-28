@@ -20,13 +20,11 @@ export const selectClosestFromTarget = (target: HTMLElement, selector: string): 
   return closestEl;
 };
 
-export const addClassList = (params: { selector: string; className: string }) => {
-  const { selector, className } = params;
+export const addClassList = ({ selector, className }: { selector: string; className: string }) => {
   selectTarget(selector).classList.add(className);
 };
 
-export const removeClassList = (params: { selector: string; className: string }) => {
-  const { selector, className } = params;
+export const removeClassList = ({ selector, className }: { selector: string; className: string }) => {
   selectTarget(selector).classList.remove(className);
 };
 

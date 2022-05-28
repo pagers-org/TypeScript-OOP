@@ -8,20 +8,19 @@ class Coffee {
   }
 }
 
-const COFFE_IDS = {
-  americano: 'americano',
-  au_lait: 'au_lait',
-  capuccino: 'capuccino',
-  corretto: 'corretto',
-  espresso: 'espresso',
-  latte: 'latte',
-  lungo: 'lungo',
-  macchiato: 'macchiato',
-  mocha: 'mocha',
-  ristretto: 'ristretto',
-} as const;
+type CoffeeId =
+  | 'americano'
+  | 'au_lait'
+  | 'capuccino'
+  | 'corretto'
+  | 'espresso'
+  | 'latte'
+  | 'lungo'
+  | 'macchiato'
+  | 'mocha'
+  | 'ristretto';
 
-export const COFFE_NAMES: Record<keyof typeof COFFE_IDS, string> = {
+export const COFFE_NAMES: Record<CoffeeId, string> = {
   americano: '아메리카노',
   au_lait: '카페 오레',
   capuccino: '카푸치노',
