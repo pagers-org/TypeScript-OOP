@@ -1,10 +1,14 @@
 import Kitchen from './components/Kitchen';
 import OrderList from './components/OrderList';
+import Subject from './core/Subject';
 
 (() => {
   const orderList = new OrderList(document.querySelector('.order-list'));
   const kitchen = new Kitchen(document.querySelector('#right-section'));
-  kitchen.subscription = orderList.subscribe(kitchen.subscriber.bind(kitchen));
+
+  orderList.setSubject(new Subject()).subscribe(kitchen.observer);
+
+  // kitchen.subscription = orderList.subscribe(kitchen.subscriber.bind(kitchen));
 })();
 
 // let currentElement: HTMLButtonElement | null = null;

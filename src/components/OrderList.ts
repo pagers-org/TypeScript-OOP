@@ -1,4 +1,5 @@
 import Component from '../core/Component';
+import Subject from '../core/Subject';
 import Coffee from '../model/Coffee';
 import Option from '../model/Option';
 import CoffeeService from '../services/CoffeeService';
@@ -15,23 +16,21 @@ type Order = {
 
 export type OrdersState = { orders: Order[] };
 
-class OrderList extends Component implements Observable {
+class OrderList extends Component implements Subjectable<OrdersState> {
   private state: OrdersState = { orders: [] };
-  private observers$ = new Set();
+  private subject: Subject<OrdersState> | null;
 
   init() {
     this.setEvent();
   }
 
-  subscribe<OrdersState>(callback: (s: OrdersState) => void) {
-    this.observers$.add(callback);
-    return {
-      unsubscribe: () => this.observers$.delete(callback),
-    };
-  }
-
-  next() {
-    this.observers$.forEach(callback => typeof callback === 'function' && callback(this.state));
+  setSubject(subject: Subject<OrdersState>) {
+    if (this.subject) {
+      console.warn('[OrderList] can handle only one subject');
+    } else {
+      this.subject = subject;
+    }
+    return this.subject;
   }
 
   render() {
@@ -43,7 +42,7 @@ class OrderList extends Component implements Observable {
   setState<OrdersState>(state: OrdersState) {
     this.state = { ...this.state, ...state };
     this.render();
-    this.next();
+    this.subject && this.subject.next(this.state);
   }
 
   setEvent(): void {

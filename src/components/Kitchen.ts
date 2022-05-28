@@ -5,11 +5,9 @@ import { OrdersState } from './OrderList';
 
 type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
 
-class Kitchen extends Component {
+class Kitchen extends Component implements Observer<OrdersState> {
   private state: KitchenState = { isOpened: false, orders: [] };
   private _selectedCoffee: Coffee | undefined;
-
-  subscription: ReturnType<Observable['subscribe']> | undefined;
 
   set selectedCoffee(coffee: Coffee) {
     this.toggleSelectedCoffee(coffee);
@@ -112,7 +110,7 @@ class Kitchen extends Component {
     }
   }
 
-  subscriber(state: OrdersState) {
+  observer(state: OrdersState) {
     if (state.orders.length === 0) {
       return this.setState({ isOpened: false, orders: state.orders });
     }
