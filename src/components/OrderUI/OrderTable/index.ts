@@ -19,7 +19,6 @@ const OrderTable = ({ rows }: { rows: ExtraSelection[] }) => {
       </div>
   </div>
 `;
-
   const $orderTable = createDom(template);
 
   // 컴포지션을 위한 처리...
@@ -60,7 +59,6 @@ const OrderTable = ({ rows }: { rows: ExtraSelection[] }) => {
     if (itemId === null || itemId === undefined) {
       return;
     }
-
     EventBus.emit<{ id: string }>(EVENTS.editOrder.byId, { id: itemId });
   };
   $orderTable.addEventListener('click', onEditClick);

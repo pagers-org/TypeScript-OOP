@@ -43,10 +43,13 @@ const OrderUI = ({ $target }: { $target: Element | null }) => {
   const editById = ({ id }: { id: string }) => {
     try {
       const item = selectionCollection.getById(id).clone();
+
       const selectableList = item.getSelectableList();
       const randomSelected = selectableList[Math.floor(Math.random() * selectableList.length)];
-      selectionCollection.select({ type: item.getType(), selected: randomSelected });
-      EventBus.emit(EVENTS.editOrder.completed, { item: selectionCollection.getById(id) });
+      item.select({ type: item.getType(), selected: randomSelected });
+
+      selectionCollection.edit(item);
+      EventBus.emit(EVENTS.editOrder.completed, { item });
     } catch (e) {
       alert(e);
     }

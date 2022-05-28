@@ -44,12 +44,12 @@ export const EXTRA_OPTIONS: ExtraIngredientRecord[] = [
 ];
 
 export const EVENTS = {
-  createOrder: { random: 'random', completed: 'completed' },
+  createOrder: { random: 'createOrderRandom', completed: 'createOrderCompleted' },
   deleteOrder: {
-    byId: 'byId',
+    byId: 'deleteOrderById',
   },
   editOrder: {
-    byId: 'byId',
-    completed: 'completed',
+    byId: 'editOrderById',
+    completed: 'editOrderCompleted',
   },
 } as const;
