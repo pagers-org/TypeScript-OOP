@@ -1,9 +1,9 @@
-import { ExtraSelection } from '@/businessLogic/extraSelection';
 import TableRow from '@/components/OrderUI/OrderTable/TableRow';
+import OrderDTO from '@/domains/order/OrderDTO';
 
-const TableRows = ({ rows }: { rows: ExtraSelection[] }) => {
+const TableRows = ({ rows }: { rows: OrderDTO[] }) => {
   const $frag = document.createDocumentFragment();
-  rows.forEach(item => $frag.appendChild(TableRow({ item })));
+  rows.forEach(item => $frag.appendChild(TableRow({ order: item })));
   return $frag;
 };
 

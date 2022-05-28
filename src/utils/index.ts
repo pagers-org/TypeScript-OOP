@@ -17,3 +17,16 @@ export const castEventTargetToElement = (target: EventTarget | null) => {
   }
   return target as Element;
 };
+
+export const getRandomLessThanLength = <T>(items: T[]): number => {
+  const len = items.length;
+
+  return Math.floor(Math.random() * len);
+};
+export const choiceRandomOne = <T>(items: T[]): T => {
+  return items[getRandomLessThanLength(items)];
+};
+
+export const deepCopyEntity = <T>(entity: T): T => {
+  return JSON.parse(JSON.stringify(entity)) as T;
+};

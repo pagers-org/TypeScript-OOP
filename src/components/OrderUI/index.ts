@@ -1,39 +1,29 @@
 import OrderTitle from '@/components/OrderUI/OrderTitle';
 import OrderButtonArea from '@/components/OrderUI/OrderButtonArea';
 import OrderTable from '@/components/OrderUI/OrderTable';
-import { ExtraSelectionCollection } from '@/businessLogic/extraSelectionCollection';
-import { ExtraSelection } from '@/businessLogic/extraSelection';
-import { EVENTS, EXTRA_OPTIONS } from '@/constants';
-import EventBus from '@/businessLogic/core/EventBus';
+import { EVENTS } from '@/constants';
+import EventBus from '@/domains/core/EventBus';
+import OrderDTO from '@/domains/order/OrderDTO';
+import { Repository } from '@/domains/core/type';
+import { createRandomOrderEntity } from '@/domains/order/orderService/createRandomOrderEntity';
 
-// 임시 생성자
-const genExtraSelectionCollectionArg = () => {
-  const record = new Map<string, ExtraSelection>();
-  EXTRA_OPTIONS.forEach(option => record.set(option.type, new ExtraSelection(option)));
-  return record;
-};
-
-const OrderUI = ({ $target }: { $target: Element | null }) => {
+const OrderUI = ({ $target, orderRepository }: { $target: Element | null; orderRepository: Repository<OrderDTO> }) => {
   if (!$target) {
     throw new Error('타겟 필요');
   }
-  const selectionCollection = new ExtraSelectionCollection(genExtraSelectionCollectionArg());
 
   const createRandomOrder = () => {
-    const newItem = new ExtraSelection(EXTRA_OPTIONS[Math.floor(EXTRA_OPTIONS.length * Math.random())]);
-    selectionCollection.add(newItem);
-    EventBus.emit(EVENTS.createOrder.completed, { item: newItem });
-
-    // // 실험 1 custom event 로 관리하기
-    // dispatchEvent(new CustomEvent(EVENTS.createOrder, { detail: newItem }));
+    const newOrderDTO = new OrderDTO(createRandomOrderEntity());
+    orderRepository.add(newOrderDTO);
+    EventBus.emit(EVENTS.createOrder.completed, { item: newOrderDTO });
   };
   EventBus.on(EVENTS.createOrder.random, createRandomOrder);
 
-  // 실험 2 custom event bus 로 관리하기
   const deleteById = ({ id }: { id: string }) => {
     try {
-      const item = selectionCollection.getById(id);
-      selectionCollection.remove(item);
+      const item = orderRepository.findById(id);
+      orderRepository.remove(item);
+      EventBus.emit(EVENTS.deleteOrder.completed, { item });
     } catch (e) {
       alert(e);
     }
@@ -42,14 +32,10 @@ const OrderUI = ({ $target }: { $target: Element | null }) => {
 
   const editById = ({ id }: { id: string }) => {
     try {
-      const item = selectionCollection.getById(id).clone();
-
-      const selectableList = item.getSelectableList();
-      const randomSelected = selectableList[Math.floor(Math.random() * selectableList.length)];
-      item.select({ type: item.getType(), selected: randomSelected });
-
-      selectionCollection.edit(item);
-      EventBus.emit(EVENTS.editOrder.completed, { item });
+      const item = orderRepository.findById(id);
+      const newOrderDTO = new OrderDTO({ ...createRandomOrderEntity(item.orderNo), id: item.id });
+      orderRepository.edit(newOrderDTO);
+      EventBus.emit(EVENTS.editOrder.completed, { item: newOrderDTO });
     } catch (e) {
       alert(e);
     }
@@ -59,7 +45,7 @@ const OrderUI = ({ $target }: { $target: Element | null }) => {
   const clone = $target.cloneNode(false);
   clone.appendChild(OrderTitle());
   clone.appendChild(OrderButtonArea());
-  clone.appendChild(OrderTable({ rows: selectionCollection.getSelectedAll() }));
+  clone.appendChild(OrderTable({ rows: orderRepository.getAll() }));
   $target.replaceWith(clone);
 };
 
