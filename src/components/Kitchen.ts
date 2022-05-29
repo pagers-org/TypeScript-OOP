@@ -7,11 +7,11 @@ type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
 
 class Kitchen extends Component implements Observer<OrdersState> {
   private state: KitchenState = { isOpened: false, orders: [] };
-  private _selectedCoffee: Coffee | undefined;
+  private selectedCoffee: Coffee | undefined;
 
-  set selectedCoffee(coffee: Coffee) {
+  set setSelectedCoffee(coffee: Coffee) {
     this.toggleSelectedCoffee(coffee);
-    this._selectedCoffee = coffee;
+    this.selectedCoffee = coffee;
   }
 
   init(): void {
@@ -128,8 +128,8 @@ class Kitchen extends Component implements Observer<OrdersState> {
   }
 
   toggleSelectedCoffee(coffee: Coffee) {
-    if (this._selectedCoffee) {
-      removeClassList({ selector: '.filling', className: this._selectedCoffee.id });
+    if (this.selectedCoffee) {
+      removeClassList({ selector: '.filling', className: this.selectedCoffee.id });
     }
 
     addClassList({ selector: '.filling', className: coffee.id });
