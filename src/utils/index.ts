@@ -33,6 +33,18 @@ export const setInnerText = (params: { selector: string; innerText: string }) =>
   selectTarget(selector).innerText = innerText;
 };
 
+export const pickChunk = <T extends unknown[]>(arr: T, sliceSize: number, currSlice: number): T => {
+  if (sliceSize < currSlice) {
+    console.warn('sliceSize can not be greater than currSlice');
+    return arr;
+  }
+
+  return arr.slice(
+    Math.floor(arr.length / sliceSize) * currSlice,
+    Math.floor(arr.length / sliceSize) * (currSlice + 1),
+  ) as T;
+};
+
 export const generator = (() => {
   let id = 0;
 

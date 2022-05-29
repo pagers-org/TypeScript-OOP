@@ -8,7 +8,7 @@ class Coffee {
   }
 }
 
-type CoffeeId =
+export type CoffeeId =
   | 'americano'
   | 'au_lait'
   | 'capuccino'

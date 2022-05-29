@@ -6,9 +6,8 @@ import Subject from './core/Subject';
   const orderList = new OrderList(document.querySelector('.order-list'));
   const kitchen = new Kitchen(document.querySelector('#right-section'));
 
-  orderList.setSubject(new Subject()).subscribe(kitchen.observer);
-
-  // kitchen.subscription = orderList.subscribe(kitchen.subscriber.bind(kitchen));
+  const subscription = orderList.setSubject(new Subject());
+  subscription.subscribe(kitchen.observer.bind(kitchen));
 })();
 
 // let currentElement: HTMLButtonElement | null = null;

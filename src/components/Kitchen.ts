@@ -1,6 +1,6 @@
 import Component from '../core/Component';
-import Coffee from '../model/Coffee';
-import { addClassList, removeClassList, selectTarget, setInnerText } from '../utils';
+import Coffee, { CoffeeId, COFFE_NAMES } from '../model/Coffee';
+import { addClassList, entries, pickChunk, removeClassList, selectTarget, setInnerText } from '../utils';
 import { OrdersState } from './OrderList';
 
 type KitchenState = { isOpened: boolean; orders: OrdersState['orders'] };
@@ -46,18 +46,24 @@ class Kitchen extends Component implements Observer<OrdersState> {
     <div class="select-coffee-container">
       <div class="row">
         <div>
-          <button class="coffee-category-button" id="americano">아메리카노</button>
-          <button class="coffee-category-button" id="au_lait">카페 오레</button>
-          <button class="coffee-category-button" id="capuccino">카푸치노</button>
-          <button class="coffee-category-button" id="corretto">코레또</button>
-          <button class="coffee-category-button" id="espresso">에스프레소</button>
+        ${pickChunk(entries(COFFE_NAMES), 2, 0)
+          .map(
+            ([id, name]) =>
+              `<button class="coffee-category-button ${
+                this.hasCoffeeOrder(id) ? 'selected' : ''
+              }" id="${id}">${name}</button>`,
+          )
+          .join('')}
         </div>
         <div>
-          <button class="coffee-category-button" id="latte">카페 라떼</button>
-          <button class="coffee-category-button" id="lungo">룽고</button>
-          <button class="coffee-category-button" id="macchiato">마끼야또</button>
-          <button class="coffee-category-button" id="mocha">카페 모카</button>
-          <button class="coffee-category-button" id="ristretto">리스트레또</button>
+        ${pickChunk(entries(COFFE_NAMES), 2, 1)
+          .map(
+            ([id, name]) =>
+              `<button class="coffee-category-button ${
+                this.hasCoffeeOrder(id) ? 'selected' : ''
+              }" id="${id}">${name}</button>`,
+          )
+          .join('')}
         </div>
       </div>
       <div class="row">
@@ -103,6 +109,10 @@ class Kitchen extends Component implements Observer<OrdersState> {
     alert(`아직 주문이 없는 커피 입니다.😋`);
   }
 
+  hasCoffeeOrder(coffeeId: CoffeeId) {
+    return !!this.state.orders.find(order => order.coffee.id === coffeeId);
+  }
+
   handleClickAddOption(coffeeId: string) {
     // TODO
     if (!this.selectedCoffee) {
@@ -119,11 +129,9 @@ class Kitchen extends Component implements Observer<OrdersState> {
 
   toggleSelectedCoffee(coffee: Coffee) {
     if (this._selectedCoffee) {
-      removeClassList({ selector: `#${this._selectedCoffee.id}`, className: 'selected' });
       removeClassList({ selector: '.filling', className: this._selectedCoffee.id });
     }
 
-    addClassList({ selector: `#${coffee.id}`, className: 'selected' });
     addClassList({ selector: '.filling', className: coffee.id });
     setInnerText({ selector: '.coffee_name', innerText: coffee.name });
   }
