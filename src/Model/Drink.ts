@@ -1,8 +1,8 @@
-import { drinkMap, DrinkMenuList } from '@/Model/constants/drinks';
+import { drinkMap, DrinkNameList, DrinkMenuList } from '@/Model/constants/drinks';
 
 class Drink {
   name: DrinkMenuList;
-  menuName: typeof drinkMap[DrinkMenuList];
+  menuName: DrinkNameList;
 
   constructor(name: DrinkMenuList) {
     this.name = name;
