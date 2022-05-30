@@ -21,7 +21,7 @@ class Order {
     return this.id === otherOrder.id;
   };
 
-  menuName() {
+  getMenuName() {
     return this.drink.menuName;
   }
 }
