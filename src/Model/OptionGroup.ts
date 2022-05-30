@@ -24,10 +24,7 @@ class OptionGroup {
   private selectMultipleOption = (optionIndex: number) => {
     const targetOption = this.options[optionIndex];
 
-    if (targetOption.getIsSelected()) {
-      return targetOption.setIsSelected(false);
-    }
-    targetOption.setIsSelected(true);
+    targetOption.setIsSelected(!targetOption.getIsSelected());
   };
 
   selectOption = (optionIndex: number) => {
