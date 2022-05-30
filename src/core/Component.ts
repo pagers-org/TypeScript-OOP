@@ -33,10 +33,6 @@ abstract class Component extends HTMLElement {
     // override
   };
 
-  public setComponentId(componentId: string | number) {
-    this.componentId = componentId;
-  }
-
   public getComponentId() {
     return this.componentId;
   }
