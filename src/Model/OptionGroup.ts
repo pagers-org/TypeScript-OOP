@@ -38,7 +38,7 @@ class OptionGroup {
     this.selectSingleOption(optionIndex);
   };
 
-  getSelectedOption = () => {
+  getSelectedOptions = () => {
     return this.options.filter(option => option.isSelected);
   };
 }
