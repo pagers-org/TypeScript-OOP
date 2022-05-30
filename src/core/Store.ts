@@ -1,4 +1,4 @@
-export interface DisPatch {
+export interface Dispatch {
   type: string;
   payload?: unknown;
 }
@@ -9,7 +9,7 @@ interface PublishPayload<T> {
   store: T;
 }
 
-function createStore<T, P extends DisPatch>(
+function createStore<T, P extends Dispatch>(
   name: string,
   callback: (store: T, action: P) => T,
   targetElement?: HTMLElement,

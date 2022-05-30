@@ -1,4 +1,4 @@
-import createStore, { DisPatch } from '@/core/Store';
+import createStore, { Dispatch } from '@/core/Store';
 import type Order from '@/Model/Order';
 import { ORDER_STORE } from '@/Stores/orderStore/constants';
 
@@ -10,7 +10,7 @@ const initStore: OrdersStore = {
   orders: [],
 };
 
-interface OrderTableAction extends DisPatch {
+interface OrderTableAction extends Dispatch {
   type: string;
   payload: {
     componentId: string;
