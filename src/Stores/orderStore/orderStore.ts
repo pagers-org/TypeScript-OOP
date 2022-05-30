@@ -40,10 +40,9 @@ export const { dispatch, getStore } = createStore<OrdersStore, OrderTableAction>
         return store;
       }
       case DELETE: {
-        const targetIndex = store.orders.findIndex(order => order.isSameOrder(action.payload.order));
-        if (targetIndex !== -1) {
-          store.orders.splice(targetIndex, 1);
-        }
+        const newOrders = store.orders.filter(order => !order.isSameOrder(action.payload.order));
+        store.orders = newOrders;
+
         return store;
       }
       default: {
