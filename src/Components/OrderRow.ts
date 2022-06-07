@@ -27,6 +27,9 @@ class OrderRow extends Component {
     this.addEventListenerToWindow(ORDER_STORE.event, callback);
   };
 
+  // TODO: useState같은 형태로는 안될까?, 매번 render를 넣어줘야하는게 불편하다. Proxy??를 사용하면 될까
+  // set할 때 마다, this.render를 트리거하는 특수한 객체라면 가능하다.
+  // 그리고 this.render는 반드시 하나만 사용되어야한다. (나중에 throttle 등의 비동기적인 batching이 이루어지려면, state는 그대로 갱신되지만, render는 가끔)
   public setOrder(order: Order) {
     this.order = order;
     this.render();
@@ -43,7 +46,7 @@ class OrderRow extends Component {
   private createOptionGroups() {
     return this.order.optionGroups.map(optionGroup => {
       const optionName = optionGroup.name;
-      const selectedOption = optionGroup.getSelectedOption()[0];
+      const selectedOption = optionGroup.getSelectedOptions()[0];
       return this.createCell(optionName, selectedOption.name);
     }, this);
   }
@@ -85,7 +88,7 @@ class OrderRow extends Component {
     return {
       icon: 'fa-trash-can',
       onClick: () => {
-        dispatch({ type: ORDER_STORE.types.DELETE, payload: this.order });
+        dispatch({ type: ORDER_STORE.types.DELETE, payload: { componentId: this.id, order: this.order } });
         this.destroy();
       },
     };
@@ -108,7 +111,7 @@ class OrderRow extends Component {
     }
 
     const idCell = this.createCell('id', 1);
-    const cafe = this.createCell('메뉴명', this.order.menuName());
+    const cafe = this.createCell('메뉴명', this.order.getMenuName());
     const optionGroups = this.createOptionGroups();
     const editButton = this.appendButtonIcon(this.createCell('수정하기'));
     const deleteButton = this.appendButtonIcon(this.createCell('삭제하기'));
