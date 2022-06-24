@@ -1,5 +1,9 @@
-import '@/View/OrderList/OrderList';
+import '@/View/OrderTable/OrderTable';
 import '@/View/Kitchen/Kitchen';
+
+import OrderRow from '@/Components/OrderRow';
+
+customElements.define('cafe-order-row', OrderRow);
 
 let currentElement: HTMLButtonElement | null = null;
 const pageNav = document.querySelector('header') as HTMLHeadElement;

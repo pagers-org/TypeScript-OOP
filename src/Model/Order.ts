@@ -1,35 +1,28 @@
+import { nanoid } from 'nanoid';
+
 import Drink from '@/Model/Drink';
+import OptionGroup from '@/Model/OptionGroup';
 
 // 주문을 set하는 순간부터 생성
 class Order {
-  id: number;
-  drinks: Drink[] = [];
+  id: string;
+  drink: Drink;
+  optionGroups: OptionGroup[];
   orderTime = -1;
   finishTime = -1;
 
-  constructor(id: number, drink: Drink) {
-    this.id = id;
-    this.drinks.push(drink);
+  constructor(drink: Drink, optionGroups: OptionGroup[]) {
+    this.id = nanoid();
+    this.drink = drink;
+    this.optionGroups = optionGroups;
   }
 
-  addDrink(drink: Drink) {
-    this.drinks.push(drink);
-  }
+  isSameOrder = (otherOrder: Order) => {
+    return this.id === otherOrder.id;
+  };
 
-  deleteDrink(index: number) {
-    this.drinks.splice(index, 1);
-  }
-
-  private recordNow() {
-    return new Date().getUTCMilliseconds();
-  }
-
-  setOrderInPlace() {
-    this.orderTime = this.recordNow();
-  }
-
-  finishOrder() {
-    this.finishTime = this.recordNow();
+  getMenuName() {
+    return this.drink.menuName;
   }
 }
 

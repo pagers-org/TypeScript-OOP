@@ -1,33 +1,19 @@
-interface OptionProps {
+class Option {
   name: string;
-  selections: string[];
-  type: 'radio' | 'checkbox';
-  isOptional?: boolean;
-  selectedIndex: number;
-}
+  isSelected: boolean;
 
-class Option implements OptionProps {
-  name: string;
-  selections: string[];
-  type: 'radio' | 'checkbox';
-  isOptional?: boolean;
-  selectedIndex = 0;
-
-  constructor({ name, selections, type, isOptional, selectedIndex }: OptionProps) {
+  constructor(name: string, isSelected?: boolean) {
     this.name = name;
-    this.selections = selections;
-    this.type = type;
-    this.isOptional = isOptional || false;
-    this.selectedIndex = selectedIndex || 0;
+    this.isSelected = isSelected || false;
   }
 
-  getOptions() {
-    return this.selections;
-  }
+  setIsSelected = (isSelected: boolean) => {
+    this.isSelected = isSelected;
+  };
 
-  getSelectedOption() {
-    return this.selections[this.selectedIndex];
-  }
+  getIsSelected = () => {
+    return this.isSelected;
+  };
 }
 
 export default Option;
