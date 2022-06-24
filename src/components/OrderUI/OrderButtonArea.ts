@@ -1,5 +1,5 @@
 import { castEventTargetToElement, createDom } from '@/utils';
-import EventBus from '@/businessLogic/core/EventBus';
+import EventBus from '@/domains/core/EventBus';
 import { EVENTS } from '@/constants';
 
 const OrderButtonArea = () => {

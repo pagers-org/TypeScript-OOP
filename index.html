@@ -25,50 +25,40 @@
     <main id="order">
       <section id="left-section">
         <!-- 주문 컴포넌트-->
-        <div class="order-list" />
-      </section>
-      <section id="right-section">
-        <h1>주방</h1>
-        <div class="coffee-container">
-          <h1 class="coffee_name">Choose your coffee</h1>
-          <div class="cup">
-            <div class="filling reset">
-              <div class="coffee">커피</div>
-              <div class="water">물</div>
-              <div class="liquor">리퀴르</div>
-              <div class="milk">우유</div>
-              <div class="whipped_cream">휘핑 크림</div>
-              <div class="milk_foam">밀크 폼</div>
-              <div class="steamed_milk">데운 우유</div>
-              <div class="chocolate">초콜릿</div>
+        <div class="order-list" ></div>
+        <!-- 주문완료 컴포넌트       -->
+        <span class="maked-list-view">
+          <button>현재까지 서빙된 커피 확인하기</button>
+        </span>
+        <div class="maked-list">
+          <h1>현재까지 서빙된 커피</h1>
+          <div class="wrapper">
+            <div class="table" id="maked-table">
+              <div class="table-row header">
+                <div class="cell">No</div>
+                <div class="cell">메뉴(수량)</div>
+                <div class="cell">최근 주문 시간</div>
+                <div class="cell">최근 서빙 완료 시간</div>
+              </div>
+              <div class="table-row">
+                <div class="cell" data-title="No">1</div>
+                <div class="cell" data-title="메뉴(수량)">아메리카노(3)</div>
+                <div class="cell" data-title="최근 주문 시간">2022.05.02 20:44:32</div>
+                <div class="cell" data-title="최근 서빙 완료 시간">2022.05.02 20:46:17</div>
+              </div>
+              <div class="table-row">
+                <div class="cell" data-title="No">1</div>
+                <div class="cell" data-title="메뉴(수량)">에스프레소(1)</div>
+                <div class="cell" data-title="최근 주문 시간">2022.05.02 20:51:37</div>
+                <div class="cell" data-title="최근 서빙 완료 시간">2022.05.02 20:53:11</div>
+              </div>
             </div>
-            <div class="plate"></div>
           </div>
         </div>
-        <div class="select-coffee-container">
-          <div class="row">
-            <div>
-              <button class="coffee-category-button" id="americano">아메리카노</button>
-              <button class="coffee-category-button" id="au_lait">카페 오레</button>
-              <button class="coffee-category-button" id="capuccino">카푸치노</button>
-              <button class="coffee-category-button" id="corretto">코레또</button>
-              <button class="coffee-category-button" id="espresso">에스프레소</button>
-            </div>
-            <div>
-              <button class="coffee-category-button" id="latte">카페 라떼</button>
-              <button class="coffee-category-button" id="lungo">룽고</button>
-              <button class="coffee-category-button" id="macchiato">마끼야또</button>
-              <button class="coffee-category-button" id="mocha">카페 모카</button>
-              <button class="coffee-category-button" id="ristretto">리스트레또</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="coffee-add-area">
-              <form>
-                <button type="submit" class="coffee-add-options-button">만들기</button>
-              </form>
-            </div>
-          </div>
+      </section>
+      <section id="right-section">
+        <!-- right-section 받아오기-->
+        <div data-component="kitchenUI" style="all:inherit; width: 100%" >
         </div>
       </section>
     </main>
