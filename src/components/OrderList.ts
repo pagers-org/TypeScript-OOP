@@ -1,4 +1,5 @@
 import Component from '../core/Component';
+import Subject from '../core/Subject';
 import Coffee from '../model/Coffee';
 import Option from '../model/Option';
 import CoffeeService from '../services/CoffeeService';
@@ -15,23 +16,21 @@ type Order = {
 
 export type OrdersState = { orders: Order[] };
 
-class OrderList extends Component implements Observable {
+class OrderList extends Component implements Subjectable<OrdersState> {
   private state: OrdersState = { orders: [] };
-  private observers$ = new Set();
+  private subject: Subject<OrdersState> | null;
 
   init() {
     this.setEvent();
   }
 
-  subscribe<OrdersState>(callback: (s: OrdersState) => void) {
-    this.observers$.add(callback);
-    return {
-      unsubscribe: () => this.observers$.delete(callback),
-    };
-  }
-
-  next() {
-    this.observers$.forEach(callback => typeof callback === 'function' && callback(this.state));
+  setSubject(subject: Subject<OrdersState>) {
+    if (this.subject) {
+      console.warn('[OrderList] can handle only one subject');
+    } else {
+      this.subject = subject;
+    }
+    return this.subject;
   }
 
   render() {
@@ -43,7 +42,7 @@ class OrderList extends Component implements Observable {
   setState<OrdersState>(state: OrdersState) {
     this.state = { ...this.state, ...state };
     this.render();
-    this.next();
+    this.subject && this.subject.next(this.state);
   }
 
   setEvent(): void {
@@ -74,17 +73,20 @@ class OrderList extends Component implements Observable {
   private updateOrderById(id: number) {
     const order = findById(this.state.orders, id);
     if (!order) return;
+
     const $order = selectTarget(`[data-order-id="${order.id}"]`);
 
-    const optionValues = Array.from($order.childNodes).reduce<string[]>((acc, currNode) => {
+    const optionValues = Array.from($order.childNodes).reduce((acc, currNode) => {
       if (!(currNode instanceof HTMLDivElement) || !currNode.isContentEditable) return acc;
       return [...acc, currNode.textContent || ''];
-    }, []);
+    }, [] as string[]);
 
     order.options.forEach((option, index) => option.setValue(optionValues[index]));
 
     this.setState({
-      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: false } : _order)),
+      orders: this.state.orders.map(prevOrder =>
+        prevOrder.id === order.id ? { ...order, editable: false } : prevOrder,
+      ),
     });
   }
 
@@ -92,7 +94,9 @@ class OrderList extends Component implements Observable {
     const order = findById(this.state.orders, id);
     if (!order) return;
     this.setState({
-      orders: this.state.orders.map(_order => (_order.id === order.id ? { ...order, editable: true } : _order)),
+      orders: this.state.orders.map(prevOrder =>
+        prevOrder.id === order.id ? { ...order, editable: true } : prevOrder,
+      ),
     });
   }
 
@@ -102,13 +106,9 @@ class OrderList extends Component implements Observable {
     this.setState({ orders: this.state.orders.filter(v => v.id !== order.id) });
   }
 
-  private getUniqueId() {
-    return generator.getUniqueId();
-  }
-
   private getNewOrder(): Order {
     return {
-      id: this.getUniqueId(),
+      id: generator.getUniqueId(),
       editable: false,
       coffee: CoffeeService.getRandomCoffee(),
       options: CoffeeService.getRandomOptions(),

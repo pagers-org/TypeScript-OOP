@@ -8,13 +8,16 @@ class CoffeeService {
 
   constructor() {
     this.menus = entries(COFFE_NAMES).map(([id, name]) => new Coffee(id, name));
-    this.options = entries(OPTIONS)
-      .flatMap(([key, options]) => options.map(option => ({ key, option })))
-      .reduce((acc, { key, option }) => {
-        acc[key] = acc[key] || [];
-        acc[key].push(new Option(key, option));
-        return acc;
-      }, {} as Record<OptionKey, Option[]>);
+
+    const allOptionsList = entries(OPTIONS).flatMap(([key, options]) => options.map(option => ({ key, option })));
+
+    const optionsGroupedByKey = allOptionsList.reduce((acc, { key, option }) => {
+      acc[key] = acc[key] || [];
+      acc[key].push(new Option(key, option));
+      return acc;
+    }, {} as Record<OptionKey, Option[]>);
+
+    this.options = optionsGroupedByKey;
   }
 
   getRandomCoffee() {

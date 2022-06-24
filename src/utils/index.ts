@@ -20,19 +20,29 @@ export const selectClosestFromTarget = (target: HTMLElement, selector: string): 
   return closestEl;
 };
 
-export const addClassList = (params: { selector: string; className: string }) => {
-  const { selector, className } = params;
+export const addClassList = ({ selector, className }: { selector: string; className: string }) => {
   selectTarget(selector).classList.add(className);
 };
 
-export const removeClassList = (params: { selector: string; className: string }) => {
-  const { selector, className } = params;
+export const removeClassList = ({ selector, className }: { selector: string; className: string }) => {
   selectTarget(selector).classList.remove(className);
 };
 
 export const setInnerText = (params: { selector: string; innerText: string }) => {
   const { selector, innerText } = params;
   selectTarget(selector).innerText = innerText;
+};
+
+export const pickChunk = <T extends unknown[]>(arr: T, sliceSize: number, currSlice: number): T => {
+  if (sliceSize < currSlice) {
+    console.warn('sliceSize can not be greater than currSlice');
+    return arr;
+  }
+
+  return arr.slice(
+    Math.floor(arr.length / sliceSize) * currSlice,
+    Math.floor(arr.length / sliceSize) * (currSlice + 1),
+  ) as T;
 };
 
 export const generator = (() => {
