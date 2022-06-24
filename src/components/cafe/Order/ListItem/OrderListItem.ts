@@ -1,18 +1,18 @@
 import { Component } from '@/components';
 import { OrderListItemView } from './OrderListItemView';
 import { OPTION_GROUP_NAMES, OptionGroupName } from '@/@types';
-import { CafeOrder } from '@/cafe';
 import { eventDispatcher, eventListener } from '@/main';
+import { Order } from '@/domain';
 
 export class OrderListItem extends Component {
-  private cafeOrder!: CafeOrder;
+  private order!: Order;
 
   private $removeOrderButton!: HTMLElement;
   private $editOrderButton!: HTMLElement;
   private $no!: HTMLElement;
 
-  public setOrder(order: CafeOrder) {
-    this.cafeOrder = order;
+  public setOrder(order: Order) {
+    this.order = order;
   }
 
   protected bindElements() {
@@ -23,7 +23,7 @@ export class OrderListItem extends Component {
 
   protected bindListeners() {
     eventListener.changedOption(({ order }) => {
-      if (order !== this.cafeOrder.order) {
+      if (order !== this.order) {
         return;
       }
 
@@ -54,7 +54,7 @@ export class OrderListItem extends Component {
   }
 
   public removeOrder() {
-    eventDispatcher.orderRemoved({ order: this.cafeOrder.order });
+    eventDispatcher.orderRemoved({ order: this.order });
 
     this.remove();
   }
@@ -67,7 +67,7 @@ export class OrderListItem extends Component {
 
   private setOptionGroupText(selected: OptionGroupName) {
     const $el = this.getOptionGroupElement(selected);
-    $el.textContent = this.cafeOrder.order.getSelectedOptionValue(selected);
+    $el.textContent = this.order.getSelectedOptionValue(selected);
   }
 
   private getOptionGroupElement(optionGroupName: OptionGroupName) {
@@ -81,7 +81,7 @@ export class OrderListItem extends Component {
     const contentEditAble = this.$container.getAttribute(key);
 
     if (contentEditAble === 'true') {
-      this.cafeOrder.order.validate();
+      this.order.validate();
 
       this.$container.removeAttribute(key);
     } else {
@@ -90,6 +90,6 @@ export class OrderListItem extends Component {
   }
 
   protected async view() {
-    return OrderListItemView(this.cafeOrder.beverage.getName(), this.cafeOrder.order);
+    return OrderListItemView(this.order);
   }
 }

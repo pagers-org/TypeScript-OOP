@@ -1,5 +1,4 @@
 import { Beverage, Material, Option, OptionGroup, Recipe } from '@/domain';
-import { BeverageName } from '@/@types';
 
 export abstract class AbstractApi {
   protected abstract beverages(): Promise<Beverage[]>;
@@ -34,11 +33,5 @@ export abstract class AbstractApi {
     }
 
     return beverage.clone();
-  }
-
-  public async findBeverageName(id: number): Promise<BeverageName> {
-    const beverage = await this.findBeverage(id);
-
-    return beverage.getName();
   }
 }

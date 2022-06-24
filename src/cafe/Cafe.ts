@@ -1,68 +1,61 @@
-import { AbstractApi, Beverage, Menu, MenuItem, Order, Orders, Serving, Servings } from '@/domain';
+import { Order, Serving, Servings } from '@/domain';
+import { OrderGroups } from '@/domain/order/group/OrderGroups';
+import { CafeStorage } from '@/cafe/CafeStorage';
 
-export type CafeOrder = {
-  order: Order;
-  beverage: Beverage;
+export type CafeConstructor = {
+  orderGroups: OrderGroups;
+  servings: Servings;
+  storage: CafeStorage;
 };
 
 export class Cafe {
-  private readonly api: AbstractApi;
-
-  private readonly orders: Orders;
+  private readonly orderGroups: OrderGroups;
   private readonly servings: Servings;
+  private readonly storage: CafeStorage;
 
-  constructor(api: AbstractApi, orders: Orders, servings: Servings) {
-    this.api = api;
-    this.orders = orders;
-    this.servings = servings;
+  constructor(constructor: CafeConstructor) {
+    this.orderGroups = constructor.orderGroups;
+    this.servings = constructor.servings;
+    this.storage = constructor.storage;
   }
 
   public isEmptyOrder(): boolean {
-    return this.orders.isEmpty();
+    return this.orderGroups.isEmpty();
   }
 
   public isEmptyOrderGroup(beverageId: number): boolean {
-    return this.orders.isEmptyOrderGroup(beverageId);
+    return this.orderGroups.isEmptyById(beverageId);
   }
 
   public addOrder(order: Order): void {
-    this.orders.addOrder(order);
+    this.orderGroups.addOrder(order);
   }
 
   public removeOrder(order: Order): void {
-    this.orders.removeOrder(order);
+    this.orderGroups.removeOrder(order);
+  }
+
+  public firstOrder(): Order {
+    return this.orderGroups.firstOrder();
   }
 
   public addServing(serving: Serving) {
     this.servings.add(serving);
   }
 
-  public async findBeverage(beverageId: number) {
-    return await this.api.findBeverage(beverageId);
+  public saveOrders() {
+    this.storage.saveOrders(this.orderGroups.getOrderAll());
   }
 
-  public async firstOrder(): Promise<CafeOrder> {
-    const order = this.orders.firstOrder();
-    const beverage = await this.findBeverage(order.getBeverageId());
-
-    return { order, beverage };
+  public saveServings() {
+    this.storage.saveServings(this.servings.getAll());
   }
 
-  public async getMenu() {
-    const beverages = await this.api.getBeveragesAll();
-    const menuItems = beverages.map(item => new MenuItem({ beverageId: item.getId() }));
-    return new Menu({ menuItems });
+  public getOrderAllFromStorage() {
+    return this.storage.getOrders();
   }
 
-  public async getMenuItems() {
-    return (await this.getMenu()).getMenuItems();
-  }
-
-  public async getOptionGroupsAll() {
-    return await this.api.getOptionGroupsAll();
-  }
-
-  public async getBeveragesCount() {
-    return await this.api.getBeveragesCount();
+  public getServingAllFromStorage() {
+    return this.storage.getServings();
   }
 }

@@ -6,8 +6,11 @@ export * from '@/domain/beverage/Material';
 export * from '@/domain/beverage/Recipe';
 export * from '@/domain/beverage/Beverage';
 
-export * from '@/domain/option/OptionGroup';
+export * from '@/domain/option/group/OptionGroup';
+export * from '@/domain/option/group/OptionGroups';
+
 export * from '@/domain/option/Option';
+export * from '@/domain/option/Options';
 
 export * from '@/domain/menu/Menu';
 export * from '@/domain/menu/MenuItem';

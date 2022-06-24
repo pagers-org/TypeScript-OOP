@@ -1,18 +1,25 @@
 import { createCustomElement } from '@/common';
-import { Header, Menu, MenuButton, Modal, OrderList, OrderListItem, Served, ServedItem } from '@/components';
+import { Header, MenuButton, MenuComponent, Modal, OrderList, OrderListItem, Served, ServedItem } from '@/components';
 import { App } from '@/App';
-import { Cafe, EventDispatcher, EventListener } from '@/cafe';
-import { Orders, Servings } from '@/domain';
+import { Cafe, CafeStorage, LocalStorage } from '@/cafe';
+import { Servings } from '@/domain';
 import { FetchApi } from '@/api/FetchApi';
+import { EventDispatcher, EventListener } from '@/event';
+import { OrderGroups } from '@/domain/order/group/OrderGroups';
 
 export const eventListener = new EventListener();
 export const eventDispatcher = new EventDispatcher();
 
 // const api =new InMemoryApi();
+export const api = new FetchApi();
 
-const api = new FetchApi();
-
-new App(new Cafe(api, new Orders(), new Servings()));
+new App(
+  new Cafe({
+    servings: new Servings(),
+    orderGroups: new OrderGroups(),
+    storage: new CafeStorage(new LocalStorage()),
+  }),
+);
 
 export const CUSTOM_ELEMENTS = {
   HEADER: 'cafe-header',
@@ -27,7 +34,7 @@ export const CUSTOM_ELEMENTS = {
 
 setTimeout(() => {
   createCustomElement(CUSTOM_ELEMENTS.HEADER, Header);
-  createCustomElement(CUSTOM_ELEMENTS.MENU, Menu);
+  createCustomElement(CUSTOM_ELEMENTS.MENU, MenuComponent);
   createCustomElement(CUSTOM_ELEMENTS.MENU_BUTTON, MenuButton);
   createCustomElement(CUSTOM_ELEMENTS.ORDER_LIST, OrderList);
   createCustomElement(CUSTOM_ELEMENTS.ORDER_LIST_ITEM, OrderListItem);

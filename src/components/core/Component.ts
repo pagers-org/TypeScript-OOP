@@ -1,5 +1,6 @@
 import { createElement, dispatchCustomEvent } from '@/common';
-import { Cafe, Events } from '@/cafe';
+import { Cafe } from '@/cafe';
+import { Events } from '@/event';
 
 export class Component extends HTMLElement {
   protected $container!: HTMLElement;

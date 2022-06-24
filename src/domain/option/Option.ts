@@ -4,6 +4,7 @@ export type OptionConstructor = {
   id: number;
   optionGroupId: number;
   name: OptionName;
+  selected: boolean;
 };
 
 export class Option {
@@ -16,6 +17,7 @@ export class Option {
     this.id = constructor.id;
     this.optionGroupId = constructor.optionGroupId;
     this.name = constructor.name;
+    this.selected = constructor.selected || false;
   }
 
   public isSelected(): boolean {
@@ -32,13 +34,5 @@ export class Option {
 
   public getGroupId(): number {
     return this.optionGroupId;
-  }
-
-  public clone() {
-    return new Option({
-      id: this.id,
-      optionGroupId: this.optionGroupId,
-      name: this.name,
-    });
   }
 }
